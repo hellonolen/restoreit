@@ -7,7 +7,7 @@ export default function SecurityPage() {
     const [twoFAEnabled, setTwoFAEnabled] = useState(false);
     const [activeSessions] = useState([
         { id: '1', device: 'MacBook Pro 16"', browser: 'Safari 17.2', location: 'Austin, TX', active: true, registeredAt: 'Mar 3, 2026' },
-        { id: '2', device: 'iPhone 15 Pro', browser: 'RestoreIt App', location: 'Austin, TX', active: false, registeredAt: 'Feb 28, 2026' },
+        { id: '2', device: 'iPhone 15 Pro', browser: 'restoreit App', location: 'Austin, TX', active: false, registeredAt: 'Feb 28, 2026' },
     ]);
 
     const securityLog = [
@@ -23,7 +23,7 @@ export default function SecurityPage() {
                 <h1 className="text-3xl font-bold text-white tracking-tight mb-2 flex items-center gap-3">
                     <Shield className="text-[#8A2BE2]" size={28} /> Forensic Security Center
                 </h1>
-                <p className="text-zinc-500 text-lg">Manage forensic session integrity, 2FA, and Cloud Vault access credentials.</p>
+                <p className="text-zinc-500 text-lg">Manage forensic session integrity, 2FA, and restoreit access credentials.</p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -40,7 +40,7 @@ export default function SecurityPage() {
                                 <h2 className="text-lg font-bold text-white flex items-center gap-2">
                                     <Smartphone size={20} className="text-[#8A2BE2]" /> Multi-Factor Authentication
                                 </h2>
-                                <p className="text-sm text-zinc-500">Secure your recovery vault with biometric or token-based verification.</p>
+                                <p className="text-sm text-zinc-500">Secure your restore vault with biometric or token-based verification.</p>
                             </div>
                             <div className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border ${twoFAEnabled ? 'bg-green-500/10 border-green-500/30 text-green-400' : 'bg-red-500/10 border-red-500/30 text-red-400'}`}>
                                 {twoFAEnabled ? 'Active Protection' : 'Defensive Gap Detected'}
@@ -116,10 +116,10 @@ export default function SecurityPage() {
                         </div>
                         <div className="space-y-2">
                             <h2 className="text-xl font-bold text-white tracking-tight">Vault Credentials</h2>
-                            <p className="text-xs text-[#8A2BE2] font-medium leading-relaxed uppercase tracking-wide">RestoreIt Forensic Passkeys</p>
+                            <p className="text-xs text-[#8A2BE2] font-medium leading-relaxed uppercase tracking-wide">restoreit Forensic Passkeys</p>
                         </div>
                         <p className="text-sm text-zinc-400 leading-relaxed">
-                            Generating a new forensic key will invalidate all existing Cloud Vault links. Download your new key file immediately.
+                            Generating a new forensic key will invalidate all existing restoreit links. Download your new key file immediately.
                         </p>
                         <button className="w-full bg-white text-black py-4 rounded-2xl text-sm font-black uppercase tracking-[0.2em] hover:bg-zinc-200 transition-all active:scale-[0.98]">
                             Regenerate Key

@@ -16,18 +16,18 @@ export default function ProtectionPage() {
             </div>
 
             <div className="grid grid-cols-3 gap-6">
-                {/* Recovery Readiness Score */}
+                {/* Restore Readiness Score */}
                 <div className="col-span-1 p-6 rounded-2xl border border-[#8A2BE2]/30 bg-gradient-to-br from-[#8A2BE2]/10 to-transparent space-y-4">
                     <div className="flex items-center gap-2 text-[#8A2BE2]">
                         <Brain size={18} />
-                        <span className="text-xs font-bold uppercase tracking-wider">Recovery Readiness</span>
+                        <span className="text-xs font-bold uppercase tracking-wider">Restore Readiness</span>
                     </div>
                     <div className="flex items-baseline gap-2">
                         <span className="text-4xl font-bold text-white">98</span>
                         <span className="text-sm text-zinc-500">/ 100</span>
                     </div>
                     <p className="text-xs text-zinc-400 leading-relaxed">
-                        Your system is in optimal condition. Data retrieval paths are verified and Cloud Vault synchronization is active.
+                        Your system is in optimal condition. Data retrieval paths are verified and restoreit synchronization is active.
                     </p>
                     <div className="pt-2">
                         <div className="flex items-center gap-2 text-[10px] text-green-400 font-medium">
@@ -133,7 +133,7 @@ export default function ProtectionPage() {
                 <div className="flex items-center gap-4">
                     <Shield size={24} className="text-[#8A2BE2]" />
                     <div>
-                        <div className="text-white font-semibold">Priority Recovery Queue</div>
+                        <div className="text-white font-semibold">Priority Restore Queue</div>
                         <div className="text-sm text-zinc-500">As a Protection Plan member, your scans are prioritized on our high-performance cluster.</div>
                     </div>
                 </div>

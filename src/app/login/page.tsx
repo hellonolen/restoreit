@@ -2,9 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Mail, Lock, Eye, EyeOff, ArrowRight, Shield, CheckCircle2 } from 'lucide-react';
+import { Mail, Eye, EyeOff, ArrowRight, Shield } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
@@ -16,9 +15,7 @@ export default function LoginPage() {
     const router = useRouter();
 
     useEffect(() => {
-        // Hydration safety
-        const timer = setTimeout(() => setMounted(true), 0);
-        return () => clearTimeout(timer);
+        setMounted(true);
     }, []);
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -26,138 +23,104 @@ export default function LoginPage() {
         if (!email || !password) { setError('Credential pair required for forensic access.'); return; }
         setError('');
         setLoading(true);
-
-        // Simulate high-fidelity auth delay
+        // Simulation of forensic extraction auth
         await new Promise(r => setTimeout(r, 1800));
-
-        // Set mock session cookie for middleware
         document.cookie = "restoreit_session=true; path=/; max-age=3600";
-
         setLoading(false);
-        router.push('/account');
+        router.push('/');
     };
 
     if (!mounted) return null;
 
     return (
-        <div className="min-h-screen bg-[#050506] text-zinc-300 font-sans flex relative overflow-hidden">
-
-            {/* Left Panel: Forensic Branding & Stats */}
-            <div className="hidden lg:flex w-1/2 relative flex-col p-16 justify-between border-r border-white/5 bg-black/40">
-                <div className="absolute inset-0 pointer-events-none opacity-20">
-                    <div className="absolute top-[-10%] left-[-10%] w-[80%] h-[80%] bg-[#8A2BE2]/20 blur-[150px] rounded-full animate-pulse" />
-                    <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-[#4B0082]/20 blur-[120px] rounded-full animate-pulse duration-[5000ms]" />
+        <div className="min-h-screen flex flex-col lg:flex-row bg-black relative selection:bg-[#8A2BE2]/30">
+            {/* Left Panel: Forensic Branding */}
+            <div className="hidden lg:flex w-[45%] relative flex-col p-20 justify-between overflow-hidden border-r border-[#ffffff08]">
+                <div className="absolute inset-0 pointer-events-none">
+                    <div className="absolute top-[-10%] left-[-10%] w-[100%] h-[100%] bg-gradient-to-br from-[#8A2BE2]/10 to-transparent blur-[120px]" />
                 </div>
 
                 <div className="relative z-10">
-                    <Link href="/" className="group flex items-center gap-4 mb-16">
-                        <div className="w-10 h-10 rounded-xl bg-[#8A2BE2] flex items-center justify-center shadow-[0_0_20px_rgba(138,43,226,0.4)] group-hover:scale-105 transition-transform duration-300">
-                            <div className="w-3 h-3 bg-white rounded-sm rotate-45 group-hover:rotate-90 transition-transform duration-500"></div>
+                    <Link href="/" className="group flex items-center gap-4 mb-24 transition-all duration-700">
+                        <div className="w-10 h-10 rounded-xl bg-[#8A2BE2] flex items-center justify-center shadow-[0_0_30px_rgba(138,43,226,0.3)] group-hover:scale-105 transition-transform">
+                            <div className="w-2.5 h-2.5 bg-white rounded-sm rotate-45"></div>
                         </div>
-                        <span className="text-xl font-black tracking-[0.3em] text-white">RESTOREIT</span>
+                        <span className="text-xl font-black tracking-[0.4em] text-white">restoreit</span>
                     </Link>
 
-                    <div className="space-y-8 animate-in slide-in-from-left-4 duration-700">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#8A2BE2]/10 border border-[#8A2BE2]/20 text-[#8A2BE2] text-[10px] font-black uppercase tracking-widest">
+                    <div className="space-y-8 max-w-lg">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/40 text-[9px] font-black uppercase tracking-[0.2em]">
                             <Shield size={10} strokeWidth={3} /> Certified Forensic Node
                         </div>
-                        <h1 className="text-7xl font-black text-white leading-[1] tracking-tighter">
-                            Backend <br />
-                            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8A2BE2] to-[#B066FF]">Extraction Gate.</span>
+                        <h1 className="text-7xl font-sans font-black text-white leading-[1.05] tracking-tighter animate-in fade-in slide-in-from-bottom-4 duration-700">
+                            restoreit <br />
+                            <span className="text-zinc-600">restoreit.</span>
                         </h1>
-                        <p className="text-xl text-zinc-500 leading-relaxed max-w-md font-medium">
-                            Authorized personnel only. Accessing the Cloud Vault reconstruction pool requires workstation-level forensic credentials.
+                        <p className="text-lg text-zinc-500 leading-relaxed font-medium max-w-sm">
+                            Accessing the restoreit restore pool requires authorized workstation credentials and encrypted relay handshake.
                         </p>
                     </div>
                 </div>
 
-                <div className="relative z-10 space-y-8 animate-in slide-in-from-bottom-4 duration-1000">
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="p-6 rounded-[32px] bg-white/[0.02] border border-white/5 space-y-3">
-                            <div className="flex items-center justify-between">
-                                <Shield className="text-[#8A2BE2] mb-6" size={40} />
-                                <span className="text-[10px] text-green-500 font-black">ENCRYPTED</span>
-                            </div>
-                            <div className="text-2xl font-black text-white">AES-256</div>
-                            <div className="text-[10px] font-bold text-zinc-600 uppercase tracking-widest">Protocol Standard</div>
-                        </div>
-                        <div className="p-6 rounded-[32px] bg-white/[0.02] border border-white/5 space-y-3">
-                            <div className="flex items-center justify-between">
-                                <CheckCircle2 className="text-[#8A2BE2]" size={18} />
-                                <span className="text-[10px] text-blue-400 font-black">ACTIVE</span>
-                            </div>
-                            <div className="text-2xl font-black text-white">Zero-Write</div>
-                            <div className="text-[10px] font-bold text-zinc-600 uppercase tracking-widest">Disk Integrity</div>
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-6 opacity-30">
-                        <div className="text-[9px] font-black text-white uppercase tracking-[0.2em]">© 2026 FORENSIC PLATFORMS</div>
-                        <div className="w-1.5 h-1.5 rounded-full bg-zinc-800" />
-                        <div className="text-[9px] font-black text-white uppercase tracking-[0.2em]">SESS CODE: BK-4922</div>
-                    </div>
+                <div className="relative z-10 flex flex-col gap-2">
+                    <div className="text-[9px] font-black text-white/20 uppercase tracking-[0.25em]">© 2026 restoreit · BK-4922</div>
                 </div>
             </div>
 
-            {/* Right Panel: Login Form */}
-            <div className="flex-1 flex flex-col relative justify-center items-center p-8 bg-[#050506]">
-                <div className="lg:hidden absolute top-8 left-8">
-                    <Link href="/" className="group flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-lg bg-[#8A2BE2] flex items-center justify-center">
-                            <div className="w-2.5 h-2.5 bg-white rounded-sm rotate-45"></div>
-                        </div>
-                        <span className="text-md font-black tracking-widest text-white">RESTOREIT</span>
-                    </Link>
-                </div>
-
+            {/* Right Panel: Focused Sign In (Matches User Screenshot) */}
+            <div className="flex-1 flex flex-col bg-black relative p-8 lg:p-24 items-center justify-center border-l border-white/[0.04]">
                 <div className="w-full max-w-md space-y-12">
-                    <div className="space-y-4">
-                        <div className="w-8 h-8 rounded-lg bg-[#8A2BE2]/10 border border-[#8A2BE2]/30 flex items-center justify-center">
-                            <div className="w-2 h-2 bg-[#8A2BE2] rounded-sm animate-pulse" />
-                        </div>
-                        <h2 className="text-4xl font-black text-white tracking-tighter">Sign In</h2>
-                        <p className="text-zinc-500 font-medium tracking-tight">Access the RestoreIt Recovery Dashboard and Cloud Vault Archive.</p>
+                    {/* Brand Icon (Purple Dot) */}
+                    <div className="w-12 h-12 rounded-[14px] bg-[#8A2BE2]/10 border border-[#8A2BE2]/30 flex items-center justify-center">
+                        <div className="w-2 h-2 rounded-full bg-[#8A2BE2] animate-pulse" />
                     </div>
 
-                    <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="space-y-4">
+                        <h2 className="text-6xl font-black text-white tracking-tighter">Sign In</h2>
+                        <p className="text-zinc-500 text-lg font-medium leading-relaxed max-w-sm">
+                            Access the restoreit Restore Dashboard and restoreit Archive.
+                        </p>
+                    </div>
+
+                    <form onSubmit={handleSubmit} className="space-y-8">
                         {error && (
-                            <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-bold animate-in zoom-in-95">
+                            <div className="p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-500 text-[10px] font-black uppercase tracking-widest animate-in fade-in zoom-in-95">
                                 {error}
                             </div>
                         )}
 
-                        <div className="space-y-4">
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-black text-zinc-600 uppercase tracking-widest ml-1">Forensic Email</label>
-                                <div className="relative group/input">
-                                    <Mail size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-700 group-focus-within/input:text-[#8A2BE2] transition-colors" />
+                        <div className="space-y-5">
+                            <div className="space-y-3">
+                                <label className="text-[10px] font-black text-zinc-600 uppercase tracking-[0.2em] ml-1">Forensic Email</label>
+                                <div className="relative group">
                                     <input
                                         type="email"
                                         placeholder="analyst@restoreit.app"
                                         value={email}
                                         onChange={e => setEmail(e.target.value)}
-                                        className="w-full bg-white/[0.02] border border-white/10 rounded-2xl pl-12 pr-4 py-4 text-sm text-white placeholder-zinc-800 outline-none focus:border-[#8A2BE2]/50 focus:bg-white/[0.04] transition-all font-medium"
+                                        className="w-full bg-white/[0.02] border border-white/[0.08] rounded-2xl px-6 py-5 text-sm text-white placeholder-zinc-800 outline-none focus:border-[#8A2BE2]/50 focus:bg-[#8A2BE2]/[0.02] transition-all font-medium"
                                     />
+                                    <Mail size={16} className="absolute right-6 top-1/2 -translate-y-1/2 text-zinc-800 group-focus-within:text-zinc-600 transition-colors" />
                                 </div>
                             </div>
 
-                            <div className="space-y-2">
+                            <div className="space-y-3">
                                 <div className="flex items-center justify-between ml-1">
-                                    <label className="text-[10px] font-black text-zinc-600 uppercase tracking-widest">Access Key</label>
-                                    <button type="button" className="text-[10px] font-bold text-[#8A2BE2]/60 hover:text-[#8A2BE2] transition-colors uppercase tracking-widest">Forgot Code?</button>
+                                    <label className="text-[10px] font-black text-zinc-600 uppercase tracking-[0.2em]">Access Key</label>
+                                    <button type="button" className="text-[10px] font-black text-[#8A2BE2] hover:text-[#B066FF] transition-all uppercase tracking-[0.15em]">Forgot Code?</button>
                                 </div>
-                                <div className="relative group/input">
-                                    <Lock size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-700 group-focus-within/input:text-[#8A2BE2] transition-colors" />
+                                <div className="relative group">
                                     <input
                                         type={showPassword ? 'text' : 'password'}
                                         placeholder="••••••••"
                                         value={password}
                                         onChange={e => setPassword(e.target.value)}
-                                        className="w-full bg-white/[0.02] border border-white/10 rounded-2xl pl-12 pr-12 py-4 text-sm text-white placeholder-zinc-800 outline-none focus:border-[#8A2BE2]/50 focus:bg-white/[0.04] transition-all font-medium"
+                                        className="w-full bg-white/[0.02] border border-white/[0.08] rounded-2xl px-6 py-5 text-sm text-white placeholder-zinc-800 outline-none focus:border-[#8A2BE2]/50 focus:bg-[#8A2BE2]/[0.02] transition-all font-medium"
                                     />
                                     <button
                                         type="button"
                                         onClick={() => setShowPassword(p => !p)}
-                                        className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-700 hover:text-white transition-colors"
+                                        className="absolute right-6 top-1/2 -translate-y-1/2 text-zinc-800 hover:text-zinc-500 transition-colors"
                                     >
                                         {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                                     </button>
@@ -168,29 +131,27 @@ export default function LoginPage() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="w-full h-16 bg-[#8A2BE2] hover:bg-[#7e22ce] disabled:opacity-50 text-white rounded-2xl text-sm font-black uppercase tracking-[0.2em] transition-all shadow-xl shadow-[#8A2BE2]/20 active:scale-[0.98] flex items-center justify-center gap-3 group"
+                            className={`w-full h-20 rounded-3xl text-xs font-black uppercase tracking-[0.3em] transition-all flex items-center justify-center gap-3 active:scale-[0.98] ${loading
+                                ? 'bg-zinc-900 text-zinc-700 cursor-not-allowed border border-white/5'
+                                : 'bg-[#8A2BE2] hover:bg-[#7e22ce] text-white shadow-[0_20px_40px_rgba(138,43,226,0.25)]'
+                                }`}
                         >
                             {loading ? (
-                                <div className="flex items-center gap-3">
-                                    <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                                    Bypassing Firewall...
-                                </div>
+                                <>
+                                    <div className="w-5 h-5 border-2 border-white/10 border-t-white rounded-full animate-spin" />
+                                    Handshaking
+                                </>
                             ) : (
-                                <>Authenticate Access <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" /></>
+                                <>Authenticate Access <ArrowRight size={16} /></>
                             )}
                         </button>
                     </form>
 
-                    <div className="pt-8 border-t border-white/5 space-y-8">
-                        <div className="flex items-center justify-between">
-                            <span className="text-xs text-zinc-600">Need helping connecting?</span>
-                            <Link href="/support" className="text-xs font-bold text-[#8A2BE2] hover:underline">Forensic Support →</Link>
-                        </div>
-                        <div className="flex items-center gap-4 text-xs font-bold text-zinc-500">
-                            <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
-                            <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
-                            <Link href="/" className="text-zinc-600 hover:text-white transition-colors ml-auto">← Back to Site</Link>
-                        </div>
+                    <div className="pt-12 border-t border-white/[0.04] flex items-center justify-between">
+                        <span className="text-[11px] font-bold text-zinc-700">Need helping connecting?</span>
+                        <Link href="/support" className="text-[11px] font-black text-[#8A2BE2] flex items-center gap-2 group">
+                            Forensic Support <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                        </Link>
                     </div>
                 </div>
             </div>

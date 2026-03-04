@@ -8,7 +8,7 @@ const mockUser = {
     email: 'jane@example.com',
     joinedAt: 'January 14, 2026',
     sessionsCompleted: 3,
-    plan: 'RestoreIt Pro',
+    plan: 'restoreit Pro',
     proProtection: false,
 };
 
@@ -17,7 +17,7 @@ export default function AccountPage() {
         <div className="space-y-8 max-w-2xl">
             <div>
                 <h1 className="text-xl font-semibold text-white mb-1">My Account</h1>
-                <p className="text-sm text-zinc-500">Your profile, plan status, and recovery summary.</p>
+                <p className="text-sm text-zinc-500">Your profile, plan status, and restore summary.</p>
             </div>
 
             {/* Profile Card */}
@@ -38,7 +38,7 @@ export default function AccountPage() {
             {/* Stats */}
             <div className="grid grid-cols-3 gap-4">
                 {[
-                    { icon: <HardDrive size={16} />, label: 'Recoveries Completed', value: mockUser.sessionsCompleted },
+                    { icon: <HardDrive size={16} />, label: 'Restores Completed', value: mockUser.sessionsCompleted },
                     { icon: <Calendar size={16} />, label: 'Member Since', value: mockUser.joinedAt },
                     { icon: <Activity size={16} />, label: 'Protection Status', value: mockUser.proProtection ? 'Active' : 'Inactive' },
                 ].map(({ icon, label, value }) => (
@@ -57,7 +57,7 @@ export default function AccountPage() {
                         <ShieldCheck size={22} className="text-[#8A2BE2] shrink-0 mt-0.5" />
                         <div>
                             <div className="text-white font-semibold mb-1">Add Protection Plan — $12/month</div>
-                            <div className="text-sm text-zinc-400 leading-relaxed">Continuous disk health monitoring, early warning alerts, priority recovery queue, and extended Cloud Vault retention.</div>
+                            <div className="text-sm text-zinc-400 leading-relaxed">Continuous disk health monitoring, early warning alerts, priority restore queue, and extended restoreit retention.</div>
                         </div>
                     </div>
                     <Link href="/account/billing" className="shrink-0 bg-[#8A2BE2] hover:bg-[#7e22ce] text-white px-5 py-3 rounded-xl text-sm font-semibold transition-all whitespace-nowrap">

@@ -48,7 +48,7 @@ export function ScanHistory({ sessions, onClose, darkMode }: ScanHistoryProps) {
                             <div className={`grid grid-cols-3 gap-3 text-xs ${darkMode ? 'text-zinc-500' : 'text-zinc-500'}`}>
                                 <div><div className="font-semibold text-zinc-400 mb-0.5">Files</div>{s.filesFound.toLocaleString()}</div>
                                 <div><div className="font-semibold text-zinc-400 mb-0.5">Data</div>{formatBytes(s.dataSize)}</div>
-                                <div><div className="font-semibold text-zinc-400 mb-0.5">Rate</div><span className="text-green-400">{s.recoveryRate}%</span></div>
+                                <div><div className="font-semibold text-zinc-400 mb-0.5">Rate</div><span className="text-green-400">{s.restoreRate}%</span></div>
                             </div>
                             <div className={`mt-2 text-[11px] ${darkMode ? 'text-zinc-700' : 'text-zinc-400'}`}>{ago(s.startedAt)}</div>
                         </div>

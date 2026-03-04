@@ -1,4 +1,4 @@
-// AGENT 4 — ExtractionBrowser: File Filter, Search, Selective Recovery, Grid/List/Timeline, Proof of Life
+// AGENT 4 — ExtractionBrowser: File Filter, Search, Selective Restore, Grid/List/Timeline, Proof of Life
 "use client";
 
 import { useState, useMemo } from 'react';
@@ -16,6 +16,8 @@ interface FileItem {
     integrity: number;
     modifiedAt: number;
     path: string;
+    hash?: string;
+    clusterOffset?: string;
 }
 
 interface ExtractionBrowserProps {
@@ -25,19 +27,20 @@ interface ExtractionBrowserProps {
     onRestart: () => void;
     onCheckout: () => void;
     darkMode: boolean;
+    onBack?: () => void;
 }
 
 const MOCK_FILES: FileItem[] = [
-    { id: '1', name: 'family_vacation_2023.jpg', size: 8_400_000, category: 'images', status: 'intact', integrity: 100, modifiedAt: 1706745600000, path: '/Users/admin/Pictures' },
-    { id: '2', name: 'tax_return_2024.pdf', size: 4_200_000, category: 'documents', status: 'intact', integrity: 98, modifiedAt: 1706832000000, path: '/Users/admin/Documents' },
-    { id: '3', name: 'birthday_party.mp4', size: 142_000_000, category: 'videos', status: 'fragmented', integrity: 72, modifiedAt: 1706918400000, path: '/Users/admin/Movies' },
-    { id: '4', name: 'project_backup.zip', size: 234_000_000, category: 'archives', status: 'intact', integrity: 95, modifiedAt: 1707004800000, path: '/Users/admin/Downloads' },
-    { id: '5', name: 'portrait_edit.psd', size: 560_000_000, category: 'images', status: 'intact', integrity: 100, modifiedAt: 1707091200000, path: '/Users/admin/Desktop' },
-    { id: '6', name: 'family_vacation_2023_copy.jpg', size: 8_400_000, category: 'images', status: 'intact', integrity: 100, isDuplicate: true, modifiedAt: 1706745600000, path: '/Users/admin/Pictures/Duplicates' },
-    { id: '7', name: 'business_contract.docx', size: 890_000, category: 'documents', status: 'intact', integrity: 100, modifiedAt: 1707177600000, path: '/Users/admin/Documents' },
-    { id: '8', name: 'raw_footage_001.mov', size: 2_100_000_000, category: 'videos', status: 'corrupted', integrity: 31, modifiedAt: 1707264000000, path: '/Volumes/External/Footage' },
-    { id: '9', name: 'dissertation_final.pdf', size: 15_000_000, category: 'documents', status: 'fragmented', integrity: 85, modifiedAt: 1707350400000, path: '/Users/admin/Documents/School' },
-    { id: '10', name: 'drone_photo_0012.dng', size: 24_000_000, category: 'images', status: 'intact', integrity: 97, modifiedAt: 1707436800000, path: '/Users/admin/Pictures/RAW' },
+    { id: '1', name: 'family_vacation_2023.jpg', size: 8_400_000, category: 'images', status: 'intact', integrity: 100, modifiedAt: 1706745600000, path: '/Users/admin/Pictures', hash: '8a2b...e2f9', clusterOffset: '0x004F3B' },
+    { id: '2', name: 'tax_return_2024.pdf', size: 4_200_000, category: 'documents', status: 'intact', integrity: 98, modifiedAt: 1706832000000, path: '/Users/admin/Documents', hash: 'f9e2...8a2b', clusterOffset: '0x11A4C2' },
+    { id: '3', name: 'birthday_party.mp4', size: 142_000_000, category: 'videos', status: 'fragmented', integrity: 72, modifiedAt: 1706918400000, path: '/Users/admin/Movies', hash: 'c6d1...f0a3', clusterOffset: '0x99B0F1' },
+    { id: '4', name: 'project_backup.zip', size: 234_000_000, category: 'archives', status: 'intact', integrity: 95, modifiedAt: 1707004800000, path: '/Users/admin/Downloads', hash: 'e0f3...d9c1', clusterOffset: '0x77D2E9' },
+    { id: '5', name: 'portrait_edit.psd', size: 560_000_000, category: 'images', status: 'intact', integrity: 100, modifiedAt: 1707091200000, path: '/Users/admin/Desktop', hash: 'b4a1...c0e9', clusterOffset: '0x33F8A2' },
+    { id: '6', name: 'family_vacation_2023_copy.jpg', size: 8_400_000, category: 'images', status: 'intact', integrity: 100, isDuplicate: true, modifiedAt: 1706745600000, path: '/Users/admin/Pictures/Duplicates', hash: '8a2b...e2f9', clusterOffset: '0x88E1C4' },
+    { id: '7', name: 'business_contract.docx', size: 890_000, category: 'documents', status: 'intact', integrity: 100, modifiedAt: 1707177600000, path: '/Users/admin/Documents', hash: '6d9f...a1b2', clusterOffset: '0x22C7D1' },
+    { id: '8', name: 'raw_footage_001.mov', size: 2_100_000_000, category: 'videos', status: 'corrupted', integrity: 31, modifiedAt: 1707264000000, path: '/Volumes/External/Footage', hash: 'a1b2...6d9f', clusterOffset: '0xEE4B90' },
+    { id: '9', name: 'dissertation_final.pdf', size: 15_000_000, category: 'documents', status: 'fragmented', integrity: 85, modifiedAt: 1707350400000, path: '/Users/admin/Documents/School', hash: 'd9c1...e0f3', clusterOffset: '0x55F1A8' },
+    { id: '10', name: 'drone_photo_0012.dng', size: 24_000_000, category: 'images', status: 'intact', integrity: 97, modifiedAt: 1707436800000, path: '/Users/admin/Pictures/RAW', hash: 'f0a3...c6d1', clusterOffset: '0xAA7D2C' },
 ];
 
 function formatBytes(b: number): string {
@@ -49,7 +52,7 @@ function formatBytes(b: number): string {
 
 function IntegrityBadge({ score, status }: { score: number; status: FileItem['status'] }) {
     if (status === 'intact') return <span className="text-[10px] px-2 py-0.5 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 font-semibold">Intact</span>;
-    if (status === 'fragmented') return <span className="text-[10px] px-2 py-0.5 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 font-semibold">{score}% Recovered</span>;
+    if (status === 'fragmented') return <span className="text-[10px] px-2 py-0.5 rounded-full bg-yellow-500/10 border border-yellow-500/20 text-yellow-400 font-semibold">{score}% Restored</span>;
     return <span className="text-[10px] px-2 py-0.5 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 font-semibold">Corrupted</span>;
 }
 
@@ -61,7 +64,7 @@ function FileCategoryIcon({ cat, size = 14 }: { cat: FileCategory; size?: number
     return <Cpu size={size} />;
 }
 
-export default function ExtractionBrowser({ totalFiles, files, stats, onRestart, onCheckout, darkMode }: ExtractionBrowserProps) {
+export default function ExtractionBrowser({ totalFiles, files, stats, onRestart, onCheckout, darkMode, onBack }: ExtractionBrowserProps) {
     const [search, setSearch] = useState('');
     const [categoryFilter, setCategoryFilter] = useState<FileCategory>('all');
     const [viewMode, setViewMode] = useState<ViewMode>('list');
@@ -107,7 +110,7 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
         setSelectAll(prev => !prev);
     };
 
-    const recoveryRate = Math.round((MOCK_FILES.filter(f => f.status === 'intact').length / MOCK_FILES.length) * 100);
+    const restoreRate = Math.round((MOCK_FILES.filter(f => f.status === 'intact').length / MOCK_FILES.length) * 100);
 
     if (isReviewing) {
         return (
@@ -157,7 +160,7 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
                             <div className="flex-1">
                                 <h4 className={`text-sm font-bold mb-1 uppercase tracking-tight ${darkMode ? 'text-white' : 'text-zinc-900'}`}>Zero-Install Extraction Protocol</h4>
                                 <p className={`text-xs leading-relaxed ${darkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>
-                                    These files will be extracted from the cloud stream directly. Your local disk remains in read-only mode, guaranteeing no data overwrites during the final recovery phase.
+                                    These files will be extracted from the cloud stream directly. Your local disk remains in read-only mode, guaranteeing no data overwrites during the final restore phase.
                                 </p>
                             </div>
                         </div>
@@ -175,7 +178,7 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
                                     <span className={`font-mono ${darkMode ? 'text-white' : 'text-zinc-900'}`}>{formatBytes(selectedSize)}</span>
                                 </div>
                                 <div className="flex justify-between text-sm">
-                                    <span className="text-zinc-500">Reconstruction</span>
+                                    <span className="text-zinc-500">restore</span>
                                     <span className="text-[#8A2BE2] font-bold uppercase tracking-widest text-[10px] flex items-center gap-1">
                                         <Cpu size={10} /> Forensic Tier
                                     </span>
@@ -214,7 +217,7 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
                             <div>
                                 <div className="text-[10px] font-bold text-[#8A2BE2] uppercase tracking-widest mb-1">Advanced Forensic Repair</div>
                                 <h3 className={`text-2xl font-semibold ${darkMode ? 'text-white' : 'text-zinc-900'}`}>
-                                    Reconstructing: <span className="font-mono text-[#8A2BE2]">{MOCK_FILES.find(f => f.id === repairingFileId)?.name}</span>
+                                    Restoring: <span className="font-mono text-[#8A2BE2]">{MOCK_FILES.find(f => f.id === repairingFileId)?.name}</span>
                                 </h3>
                             </div>
                             <button onClick={() => setRepairingFileId(null)} className="p-3 hover:bg-[#8A2BE2]/10 rounded-full transition-all text-zinc-500 hover:text-[#8A2BE2]">
@@ -242,7 +245,7 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
 
                             <div className="space-y-4">
                                 <div className={`aspect-square rounded-3xl flex items-center justify-center border relative overflow-hidden ${darkMode ? 'bg-[#8A2BE2]/5 border-[#8A2BE2]/30' : 'bg-[#8A2BE2]/5 border-[#8A2BE2]/20'}`}>
-                                    <span className="absolute top-4 left-4 px-2 py-1 rounded bg-green-500/10 border border-green-500/20 text-[10px] font-bold text-green-400 uppercase tracking-widest z-10">RestoreIt Reconstruction</span>
+                                    <span className="absolute top-4 left-4 px-2 py-1 rounded bg-green-500/10 border border-green-500/20 text-[10px] font-bold text-green-400 uppercase tracking-widest z-10">restoreit restore</span>
                                     <div className="absolute inset-0 bg-gradient-to-br from-[#8A2BE2]/20 to-transparent animate-pulse" />
                                     <NextImage
                                         src="https://images.unsplash.com/photo-1506744626753-140081d4cb43?q=80&w=600&auto=format&fit=crop"
@@ -257,7 +260,7 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
                                                 <Activity size={12} className="text-[#8A2BE2]" />
                                             </div>
                                             <div>
-                                                <div className="text-[10px] font-bold uppercase tracking-widest text-green-400">Status: Recoverable</div>
+                                                <div className="text-[10px] font-bold uppercase tracking-widest text-green-400">Status: Restorable</div>
                                                 <div className="text-sm font-semibold">98.4% Integrity Restored</div>
                                             </div>
                                         </div>
@@ -296,24 +299,33 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
             <div className="flex items-start justify-between flex-wrap gap-4">
                 <div className="animate-in slide-in-from-left-4 duration-500">
                     <div className="text-[#8A2BE2] text-[10px] font-bold tracking-[0.2em] uppercase mb-2 flex items-center gap-2">
-                        <span className="w-8 h-[1px] bg-[#8A2BE2]"></span> Step 3/3 — Forensic Browser
+                        <span className="w-8 h-[1px] bg-[#8A2BE2]"></span> Step 5/5 — Forensic Browser
                     </div>
                     <div className="flex items-center gap-4 mb-1">
                         <div className="w-10 h-10 rounded-2xl bg-green-500/10 text-green-400 flex items-center justify-center border border-green-500/20 shadow-[0_0_20px_rgba(34,197,94,0.1)]">
                             <CheckCircle2 size={24} strokeWidth={2} />
                         </div>
                         <h2 className={`text-3xl font-bold tracking-tight ${darkMode ? 'text-white' : 'text-zinc-900'}`}>Scan Successful</h2>
+                        {onBack && (
+                            <button
+                                onClick={onBack}
+                                className={`ml-4 px-3 py-1.5 rounded-xl border text-[9px] font-black uppercase tracking-widest transition-all ${darkMode ? 'border-white/10 text-zinc-500 hover:text-white' : 'border-black/5 text-zinc-400 hover:text-zinc-900'
+                                    }`}
+                            >
+                                ← Refine Target
+                            </button>
+                        )}
                     </div>
                     <p className={`text-sm ml-14 ${darkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
-                        Detected <strong className={darkMode ? 'text-zinc-200' : 'text-zinc-900'}>{totalFiles.toLocaleString()} files</strong> matching recovery patterns · {recoveryRate}% reconstructed
+                        Detected <strong className={darkMode ? 'text-zinc-200' : 'text-zinc-900'}>{totalFiles.toLocaleString()} files</strong> matching restore patterns · {restoreRate}% restored
                     </p>
                 </div>
                 <div className="flex items-center gap-3">
                     <div className={`text-xs px-4 py-2.5 rounded-2xl border font-mono font-bold ${darkMode ? 'border-white/10 text-zinc-400 bg-black/40' : 'border-black/5 text-zinc-600 bg-zinc-50'}`}>
-                        {formatBytes(stats.dataRecoverable)}
+                        {formatBytes(stats.dataRestorable)}
                     </div>
                     <div className="flex items-center gap-2 px-4 py-2.5 rounded-2xl border border-[#8A2BE2]/30 bg-[#8A2BE2]/10 text-[#8A2BE2] text-xs font-bold uppercase tracking-widest shadow-[0_0_15px_rgba(138,43,226,0.1)]">
-                        <Shield size={14} /> Recovery Verified
+                        <Shield size={14} /> Restore Verified
                     </div>
                 </div>
             </div>
@@ -325,7 +337,7 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
                 <div>
                     <h4 className={`text-sm font-bold mb-1 ${darkMode ? 'text-orange-100' : 'text-orange-900'}`}>Read-Only Barrier Active</h4>
                     <p className={`text-xs leading-relaxed max-w-2xl ${darkMode ? 'text-orange-100/60' : 'text-orange-800/70'}`}>
-                        RestoreIt has locked disk writes to &quot;Macintosh HD&quot; to prevent sector overwriting. To recover these files, you must proceed to the forensic extraction gate.
+                        restoreit has locked disk writes to &quot;Macintosh HD&quot; to prevent sector overwriting. To restore these files, you must proceed to the forensic extraction gate.
                     </p>
                 </div>
             </div>
@@ -419,16 +431,18 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
                                                     onClick={(e) => { e.stopPropagation(); setRepairingFileId(file.id); }}
                                                     className="text-[9px] px-2 py-0.5 rounded-full bg-[#8A2BE2]/10 border border-[#8A2BE2]/20 text-[#8A2BE2] font-black uppercase tracking-widest hover:bg-[#8A2BE2]/20 transition-all flex items-center gap-1.5 group/btn shadow-lg shadow-[#8A2BE2]/5 agent-pulse"
                                                 >
-                                                    <Cpu size={9} className="animate-pulse" /> RestoreIt Repair Mode
+                                                    <Cpu size={9} className="animate-pulse" /> restoreit Repair Mode
                                                 </button>
                                             )}
                                         </div>
                                         <div className={`text-[11px] font-medium flex items-center gap-3 overflow-hidden ${darkMode ? 'text-zinc-600' : 'text-zinc-400'}`}>
-                                            <span className="truncate max-w-[200px] font-mono">{file.path}</span>
+                                            <span className="truncate max-w-[150px] font-mono">{file.path}</span>
                                             <span className="w-1 h-1 rounded-full bg-zinc-800" />
                                             <span className="shrink-0">{formatBytes(file.size)}</span>
                                             <span className="w-1 h-1 rounded-full bg-zinc-800" />
-                                            <span className="shrink-0 font-mono text-[10px]">{new Date(file.modifiedAt).toLocaleDateString()}</span>
+                                            <span className="shrink-0 font-mono text-[9px] text-[#8A2BE2] opacity-60">SHA-256: {file.hash}</span>
+                                            <span className="w-1 h-1 rounded-full bg-zinc-800" />
+                                            <span className="shrink-0 font-mono text-[9px]">{file.clusterOffset}</span>
                                         </div>
                                     </div>
 
@@ -460,7 +474,7 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
                                     'https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=200&auto=format&fit=crop',
                                 ].map((src, i) => (
                                     <div key={i} className="aspect-square relative rounded-2xl overflow-hidden group/thumb">
-                                        <NextImage src={src} width={200} height={200} alt="Recovered thumbnail" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                                        <NextImage src={src} width={200} height={200} alt="Restored thumbnail" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
                                         <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] flex items-center justify-center transition-all group-hover:opacity-0">
                                             <Lock size={20} className="text-white/20" />
                                         </div>
@@ -478,7 +492,7 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
                             <div className="flex items-center justify-between">
                                 <div className="space-y-1">
                                     <div className={`text-[10px] font-bold uppercase tracking-widest ${darkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>Est. Retrieval</div>
-                                    <div className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-zinc-900'}`}>{selectedIds.size > 0 ? formatBytes(MOCK_FILES.filter(f => selectedIds.has(f.id)).reduce((a, b) => a + b.size, 0)) : formatBytes(stats.dataRecoverable)}</div>
+                                    <div className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-zinc-900'}`}>{selectedIds.size > 0 ? formatBytes(MOCK_FILES.filter(f => selectedIds.has(f.id)).reduce((a, b) => a + b.size, 0)) : formatBytes(stats.dataRestorable)}</div>
                                 </div>
                                 <div className="h-10 w-[1px] bg-white/10" />
                                 <div className="space-y-1 text-right">
@@ -511,7 +525,7 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
                             <span className={`text-[10px] font-black uppercase tracking-widest ${darkMode ? 'text-zinc-400' : 'text-zinc-700'}`}>Client Integrity Lock</span>
                         </div>
                         <p className="text-[11px] leading-relaxed italic">
-                            &quot;We guarantee the absolute structural integrity of the detected file headers. If your files cannot be reconstructed in our forensic cloud, a full credit will be issued.&quot;
+                            &quot;We guarantee the absolute structural integrity of the detected file headers. If your files cannot be restored in our forensic cloud, a full credit will be issued.&quot;
                         </p>
                     </div>
                 </div>

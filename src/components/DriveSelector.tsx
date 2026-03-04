@@ -15,6 +15,7 @@ interface DriveSelectorProps {
     scanMode: ScanMode;
     onScanModeChange: (mode: ScanMode) => void;
     darkMode: boolean;
+    onBack?: () => void;
 }
 
 function Tooltip({ text, children }: { text: string; children: React.ReactNode }) {
@@ -61,7 +62,7 @@ function estimateScanTime(sizeBytes: number, mode: ScanMode): string {
 }
 
 export default function DriveSelector({
-    drives, selectedDrive, onSelectDrive, onStartScan, scanMode, onScanModeChange, darkMode
+    drives, selectedDrive, onSelectDrive, onStartScan, scanMode, onScanModeChange, darkMode, onBack
 }: DriveSelectorProps) {
     const [showRelayExplainer, setShowRelayExplainer] = useState(false);
     const selectedDriveInfo = drives.find(d => d.id === selectedDrive);
@@ -76,19 +77,30 @@ export default function DriveSelector({
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 w-full space-y-8">
 
             {/* Title */}
-            <div>
-                <div className="text-[#8A2BE2] text-xs font-bold tracking-widest uppercase mb-3">Step 1 of 3</div>
-                <h2 className={`text-2xl font-semibold mb-2 ${darkMode ? 'text-white' : 'text-zinc-900'}`}>Connect & Configure</h2>
-                <p className={`text-sm leading-relaxed ${darkMode ? 'text-zinc-500' : 'text-zinc-500'}`}>
-                    Choose your scan mode, then run the secure relay command to begin reading your disk safely.
-                </p>
+            <div className="flex items-center justify-between">
+                <div>
+                    <div className="text-[#8A2BE2] text-[10px] font-black uppercase tracking-[0.2em] mb-3">Step 2 of 5 — Scan Configuration</div>
+                    <h2 className={`text-4xl font-black mb-2 tracking-tighter ${darkMode ? 'text-white' : 'text-zinc-900'}`}>Target Selection.</h2>
+                    <p className={`text-sm leading-relaxed max-w-lg ${darkMode ? 'text-zinc-500' : 'text-zinc-500'}`}>
+                        Choose your scan mode, then run the secure relay command to begin reading your disk safely.
+                    </p>
+                </div>
+                {onBack && (
+                    <button
+                        onClick={onBack}
+                        className={`px-4 py-2 rounded-xl border text-[10px] font-black uppercase tracking-widest transition-all ${darkMode ? 'border-white/10 text-zinc-500 hover:text-white' : 'border-black/5 text-zinc-400 hover:text-zinc-900'
+                            }`}
+                    >
+                        ← Back
+                    </button>
+                )}
             </div>
 
             {/* SCAN MODE SELECTOR */}
             <div>
                 <div className={`flex items-center gap-2 mb-3 text-xs font-semibold uppercase tracking-widest ${darkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>
                     Scan Mode
-                    <Tooltip text="Quick Scan reads only recently deleted file entries. Deep Scan reads every sector — slower but recovers more, including overwritten fragments.">
+                    <Tooltip text="Quick Scan reads only recently deleted file entries. Deep Scan reads every sector — slower but restores more, including overwritten fragments.">
                         <HelpCircle size={13} className="cursor-help opacity-50 hover:opacity-100" />
                     </Tooltip>
                 </div>
@@ -139,7 +151,7 @@ export default function DriveSelector({
                         </div>
                         <ul className="space-y-1.5 text-xs text-zinc-500">
                             <li className="flex items-center gap-2"><CheckCircle2 size={11} className="text-[#8A2BE2] shrink-0" /> Thorough (30–120 min)</li>
-                            <li className="flex items-center gap-2"><CheckCircle2 size={11} className="text-[#8A2BE2] shrink-0" /> ALL recoverable files</li>
+                            <li className="flex items-center gap-2"><CheckCircle2 size={11} className="text-[#8A2BE2] shrink-0" /> ALL restorable files</li>
                             <li className="flex items-center gap-2"><CheckCircle2 size={11} className="text-[#8A2BE2] shrink-0" /> Fragmented + overwritten</li>
                             {selectedDriveInfo && (
                                 <li className="flex items-center gap-2 text-[#8A2BE2] font-medium mt-2">
@@ -194,7 +206,7 @@ export default function DriveSelector({
                     <div className={`${darkMode ? 'bg-white/5 border-white/10' : 'bg-white border-black/10'} border rounded-xl p-4 space-y-3 text-xs leading-relaxed ${darkMode ? 'text-zinc-400' : 'text-zinc-600'} animate-in fade-in slide-in-from-top-2 duration-200`}>
                         <h4 className={`font-semibold text-sm ${darkMode ? 'text-white' : 'text-zinc-900'}`}>What does this command do?</h4>
                         <p><strong className={darkMode ? 'text-zinc-300' : 'text-zinc-700'}>curl</strong> fetches the relay script directly from our secure server and pipes it instantly into your shell with <strong className={darkMode ? 'text-zinc-300' : 'text-zinc-700'}>bash</strong>. Nothing is saved to your disk. The relay runs entirely in memory (RAM), reads raw disk sectors, encrypts them with TLS, and streams them to our Cloud engine.</p>
-                        <p><strong className={darkMode ? 'text-zinc-300' : 'text-zinc-700'}>Why not download?</strong> Any file saved to your affected disk — including a recovery app — risks overwriting the exact sectors that contain your lost files. The curl relay method is the only safe approach.</p>
+                        <p><strong className={darkMode ? 'text-zinc-300' : 'text-zinc-700'}>Why not download?</strong> Any file saved to your affected disk — including a restore app — risks overwriting the exact sectors that contain your lost files. The curl relay method is the only safe approach.</p>
                         <div className="grid grid-cols-3 gap-3 pt-2">
                             {[
                                 { icon: <ShieldCheck size={14} />, label: 'Zero disk writes' },
@@ -253,9 +265,11 @@ export default function DriveSelector({
                                         <div className={`flex items-center gap-2 text-[12px] flex-wrap ${darkMode ? 'text-zinc-500' : 'text-zinc-500'}`}>
                                             <span className={`px-1.5 py-[2px] rounded ${darkMode ? 'bg-white/5 border border-white/5' : 'bg-zinc-100 border border-zinc-200'} font-mono text-[10px] uppercase tracking-wider`}>{drive.format}</span>
                                             <span>·</span>
-                                            <span>{drive.size}</span>
+                                            <span className="font-mono text-[10px] text-[#8A2BE2] opacity-70">FW: 104.2A</span>
                                             <span>·</span>
-                                            <span>{drive.type}</span>
+                                            <span className="font-mono text-[10px]">SN: {drive.id === '1' ? 'WD-WCC3F7' : 'X-77A4B'}</span>
+                                            <span>·</span>
+                                            <span>{drive.size}</span>
                                             {drive.temperature && <><span>·</span><span>{drive.temperature}°C</span></>}
                                             {isSelected && (
                                                 <>
@@ -289,7 +303,7 @@ export default function DriveSelector({
             <div className={`text-xs leading-relaxed ${darkMode ? 'text-zinc-600' : 'text-zinc-400'} flex items-start gap-2`}>
                 <Info size={13} className="shrink-0 mt-0.5 text-zinc-500" />
                 <span>
-                    RestoreIt supports <strong className="text-zinc-500">macOS</strong> (APFS, HFS+), <strong className="text-zinc-500">Windows</strong> (NTFS, exFAT), and <strong className="text-zinc-500">Linux</strong> (ext4) — including native <strong className="text-zinc-500">Apple Silicon</strong> (M1/M2/M3) and Intel x86.
+                    restoreit supports <strong className="text-zinc-500">macOS</strong> (APFS, HFS+), <strong className="text-zinc-500">Windows</strong> (NTFS, exFAT), and <strong className="text-zinc-500">Linux</strong> (ext4) — including native <strong className="text-zinc-500">Apple Silicon</strong> (M1/M2/M3) and Intel x86.
                 </span>
             </div>
 

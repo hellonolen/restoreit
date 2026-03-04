@@ -1,8 +1,8 @@
-// AGENT 5 — CheckoutModal: tier limits, refund policy, recovery guarantee, storage info
+// AGENT 5 — CheckoutModal: tier limits, refund policy, restore guarantee, storage info
 "use client";
 
 import { useRef, useState } from 'react';
-import { X, CreditCard, Lock, ShieldCheck, HardDrive, Cloud, Star, Info } from 'lucide-react';
+import { X, CreditCard, Lock, ShieldCheck, HardDrive, Cloud, Star, Info, Shield } from 'lucide-react';
 import { useClickOutside } from '../hooks/useClickOutside';
 
 interface CheckoutModalProps {
@@ -32,36 +32,36 @@ export default function CheckoutModal({ onClose, onSuccess, totalFiles, dataSize
     const tiers = [
         {
             id: 'standard' as const,
-            name: 'RestoreIt',
+            name: 'restoreit',
             price: 89,
-            scanLimit: 'Single recovery',
+            scanLimit: 'Single restore',
             storage: 'Your own drive required',
             retention: 'Immediate transfer only',
             requiresExternal: true,
             features: [
-                'Full cloud reconstruction',
-                'Recovered file bundle download',
-                'Selective file recovery',
+                'Full cloud restore',
+                'Restored file bundle download',
+                'Selective file restore',
                 '7-day support window',
             ],
-            excluded: ['Cloud Vault storage', 'Direct secure download', 'Priority queue'],
+            excluded: ['restoreit storage', 'Direct secure download', 'Priority queue'],
         },
         {
             id: 'pro' as const,
-            name: 'RestoreIt Pro',
+            name: 'restoreit Pro',
             price: 249,
             scanLimit: 'Unlimited re-downloads',
-            storage: '500 GB Cloud Vault included',
+            storage: '500 GB restoreit included',
             retention: '7-day secure vault retention',
             requiresExternal: false,
             features: [
-                'Everything in RestoreIt',
-                '500 GB private Cloud Vault',
+                'Everything in restoreit',
+                '500 GB private restoreit',
                 'Direct secure download — no external drive needed',
                 '7-day encrypted vault retention',
-                'Priority recovery queue',
+                'Priority restore queue',
                 'Extended file history',
-                '2FA Cloud Vault access',
+                '2FA restoreit access',
             ],
             excluded: [],
         },
@@ -94,7 +94,7 @@ export default function CheckoutModal({ onClose, onSuccess, totalFiles, dataSize
 
                     {/* Tier Selector */}
                     <div>
-                        <h3 className="text-xs uppercase tracking-widest font-bold text-zinc-500 mb-4">Select Your Recovery Tier</h3>
+                        <h3 className="text-xs uppercase tracking-widest font-bold text-zinc-500 mb-4">Select Your Restore Tier</h3>
                         <div className="grid grid-cols-2 gap-4">
                             {tiers.map(tier => (
                                 <button key={tier.id} onClick={() => setSelectedTier(tier.id)}
@@ -147,10 +147,10 @@ export default function CheckoutModal({ onClose, onSuccess, totalFiles, dataSize
                     {/* File Summary */}
                     <div className="p-4 rounded-xl bg-[#8A2BE2]/5 border border-[#8A2BE2]/20 flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                            <Lock size={16} className="text-[#8A2BE2]" />
+                            <Shield size={16} className="text-[#8A2BE2]" />
                             <div>
-                                <div className="text-white text-sm font-medium">{totalFiles.toLocaleString()} files locked</div>
-                                <div className="text-zinc-500 text-xs">{formatBytes(dataSize || 8_500_000_000)} to extract</div>
+                                <div className="text-white text-sm font-medium">restoreit Protection</div>
+                                <div className="text-zinc-500 text-xs">Real-time monitoring for your critical disk arrays.</div>
                             </div>
                         </div>
                         <div className="text-right">
@@ -187,7 +187,7 @@ export default function CheckoutModal({ onClose, onSuccess, totalFiles, dataSize
                         {showRefundPolicy && (
                             <div className="mt-3 p-4 rounded-xl border border-white/8 bg-black/30 text-xs text-zinc-400 leading-relaxed animate-in fade-in duration-200">
                                 <strong className="text-zinc-300 block mb-1">Our Guarantee</strong>
-                                If the scan detects recoverable files and RestoreIt fails to deliver them to your Cloud Vault, you receive a full refund — no questions asked. If no files are detected, you are not charged. Recovery success depends on the extent of overwriting since deletion; we cannot recover files that have been physically overwritten.
+                                If the scan detects restorable files and restoreit fails to deliver them to your restoreit, you receive a full refund — no questions asked. If no files are detected, you are not charged. Restore success depends on the extent of overwriting since deletion; we cannot restore files that have been physically overwritten.
                             </div>
                         )}
                     </div>
@@ -199,7 +199,7 @@ export default function CheckoutModal({ onClose, onSuccess, totalFiles, dataSize
                     </button>
 
                     <p className="text-center text-[10px] text-zinc-600 leading-relaxed">
-                        All payments are processed via encrypted Secure Checkout. Your card data is never stored on RestoreIt servers. By proceeding you agree to our <a href="/terms" className="underline hover:text-zinc-400" target="_blank">Terms of Service</a> and <a href="/privacy" className="underline hover:text-zinc-400" target="_blank">Privacy Policy</a>.
+                        All payments are processed via encrypted Secure Checkout. Your card data is never stored on restoreit servers. By proceeding you agree to our <a href="/terms" className="underline hover:text-zinc-400" target="_blank">Terms of Service</a> and <a href="/privacy" className="underline hover:text-zinc-400" target="_blank">Privacy Policy</a>.
                     </p>
                 </div>
             </div>

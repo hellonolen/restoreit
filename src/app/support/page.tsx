@@ -2,17 +2,17 @@
 import Link from 'next/link';
 import { HelpCircle, Terminal, Shield, AlertTriangle, ChevronRight } from 'lucide-react';
 
-export const metadata = { title: 'Help & Support — RestoreIt', description: 'Troubleshooting guide, system requirements, and answers to common questions about RestoreIt secure file recovery.' };
+export const metadata = { title: 'Help & Support — restoreit', description: 'Troubleshooting guide, system requirements, and answers to common questions about restoreit secure file restore.' };
 
 const faqs = [
-    { q: 'What does the curl relay command actually do?', a: "The curl command fetches a tiny relay script from our secure server and runs it directly in your computer's memory (RAM). It never saves anything to your disk. It reads your drive's raw sectors and sends them through an encrypted HTTPS connection to our Cloud engine for reconstruction. Nothing is written to the disk you are recovering from." },
-    { q: 'Why not just download recovery software?', a: 'Any file you download and install onto an affected disk can overwrite the exact sectors containing your deleted files. The memory-only relay approach is the only method that avoids destructive overwriting — which is why traditional recovery tools often fail.' },
+    { q: 'What does the curl relay command actually do?', a: "The curl command fetches a tiny relay script from our secure server and runs it directly in your computer's memory (RAM). It never saves anything to your disk. It reads your drive's raw sectors and sends them through an encrypted HTTPS connection to our Cloud engine for restore. Nothing is written to the disk you are restoring from." },
+    { q: 'Why not just download restore software?', a: 'Any file you download and install onto an affected disk can overwrite the exact sectors containing your deleted files. The memory-only relay approach is the only method that avoids destructive overwriting — which is why traditional restore tools often fail.' },
     { q: "What if the relay command times out?", a: 'The relay automatically reconnects if the connection is interrupted. If it times out completely, simply re-run the same curl command. Your scan progress is checkpointed in our Cloud — you will not start over from scratch.' },
-    { q: 'What file systems are supported?', a: 'RestoreIt supports APFS and HFS+ (macOS), NTFS and exFAT (Windows), and ext4 (Linux). RAID configurations and standard encrypted volumes (FileVault, BitLocker) require the Pro tier with extended scanning protocols.' },
-    { q: 'Can I recover files from a formatted drive?', a: 'Yes. Formatting a drive deletes the file table but usually does not zero out the data sectors. RestoreIt\'s Deep Scan reads every sector and reconstructs files from raw binary patterns, independent of the file table.' },
-    { q: 'What if no files are found?', a: 'You are not charged. Our pricing model gates payment behind confirmed file detection ("Proof of Life"). If the scan returns zero recoverable files, the session closes at no cost.' },
-    { q: 'How long does my data stay in the Cloud Vault?', a: 'Standard tier: your recovered files must be downloaded immediately — no persistent vault storage. Pro tier: your data is retained in an encrypted private Cloud Vault for 7 days, after which it is automatically purged. RestoreIt Pro subscribers receive extended 30-day retention.' },
-    { q: 'Is my data private? Can RestoreIt see my files?', a: 'All data is encrypted in transit using TLS and encrypted at rest using AES-256. RestoreIt operates on a zero-access principle — our infrastructure processes raw binary streams. We do not index, catalog, or access the content of your files beyond what is necessary for reconstruction.' },
+    { q: 'What file systems are supported?', a: 'restoreit supports APFS and HFS+ (macOS), NTFS and exFAT (Windows), and ext4 (Linux). RAID configurations and standard encrypted volumes (FileVault, BitLocker) require the Pro tier with extended scanning protocols.' },
+    { q: 'Can I restore files from a formatted drive?', a: 'Yes. Formatting a drive deletes the file table but usually does not zero out the data sectors. restoreit\'s Deep Scan reads every sector and restores files from raw binary patterns, independent of the file table.' },
+    { q: 'What if no files are found?', a: 'You are not charged. Our pricing model gates payment behind confirmed file detection ("Proof of Life"). If the scan returns zero restorable files, the session closes at no cost.' },
+    { q: 'How long does my data stay in the restoreit cloud?', a: 'Standard tier: your restored files must be downloaded immediately — no persistent vault storage. Pro tier: your data is retained in an encrypted private restoreit for 7 days, after which it is automatically purged. restoreit Pro subscribers receive extended 30-day retention.' },
+    { q: 'Is my data private? Can restoreit see my files?', a: 'All data is encrypted in transit using TLS and encrypted at rest using AES-256. restoreit operates on a zero-access principle — our infrastructure processes raw binary streams. We do not index, catalog, or access the content of your files beyond what is necessary for restore.' },
     { q: 'What are the system requirements?', a: 'macOS 12+ (Monterey or later), Windows 10+ (64-bit), or Ubuntu 20.04+. For large drives (2TB+) we recommend 8GB RAM minimum. ARM (Apple Silicon M1/M2/M3) and Intel x86_64 are both natively supported. Internet connection required.' },
 ];
 
@@ -22,7 +22,7 @@ export default function SupportPage() {
             <header className="flex items-center justify-between px-8 lg:px-16 py-6 border-b border-white/5">
                 <Link href="/" className="flex items-center gap-3">
                     <div className="w-7 h-7 rounded-md bg-[#8A2BE2] flex items-center justify-center"><div className="w-2 h-2 bg-white rounded-sm"></div></div>
-                    <span className="text-sm font-semibold tracking-wide text-white">RESTOREIT</span>
+                    <span className="text-sm font-semibold tracking-wide text-white">restoreit</span>
                 </Link>
                 <div className="flex items-center gap-4 text-xs font-bold">
                     <Link href="/terms" className="text-zinc-500 hover:text-white transition-colors">Terms</Link>
@@ -38,7 +38,7 @@ export default function SupportPage() {
                         <HelpCircle className="text-[#8A2BE2]" size={24} />
                         <h1 className="text-3xl font-semibold text-white">Help & Support</h1>
                     </div>
-                    <p className="text-zinc-400 leading-relaxed">Everything you need to understand how RestoreIt works and resolve common issues.</p>
+                    <p className="text-zinc-400 leading-relaxed">Everything you need to understand how restoreit works and resolve common issues.</p>
                 </div>
 
                 {/* System Requirements */}
@@ -70,8 +70,8 @@ export default function SupportPage() {
                         What Is the Secure Relay?
                     </h2>
                     <div className="p-6 rounded-xl border border-white/10 bg-black/30 space-y-4 text-sm text-zinc-400 leading-relaxed">
-                        <p>The RestoreIt relay is a lightweight script that runs entirely in your computer&apos;s RAM. It never touches your disk with any writes — it only reads raw sector data and streams it over an encrypted connection to our Cloud reconstruction engine.</p>
-                        <p>This design is intentional. Traditional recovery software requires installation, which writes files to the very disk you are trying to recover — permanently destroying the sectors holding your deleted data. The relay eliminates this risk completely.</p>
+                        <p>The restoreit relay is a lightweight script that runs entirely in your computer&apos;s RAM. It never touches your disk with any writes — it only reads raw sector data and streams it over an encrypted connection to our Cloud restore engine.</p>
+                        <p>This design is intentional. Traditional restore software requires installation, which writes files to the very disk you are trying to restore — permanently destroying the sectors holding your deleted data. The relay eliminates this risk completely.</p>
                         <div className="font-mono text-xs bg-black border border-white/10 rounded-xl p-4 text-[#8A2BE2] flex items-center gap-3">
                             <Terminal size={14} />
                             curl -sL https://restoreit.app/relay | bash
@@ -101,9 +101,9 @@ export default function SupportPage() {
                             { problem: 'Relay command not found', fix: 'Ensure curl is installed. On macOS it ships by default. On Linux: sudo apt install curl. On Windows, use Git Bash or WSL.' },
                             { problem: 'Permission denied when running relay', fix: 'You may need to grant Terminal full disk access. Go to System Settings → Privacy & Security → Full Disk Access → enable Terminal.' },
                             { problem: 'Drive not appearing in the selector', fix: 'Check that the drive is mounted. Open Disk Utility and verify the drive appears and is mounted. Reconnect USB drives before launching the relay.' },
-                            { problem: 'Upload speed very slow', fix: 'RestoreIt adapts to your bandwidth. A slow connection will simply increase scan time but will not fail the recovery. For fastest results use a wired Ethernet connection.' },
+                            { problem: 'Upload speed very slow', fix: 'restoreit adapts to your bandwidth. A slow connection will simply increase scan time but will not fail the restore. For fastest results use a wired Ethernet connection.' },
                             { problem: 'Scan disconnected mid-way', fix: 'Re-run the same curl command. Scan state is checkpointed. The relay will resume from the last confirmed sector rather than restarting from zero.' },
-                            { problem: 'Files show as corrupted', fix: 'Partial corruption occurs when sectors have been partially overwritten since deletion. These files are marked with a recovery integrity score. Fragmented files (50%+ integrity) can often still be opened.' },
+                            { problem: 'Files show as corrupted', fix: 'Partial corruption occurs when sectors have been partially overwritten since deletion. These files are marked with a restore integrity score. Fragmented files (50%+ integrity) can often still be opened.' },
                         ].map(({ problem, fix }) => (
                             <details key={problem} className="group p-4 rounded-xl border border-white/8 bg-black/30 cursor-pointer">
                                 <summary className="flex items-center justify-between text-sm font-medium text-zinc-300 list-none">

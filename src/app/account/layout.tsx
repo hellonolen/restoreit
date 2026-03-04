@@ -2,13 +2,13 @@
 // Account Layout Shell — shared by all /account/* pages
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { User, CreditCard, History, Shield, Cloud, ArrowLeft, ShieldCheck } from 'lucide-react';
+import { User, CreditCard, History, Shield, Cloud, ArrowLeft } from 'lucide-react';
 
 const navItems = [
     { href: '/account', label: 'Profile', icon: User, exact: true },
     { href: '/account/billing', label: 'Billing', icon: CreditCard },
-    { href: '/account/history', label: 'Recovery History', icon: History },
-    { href: '/account/vault', label: 'Cloud Vault', icon: Cloud },
+    { href: '/account/history', label: 'Restore History', icon: History },
+    { href: '/account/vault', label: 'restoreit', icon: Cloud },
     { href: '/account/protection', label: 'Protection', icon: Shield },
 ];
 
@@ -24,13 +24,13 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
                         <div className="w-7 h-7 rounded-md bg-[#8A2BE2] flex items-center justify-center shadow-lg shadow-[#8A2BE2]/20">
                             <div className="w-2 h-2 bg-white rounded-sm"></div>
                         </div>
-                        <span className="text-sm font-semibold tracking-wide text-white">RESTOREIT</span>
+                        <span className="text-sm font-semibold tracking-wide text-white">restoreit</span>
                     </Link>
                     <span className="text-zinc-700">/</span>
                     <span className="text-sm text-zinc-500">Account</span>
                 </div>
                 <Link href="/" className="flex items-center gap-2 text-xs text-zinc-500 hover:text-white transition-colors">
-                    <ArrowLeft size={14} />Back to Recovery
+                    <ArrowLeft size={14} />Back to Restore
                 </Link>
             </header>
 

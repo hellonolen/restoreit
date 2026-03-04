@@ -1,14 +1,25 @@
 // ============================================================
-// RestoreIt — Master Type Definitions
+// restoreit — Master Type Definitions
 // ============================================================
 
-export type StepType = 1 | 2 | 3 | 4;
+export type StepType = 1 | 2 | 3 | 4 | 5;
 export type ScanMode = 'quick' | 'deep';
 export type ViewMode = 'list' | 'grid' | 'timeline';
 export type FileCategory = 'all' | 'images' | 'documents' | 'videos' | 'archives' | 'system';
 export type DriveStatus = 'available' | 'offline' | 'scanning' | 'scanned';
-export type RecoverabilityStatus = 'intact' | 'fragmented' | 'corrupted' | 'duplicate';
+export type RestoreStatus = 'intact' | 'fragmented' | 'corrupted' | 'duplicate';
 export type NotificationType = 'success' | 'warning' | 'error' | 'info';
+
+export enum NetworkStatus {
+    CONNECTING = 'connecting',
+    NOMINAL = 'nominal',
+    DEGRADED = 'degraded',
+    OFFLINE = 'offline',
+    CONNECTED = 'connected', // Added to match component usage
+    HANDSHAKE = 'handshake',
+    STREAMING = 'streaming',
+    COMPLETED = 'completed'
+}
 
 export interface DriveInfo {
     id: string;
@@ -33,10 +44,10 @@ export interface FileData {
     type: 'document' | 'media' | 'archive' | 'system' | 'video' | 'image';
     category: FileCategory;
     path: string;
-    recoveredAt: number;
+    restoredAt: number;
     modifiedAt?: number;
-    status: RecoverabilityStatus;
-    integrityScore: number; // 0-100
+    status: RestoreStatus;
+    dataRestorable: number; // bytes
     isDuplicate?: boolean;
     extension: string;
     previewUrl?: string;
@@ -47,12 +58,12 @@ export interface ScanStats {
     sectorsScanned: number;
     totalSectors: number;
     filesDetected: number;
-    dataRecoverable: number; // bytes
+    dataRestorable: number; // Renamed from dataRecoverable
     elapsedSeconds: number;
     estimatedRemainingSeconds: number;
     uploadSpeedBps: number;
     dataTransferred: number; // bytes
-    networkStatus: 'connected' | 'connecting' | 'disconnected' | 'slow';
+    networkStatus: NetworkStatus | 'connecting' | 'nominal' | 'degraded' | 'offline' | 'connected';
 }
 
 export interface ScanSession {
@@ -65,7 +76,7 @@ export interface ScanSession {
     filesFound: number;
     dataSize: number;
     status: 'completed' | 'cancelled' | 'in-progress' | 'paused';
-    recoveryRate: number; // 0-100
+    restoreRate: number; // 0-100
 }
 
 export interface CheckoutTier {

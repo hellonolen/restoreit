@@ -1,4 +1,4 @@
-// AGENT 6 — ProUpsell: Post-recovery $12/mo protection, recovery readiness score, vault countdown
+// AGENT 6 — ProUpsell: Post-restore $12/mo protection, restore readiness score, vault countdown
 "use client";
 
 import { ShieldCheck, Activity, HardDrive, Bell, Star, CheckCircle2, Clock, Cpu, Cloud } from 'lucide-react';
@@ -8,9 +8,11 @@ interface ProUpsellProps {
     sessionStats: ScanSession | undefined;
     darkMode: boolean;
     onRestart: () => void;
+    onBack?: () => void;
+    onAccept?: () => void;
 }
 
-function RecoveryScore({ score }: { score: number }) {
+function RestoreScore({ score }: { score: number }) {
     const color = score >= 80 ? '#22c55e' : score >= 60 ? '#eab308' : '#ef4444';
     const radius = 40;
     const circumference = 2 * Math.PI * radius;
@@ -32,17 +34,17 @@ function RecoveryScore({ score }: { score: number }) {
     );
 }
 
-export default function ProUpsell({ sessionStats, darkMode, onRestart }: ProUpsellProps) {
+export default function ProUpsell({ sessionStats, darkMode, onRestart, onBack, onAccept }: ProUpsellProps) {
     const vaultDaysRemaining = 7;
-    const recoveryReadinessScore = 72;
+    const restoreReadinessScore = 72;
 
     const benefits = [
         { icon: <HardDrive size={16} />, title: 'Disk Health Monitoring', desc: 'Continuous SMART status tracking for all connected drives.' },
         { icon: <Bell size={16} />, title: 'Corruption Detection Alerts', desc: 'Real-time warnings before catastrophic data loss occurs.' },
-        { icon: <Activity size={16} />, title: 'File System Integrity Scanning', desc: 'Scheduled scans keep your storage healthy and recoverable.' },
-        { icon: <Cpu size={16} />, title: 'Priority Recovery Queue', desc: 'Skip the line — Pro subscribers process first in emergencies.' },
-        { icon: <Cloud size={16} />, title: 'Extended Vault Retention', desc: 'Extended Cloud Vault access for 30 days vs 7-day standard.' },
-        { icon: <Clock size={16} />, title: 'Recovery History Archive', desc: 'Full log of all past recovery sessions and extracted files.' },
+        { icon: <Activity size={16} />, title: 'File System Integrity Scanning', desc: 'Scheduled scans keep your storage healthy and restorable.' },
+        { icon: <Cpu size={16} />, title: 'Priority Restore Queue', desc: 'Skip the line — Pro subscribers process first in emergencies.' },
+        { icon: <Cloud size={16} />, title: 'Extended Vault Retention', desc: 'Extended restoreit access for 30 days vs 7-day standard.' },
+        { icon: <Clock size={16} />, title: 'Restore History Archive', desc: 'Full log of all past restore sessions and extracted files.' },
     ];
 
     return (
@@ -54,15 +56,26 @@ export default function ProUpsell({ sessionStats, darkMode, onRestart }: ProUpse
                     <CheckCircle2 size={28} strokeWidth={1.5} />
                 </div>
                 <div className="flex-1">
-                    <h2 className={`text-xl font-semibold mb-1 ${darkMode ? 'text-white' : 'text-zinc-900'}`}>Recovery Successful</h2>
+                    <div className="flex items-center justify-between mb-1">
+                        <h2 className={`text-xl font-semibold ${darkMode ? 'text-white' : 'text-zinc-900'}`}>Restore Successful</h2>
+                        {onBack && (
+                            <button
+                                onClick={onBack}
+                                className={`px-3 py-1.5 rounded-xl border text-[9px] font-black uppercase tracking-widest transition-all ${darkMode ? 'border-white/10 text-zinc-500 hover:text-white' : 'border-black/5 text-zinc-400 hover:text-zinc-900'
+                                    }`}
+                            >
+                                ← Adjust Extraction
+                            </button>
+                        )}
+                    </div>
                     <p className={`text-sm ${darkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>
-                        {sessionStats ? `${sessionStats.filesFound.toLocaleString()} files extracted · ${sessionStats.recoveryRate}% recovery rate · ${sessionStats.mode === 'deep' ? 'Deep' : 'Quick'} scan` : 'Your files have been extracted to your Cloud Vault.'}
+                        {sessionStats ? `${sessionStats.filesFound.toLocaleString()} files extracted · ${sessionStats.restoreRate}% restore rate · ${sessionStats.mode === 'deep' ? 'Deep' : 'Quick'} scan` : 'Your files have been extracted to your restoreit.'}
                     </p>
                 </div>
                 {sessionStats && (
                     <div className={`text-right text-xs ${darkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>
-                        <div className="font-mono text-green-400 text-base">{sessionStats.recoveryRate}%</div>
-                        <div>files recovered</div>
+                        <div className="font-mono text-green-400 text-base">{sessionStats.restoreRate}%</div>
+                        <div>files restored</div>
                     </div>
                 )}
             </div>
@@ -71,8 +84,8 @@ export default function ProUpsell({ sessionStats, darkMode, onRestart }: ProUpse
             <div className={`flex items-center gap-4 p-5 rounded-xl border ${darkMode ? 'border-orange-500/30 bg-orange-500/5' : 'border-orange-200 bg-orange-50'}`}>
                 <Clock size={20} className="text-orange-400 shrink-0" />
                 <div className="flex-1">
-                    <div className={`text-sm font-semibold ${darkMode ? 'text-white' : 'text-zinc-900'}`}>Cloud Vault expires in {vaultDaysRemaining} days</div>
-                    <div className={`text-xs ${darkMode ? 'text-zinc-500' : 'text-zinc-500'}`}>Your recovered files will be permanently deleted from our servers after this window unless you upgrade to Pro.</div>
+                    <div className={`text-sm font-semibold ${darkMode ? 'text-white' : 'text-zinc-900'}`}>restoreit expires in {vaultDaysRemaining} days</div>
+                    <div className={`text-xs ${darkMode ? 'text-zinc-500' : 'text-zinc-500'}`}>Your restored files will be permanently deleted from our servers after this window unless you upgrade to Pro.</div>
                 </div>
                 <div className="text-3xl font-light text-orange-400 font-mono shrink-0">{vaultDaysRemaining}d</div>
             </div>
@@ -90,7 +103,7 @@ export default function ProUpsell({ sessionStats, darkMode, onRestart }: ProUpse
 
                     <div className="p-6 space-y-5">
                         <p className={`text-sm leading-relaxed ${darkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>
-                            You just experienced what data loss feels like. RestoreIt Pro monitors your devices 24/7, detects early warning signs, and keeps your recovery vault always ready.
+                            You just experienced what data loss feels like. restoreit Pro monitors your devices 24/7, detects early warning signs, and keeps your restore vault always ready.
                         </p>
 
                         {/* Benefits */}
@@ -109,30 +122,33 @@ export default function ProUpsell({ sessionStats, darkMode, onRestart }: ProUpse
                         {/* Price */}
                         <div className={`flex items-center justify-between p-4 rounded-xl border ${darkMode ? 'bg-white/5 border-white/10' : 'bg-zinc-100 border-zinc-200'}`}>
                             <div>
-                                <div className={`font-semibold ${darkMode ? 'text-white' : 'text-zinc-900'}`}>RestoreIt Pro Protection</div>
+                                <div className={`font-semibold ${darkMode ? 'text-white' : 'text-zinc-900'}`}>restoreit Pro Protection</div>
                                 <div className="text-[11px] font-mono text-zinc-500 uppercase tracking-wider mt-0.5">Monthly · Cancel Anytime</div>
                             </div>
                             <div className={`text-3xl font-light ${darkMode ? 'text-white' : 'text-zinc-900'}`}>$12<span className="text-zinc-500 text-sm">/mo</span></div>
                         </div>
 
-                        <button className="w-full bg-[#8A2BE2] hover:bg-[#7e22ce] text-white px-5 py-4 rounded-xl text-sm font-bold tracking-wide transition-all shadow-[0_0_24px_rgba(138,43,226,0.3)] hover:shadow-[0_0_32px_rgba(138,43,226,0.4)] flex items-center justify-center gap-2">
+                        <button
+                            onClick={onAccept}
+                            className="w-full bg-[#8A2BE2] hover:bg-[#7e22ce] text-white px-5 py-4 rounded-xl text-sm font-bold tracking-wide transition-all shadow-[0_0_24px_rgba(138,43,226,0.3)] hover:shadow-[0_0_32px_rgba(138,43,226,0.4)] flex items-center justify-center gap-2"
+                        >
                             <ShieldCheck size={16} />
                             Enable Pro Protection — $12/mo
                         </button>
 
                         <button onClick={onRestart}
                             className={`w-full text-center text-xs transition-colors py-2 ${darkMode ? 'text-zinc-600 hover:text-zinc-400' : 'text-zinc-400 hover:text-zinc-600'}`}>
-                            No thanks, I understand the risk. Take me to my recovered files.
+                            No thanks, I understand the risk. Take me to my restored files.
                         </button>
                     </div>
                 </div>
 
-                {/* Right: Recovery Readiness Dashboard Preview */}
+                {/* Right: Restore Readiness Dashboard Preview */}
                 <div className="space-y-4">
                     <div className={`p-5 rounded-xl border ${darkMode ? 'border-white/10 bg-black/30' : 'border-black/8 bg-white'}`}>
-                        <div className={`text-xs uppercase tracking-widest font-bold mb-4 ${darkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>Your Recovery Readiness</div>
+                        <div className={`text-xs uppercase tracking-widest font-bold mb-4 ${darkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>Your Restore Readiness</div>
                         <div className="flex items-center gap-5 mb-5">
-                            <RecoveryScore score={recoveryReadinessScore} />
+                            <RestoreScore score={restoreReadinessScore} />
                             <div>
                                 <div className={`text-lg font-semibold mb-1 ${darkMode ? 'text-white' : 'text-zinc-900'}`}>Moderate Risk</div>
                                 <div className={`text-xs leading-relaxed ${darkMode ? 'text-zinc-500' : 'text-zinc-500'}`}>Your disk health is below recommended thresholds. Pro Protection would have warned you 14 days before this failure.</div>
@@ -144,7 +160,7 @@ export default function ProUpsell({ sessionStats, darkMode, onRestart }: ProUpse
                                 { label: 'Disk SMART Health', value: '94%', status: 'good' },
                                 { label: 'File System Integrity', value: '71%', status: 'warning' },
                                 { label: 'Storage Redundancy', value: 'None', status: 'critical' },
-                                { label: 'Recovery Vault', value: 'Not active', status: 'critical' },
+                                { label: 'Restore Vault', value: 'Not active', status: 'critical' },
                             ].map(({ label, value, status }) => (
                                 <div key={label} className="flex items-center justify-between text-xs">
                                     <span className={darkMode ? 'text-zinc-500' : 'text-zinc-500'}>{label}</span>
@@ -163,7 +179,7 @@ export default function ProUpsell({ sessionStats, darkMode, onRestart }: ProUpse
                             {[
                                 '⚡ Warned you 14 days before disk failure',
                                 '🔒 Kept a vault ready so you could skip the scan',
-                                '🚀 Placed you first in the recovery queue',
+                                '🚀 Placed you first in the restore queue',
                                 '📁 Already had your files backed in your Vault',
                             ].map(item => (
                                 <li key={item} className={`${darkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>{item}</li>

@@ -5,8 +5,8 @@ import { CreditCard, ShieldCheck, CheckCircle2, AlertCircle, Lock, X } from 'luc
 
 const mockCard = { brand: 'Visa', last4: '4242', expiry: '09/27' };
 const mockInvoices = [
-    { id: 'INV-001', date: 'Mar 3, 2026', desc: 'RestoreIt Pro — One-time Recovery', amount: '$249.00', status: 'paid' },
-    { id: 'INV-002', date: 'Feb 3, 2026', desc: 'RestoreIt — One-time Recovery', amount: '$89.00', status: 'paid' },
+    { id: 'INV-001', date: 'Mar 3, 2026', desc: 'restoreit Pro — One-time Restore', amount: '$249.00', status: 'paid' },
+    { id: 'INV-002', date: 'Feb 3, 2026', desc: 'restoreit — One-time Restore', amount: '$89.00', status: 'paid' },
 ];
 
 export default function BillingPage() {
@@ -88,7 +88,7 @@ export default function BillingPage() {
                             <input type="text" placeholder="CVC" value={cvc} onChange={e => setCvc(e.target.value)} className={`${inputClass} flex-1`} autoComplete="cc-csc" aria-label="CVC" />
                         </div>
                         <div className="flex items-center gap-2 text-xs text-zinc-600">
-                            <Lock size={11} />Card data is never stored on RestoreIt servers.
+                            <Lock size={11} />Card data is never stored on restoreit servers.
                         </div>
                         <button onClick={handleSaveCard} disabled={saving}
                             className="w-full bg-[#8A2BE2] hover:bg-[#7e22ce] disabled:opacity-60 text-white py-3 rounded-xl text-sm font-semibold transition-all flex items-center justify-center gap-2">
@@ -112,10 +112,10 @@ export default function BillingPage() {
                 {!hasProtection ? (
                     <div className="space-y-4">
                         <p className="text-sm text-zinc-400 leading-relaxed">
-                            Continuous disk health monitoring, early warning alerts, extended Cloud Vault retention, and priority recovery queue — all for $12/month on the card on file.
+                            Continuous disk health monitoring, early warning alerts, extended restoreit retention, and priority restore queue — all for $12/month on the card on file.
                         </p>
                         <ul className="grid grid-cols-2 gap-2 text-xs text-zinc-500">
-                            {['24/7 disk health monitoring', 'Corruption detection alerts', 'Priority recovery queue', 'Extended 30-day vault retention', 'Full recovery history archive', 'Cancel anytime'].map(f => (
+                            {['24/7 disk health monitoring', 'Corruption detection alerts', 'Priority restore queue', 'Extended 30-day vault retention', 'Full restore history archive', 'Cancel anytime'].map(f => (
                                 <li key={f} className="flex items-center gap-2"><span className="text-[#8A2BE2]">✓</span>{f}</li>
                             ))}
                         </ul>
@@ -147,7 +147,7 @@ export default function BillingPage() {
                             <div className="p-4 rounded-xl border border-red-500/30 bg-red-500/5 space-y-3">
                                 <div className="flex items-start gap-3">
                                     <AlertCircle size={16} className="text-red-400 shrink-0 mt-0.5" />
-                                    <p className="text-sm text-zinc-400">Cancelling will stop disk monitoring and reduce Cloud Vault retention to 7 days starting your next billing cycle.</p>
+                                    <p className="text-sm text-zinc-400">Cancelling will stop disk monitoring and reduce restoreit retention to 7 days starting your next billing cycle.</p>
                                 </div>
                                 <div className="flex gap-3">
                                     <button onClick={() => setShowCancelConfirm(false)} className="flex-1 py-2 rounded-xl border border-white/10 text-zinc-400 hover:text-white text-sm transition-all">Keep Plan</button>

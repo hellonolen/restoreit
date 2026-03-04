@@ -1,5 +1,5 @@
 "use client";
-// /account/history — Detailed recovery log
+// /account/history — Detailed restore log
 import { useState } from 'react';
 import { History, Download, ExternalLink, Calendar, HardDrive, Filter, Search, RotateCcw } from 'lucide-react';
 import Link from 'next/link';
@@ -50,7 +50,7 @@ export default function HistoryPage() {
         <div className="space-y-8 max-w-4xl">
             <div className="flex items-end justify-between">
                 <div>
-                    <h1 className="text-xl font-semibold text-white mb-1">Recovery History</h1>
+                    <h1 className="text-xl font-semibold text-white mb-1">Restore History</h1>
                     <p className="text-sm text-zinc-500">Log of all past scans and extraction sessions.</p>
                 </div>
                 <div className="flex items-center gap-3">
@@ -75,7 +75,7 @@ export default function HistoryPage() {
                     <div className="col-span-2">Session / Volume</div>
                     <div>Status</div>
                     <div>Files / Size</div>
-                    <div>Recovery Rate</div>
+                    <div>Restore Rate</div>
                     <div className="text-right">Action</div>
                 </div>
 

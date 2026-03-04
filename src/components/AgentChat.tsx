@@ -1,5 +1,5 @@
-// AGENTIC BACKBONE — Main RestoreIt Chat Interface
-// Implements: RecoveryAgent (natural language query), TroubleshootingAgent,
+// AGENTIC BACKBONE — Main restoreit Chat Interface
+// Implements: RestoreAgent (natural language query), TroubleshootingAgent,
 // SupportAgent, streaming responses, tool use display, safety layer
 "use client";
 
@@ -38,11 +38,11 @@ interface AgentChatProps {
 
 // Simulated agent responses with tool use + streaming
 const AGENT_RESPONSES: Record<string, MessageChunk[]> = {
-    recover_photos: [
+    restore_photos_intent: [
         { type: 'thinking', content: 'Parsing intent: file types → JPEG, DNG, RAW. Date range detected: June 2025. Prioritizing by resolution.' },
         { type: 'tool_use', content: '', toolUse: { name: 'scan_drive', input: '{ file_types: ["jpg","jpeg","dng","raw","heic"], date_range: "2025-06-01..2025-06-30", sort: "resolution_desc" }', status: 'running' } },
-        { type: 'tool_use', content: '', toolUse: { name: 'scan_drive', input: '{ file_types: ["jpg","jpeg","dng","raw","heic"], date_range: "2025-06-01..2025-06-30", sort: "resolution_desc" }', output: '214 files found · 4.2 GB recoverable · 98% intact', status: 'done' } },
-        { type: 'result', content: 'I found **214 photos from June 2025**, totalling 4.2 GB. Most are intact — 98% recovery confidence.\n\nTop results include:\n• 47 high-resolution JPEG files (6000×4000+)\n• 38 DNG RAW files from what appears to be a mirrorless camera\n• 129 HEIC files from an iPhone\n\nI\'ve pre-selected the strongest candidates in the file browser above. Ready to extract?' },
+        { type: 'tool_use', content: '', toolUse: { name: 'scan_drive', input: '{ file_types: ["jpg","jpeg","dng","raw","heic"], date_range: "2025-06-01..2025-06-30", sort: "resolution_desc" }', output: '214 files found · 4.2 GB restorable · 98% intact', status: 'done' } },
+        { type: 'result', content: 'I found **214 photos from June 2025**, totalling 4.2 GB. Most are intact — 98% restore confidence.\n\nTop results include:\n• 47 high-resolution JPEG files (6000×4000+)\n• 38 DNG RAW files from what appears to be a mirrorless camera\n• 129 HEIC files from an iPhone\n\nI\'ve pre-selected the strongest candidates in the file browser above. Ready to extract?' },
     ],
     relay_fail: [
         { type: 'thinking', content: 'Relay connection error detected. Running automated diagnostics.' },
@@ -54,17 +54,22 @@ const AGENT_RESPONSES: Record<string, MessageChunk[]> = {
         { type: 'tool_use', content: '', toolUse: { name: 'check_disk_permissions', input: '{ drive: "/dev/disk0" }', output: 'WARNING: Full Disk Access not granted for Terminal', status: 'done' } },
         { type: 'result', content: 'Found the issue. **Terminal does not have Full Disk Access.** This is blocking the relay from reading your drive.\n\n**Fix (30 seconds):**\n1. Open **System Settings**\n2. Go to **Privacy & Security → Full Disk Access**\n3. Click the `+` button and add **Terminal**\n4. Re-run the relay command\n\nNetwork and SSL are both fine — this is the only blocker.' },
     ],
+    restore_photos: [
+        { type: 'thinking', content: 'Identifying photo fragments across disk sectors...' },
+        { type: 'result', content: 'I have identified 4,284 JPEG and RAW fragments that appear to be from a wedding shoot. I can prioritize these for bit-perfect restore.\n\nWould you like to start the restore of these fragments?' }
+    ],
     default: [
         { type: 'thinking', content: 'Searching knowledge base and app context...' },
-        { type: 'result', content: 'I\'m here to help. You can ask me to:\n\n• **Recover specific files** — e.g. "Find my tax documents from 2024"\n• **Troubleshoot relay issues** — if the curl command fails\n• **Explain the process** — how sectors, APFS, or reconstruction works\n• **Guide you through recovery** — step by step\n\nWhat would you like to do?' },
+        { type: 'result', content: 'I\'m here to help. You can ask me to:\n\n• **Restore specific files** — e.g. "Find my tax documents from 2024"\n• **Troubleshoot relay issues** — if the curl command fails\n• **Explain the process** — how sectors, APFS, or data restore works\n• **Guide you through restore** — step by step\n\nWhat would you like to do?' }
+        ,
     ],
 };
 
 const QUICK_PROMPTS = [
-    { label: 'Recover wedding photos', icon: <ImageIcon size={13} aria-hidden="true" />, query: 'recover_photos' },
+    { label: 'Restore wedding photos', icon: <ImageIcon size={13} aria-hidden="true" />, query: 'restore_photos' },
     { label: 'Relay connection failed', icon: <AlertTriangle size={13} aria-hidden="true" />, query: 'relay_fail' },
     { label: 'Find tax documents', icon: <FileText size={13} aria-hidden="true" />, query: 'default' },
-    { label: 'Recover videos from 2023', icon: <Film size={13} aria-hidden="true" />, query: 'default' },
+    { label: 'Restore videos from 2023', icon: <Film size={13} aria-hidden="true" />, query: 'default' },
 ];
 
 function ToolBlock({ tool, darkMode }: { tool: ToolUse; darkMode: boolean }) {
@@ -150,7 +155,7 @@ export function AgentChat({ onClose, darkMode }: AgentChatProps) {
             role: 'agent',
             content: '',
             timestamp: Date.now(),
-            chunks: [{ type: 'result', content: "I'm your RestoreIt recovery assistant. I can help you recover specific files using natural language, troubleshoot connection issues, and walk you through the recovery process.\n\nWhat would you like to recover?" }],
+            chunks: [{ type: 'result', content: "I'm your restoreit restore assistant. I can help you restore specific files using natural language, troubleshoot connection issues, and walk you through the restore process.\n\nWhat would you like to restore?" }],
         },
     ]);
     const [input, setInput] = useState('');
@@ -213,7 +218,7 @@ export function AgentChat({ onClose, darkMode }: AgentChatProps) {
         await new Promise(r => setTimeout(r, 300));
         const lower = text.toLowerCase();
         let key = responseKey;
-        if (lower.includes('photo') || lower.includes('image') || lower.includes('picture') || lower.includes('wedding')) key = 'recover_photos';
+        if (lower.includes('photo') || lower.includes('image') || lower.includes('picture') || lower.includes('wedding')) key = 'restore_photos';
         else if (lower.includes('fail') || lower.includes('error') || lower.includes('curl') || lower.includes('relay') || lower.includes('connect')) key = 'relay_fail';
 
         await streamResponse(key);
@@ -222,7 +227,7 @@ export function AgentChat({ onClose, darkMode }: AgentChatProps) {
 
     return (
         <div className={`fixed bottom-24 right-6 z-50 w-96 max-h-[600px] flex flex-col rounded-2xl border shadow-2xl overflow-hidden animate-in slide-in-from-bottom-4 duration-300 ${darkMode ? 'bg-[#111113] border-white/10' : 'bg-white border-black/10'}`}
-            role="dialog" aria-label="RestoreIt recovery assistant" aria-modal="false">
+            role="dialog" aria-label="restoreit restore assistant" aria-modal="false">
 
             {/* Header */}
             <div className={`flex items-center justify-between px-4 py-3.5 border-b ${darkMode ? 'border-white/5 bg-black/40' : 'border-black/5 bg-zinc-50'}`}>
@@ -233,7 +238,7 @@ export function AgentChat({ onClose, darkMode }: AgentChatProps) {
                         </div>
                     </div>
                     <div>
-                        <div className={`text-sm font-semibold ${darkMode ? 'text-white' : 'text-zinc-900'}`}>Recovery Assistant</div>
+                        <div className={`text-sm font-semibold ${darkMode ? 'text-white' : 'text-zinc-900'}`}>restore Assistant</div>
                         <div className="flex items-center gap-1.5 text-[10px] text-green-400">
                             <span className="w-1.5 h-1.5 rounded-full bg-green-400"></span>
                             Ready · {streaming ? 'Analyzing...' : 'Online'}
@@ -278,9 +283,9 @@ export function AgentChat({ onClose, darkMode }: AgentChatProps) {
                         value={input}
                         onChange={e => setInput(e.target.value)}
                         disabled={streaming}
-                        placeholder={streaming ? 'Agent is responding...' : 'Ask about your recovery...'}
+                        placeholder={streaming ? 'Agent is responding...' : 'Ask about your restore...'}
                         className="flex-1 bg-transparent text-sm outline-none placeholder-zinc-600"
-                        aria-label="Message the recovery assistant"
+                        aria-label="Message the restore assistant"
                     />
                     <button type="submit" disabled={!input.trim() || streaming} aria-label="Send message"
                         className="w-7 h-7 rounded-lg bg-[#8A2BE2] disabled:opacity-30 hover:bg-[#7e22ce] text-white flex items-center justify-center transition-all shrink-0">
@@ -288,7 +293,7 @@ export function AgentChat({ onClose, darkMode }: AgentChatProps) {
                     </button>
                 </form>
                 <p className={`text-[10px] text-center mt-2 ${darkMode ? 'text-zinc-700' : 'text-zinc-400'}`}>
-                    RestoreIt Engine · Context-aware · Never shares your data
+                    restoreit Cloud · Context-aware · Never shares your data
                 </p>
             </div>
         </div>

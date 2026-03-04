@@ -11,8 +11,8 @@ interface OnboardingOverlayProps {
 
 const slides = [
     {
-        title: "Zero-Install Recovery",
-        desc: "Existing tools overwrite your data by installing software. RestoreIt separates computation from disk access, ensuring 100% disk safety.",
+        title: "Zero-Install Restore",
+        desc: "Existing tools overwrite your data by installing software. restoreit separates computation from disk access, ensuring 100% disk safety.",
         icon: <Activity className="text-[#8A2BE2]" size={32} />,
         visual: (
             <div className="relative w-full h-48 bg-black/40 rounded-2xl border border-white/5 overflow-hidden flex items-center justify-center gap-8">
@@ -26,7 +26,7 @@ const slides = [
                 </div>
                 <div className="flex flex-col items-center gap-2">
                     <Cloud size={32} className="text-green-400" />
-                    <div className="text-[10px] text-zinc-500 font-mono">RestoreIt Cloud</div>
+                    <div className="text-[10px] text-zinc-500 font-mono">restoreit Cloud</div>
                 </div>
                 <div className="absolute inset-x-0 bottom-4 flex justify-center">
                     <div className="text-[9px] text-zinc-600 font-mono flex items-center gap-2">
@@ -56,8 +56,8 @@ const slides = [
         )
     },
     {
-        title: "RestoreIt Reconstruction",
-        desc: "Our Cloud Agents rebuild your fragmented JPEGs, PDFs, and MP4s sector-by-sector, proving recovery with direct 'Proof of Life' previews.",
+        title: "restoreit restore",
+        desc: "Our Cloud Agents rebuild your fragmented JPEGs, PDFs, and MP4s sector-by-sector, proving restore with direct 'Proof of Life' previews.",
         icon: <div className="w-8 h-8 rounded-lg bg-[#8A2BE2]/10 border border-[#8A2BE2]/30 flex items-center justify-center"><div className="w-2 h-2 bg-[#8A2BE2] rounded-sm" /></div>,
         visual: (
             <div className="grid grid-cols-3 gap-3 w-full h-48">

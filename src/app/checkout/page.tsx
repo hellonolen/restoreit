@@ -24,7 +24,7 @@ export default function CheckoutPage() {
                     <div className="w-8 h-8 rounded-md bg-[#8A2BE2] flex items-center justify-center shadow-lg shadow-[#8A2BE2]/20">
                         <div className="w-2.5 h-2.5 bg-white rounded-sm"></div>
                     </div>
-                    <h1 className="text-base font-semibold tracking-wide">RESTOREIT</h1>
+                    <h1 className="text-base font-semibold tracking-wide">restoreit</h1>
                 </div>
                 <div className="flex items-center gap-2 px-3 py-1.5 bg-white/5 border border-white/10 text-xs tracking-widest text-zinc-400 font-mono rounded-lg">
                     SECURE CHECKOUT
@@ -40,7 +40,7 @@ export default function CheckoutPage() {
                         <div className="text-[#8A2BE2] text-sm font-semibold tracking-widest uppercase mb-4">Choose Your Path</div>
                         <h1 className="text-4xl font-semibold mb-6">Restore Your Life</h1>
                         <p className="text-zinc-400 text-lg leading-relaxed mb-10 max-w-lg">
-                            Select the recovery tier that fits your situation. Both versions securely scan your drive without writing over your deleted files.
+                            Select the restore tier that fits your situation. Both versions securely scan your drive without writing over your deleted files.
                         </p>
                     </div>
 
@@ -51,7 +51,7 @@ export default function CheckoutPage() {
                             className={`p-6 rounded-2xl border cursor-pointer transition-all ${selectedPlan === 'standard' ? 'bg-[#8A2BE2]/5 border-[#8A2BE2] shadow-[0_0_30px_rgba(138,43,226,0.15)] ring-1 ring-[#8A2BE2]' : 'bg-black/40 border-white/10 hover:border-white/20'}`}
                         >
                             <div className="flex justify-between items-start mb-4">
-                                <h3 className="text-xl font-medium">RestoreIt</h3>
+                                <h3 className="text-xl font-medium">restoreit</h3>
                                 <div className="w-5 h-5 rounded-full border-2 border-white/20 flex items-center justify-center">
                                     {selectedPlan === 'standard' && <div className="w-2.5 h-2.5 bg-[#8A2BE2] rounded-full"></div>}
                                 </div>
@@ -61,7 +61,7 @@ export default function CheckoutPage() {
                                 <li className="flex gap-2"><span className="text-[#8A2BE2]">✓</span> Deep Drive Scanner</li>
                                 <li className="flex gap-2"><span className="text-[#8A2BE2]">✓</span> Reconstructs damaged files</li>
                                 <li className="flex gap-2"><span className="text-[#8A2BE2]">✓</span> Requires your own external drive</li>
-                                <li className="flex gap-2 text-zinc-600"><span className="text-zinc-600">✕</span> No Cloud Vault</li>
+                                <li className="flex gap-2 text-zinc-600"><span className="text-zinc-600">✕</span> No restoreit</li>
                             </ul>
                         </div>
 
@@ -73,7 +73,7 @@ export default function CheckoutPage() {
                             {selectedPlan === 'pro' && <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#8A2BE2] to-[#6b21a8]"></div>}
                             <div className="flex justify-between items-start mb-4">
                                 <div className="flex items-center gap-2">
-                                    <h3 className="text-xl font-medium">RestoreIt Pro</h3>
+                                    <h3 className="text-xl font-medium">restoreit Pro</h3>
                                 </div>
                                 <div className="w-5 h-5 rounded-full border-2 border-white/20 flex items-center justify-center">
                                     {selectedPlan === 'pro' && <div className="w-2.5 h-2.5 bg-[#8A2BE2] rounded-full"></div>}
@@ -83,7 +83,7 @@ export default function CheckoutPage() {
                             <ul className="space-y-3 text-sm text-zinc-400">
                                 <li className="flex gap-2"><span className="text-[#8A2BE2]">✓</span> Deep Drive Scanner</li>
                                 <li className="flex gap-2"><span className="text-[#8A2BE2]">✓</span> Reconstructs damaged files</li>
-                                <li className="flex gap-2 text-white font-medium"><span className="text-[#8A2BE2]">✓</span> Extracts to Private Cloud Vault</li>
+                                <li className="flex gap-2 text-white font-medium"><span className="text-[#8A2BE2]">✓</span> Extracts to Private restoreit</li>
                                 <li className="flex gap-2 text-white font-medium"><span className="text-[#8A2BE2]">✓</span> No external hardware required</li>
                             </ul>
                         </div>
@@ -94,7 +94,7 @@ export default function CheckoutPage() {
                         <div>
                             <h4 className="text-sm font-medium text-white mb-1">Anti-Overwrite Guarantee</h4>
                             <p className="text-xs text-zinc-400 leading-relaxed">
-                                RestoreIt safely scans memory without writing to the disk. By extracting your files to our Cloud Vault (Pro Tier) or a separate drive (Standard Tier), you guarantee your lost files are never permanently overwritten.
+                                restoreit safely scans memory without writing to the disk. By extracting your files to our restoreit (Pro Tier) or a separate drive (Standard Tier), you guarantee your lost files are never permanently overwritten.
                             </p>
                         </div>
                     </div>
