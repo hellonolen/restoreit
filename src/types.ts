@@ -83,7 +83,7 @@ export interface CheckoutTier {
     id: 'standard' | 'pro';
     name: string;
     price: number;
-    vaultStorage: string;
+    cloudStorage: string;
     scanLimit: string;
     retention: string;
     requiresExternalDrive: boolean;
@@ -104,8 +104,8 @@ export interface ProDashboard {
     devices: DeviceHealth[];
     alerts: HealthAlert[];
     subscriptionStatus: 'active' | 'inactive' | 'trialing';
-    vaultUsed: number; // bytes
-    vaultTotal: number; // bytes
+    cloudUsed: number; // bytes
+    cloudTotal: number; // bytes
     nextRenewal: number; // timestamp
     priorityQueueStatus: 'enabled' | 'disabled';
 }

@@ -15,21 +15,21 @@ export default function PrivacyPage() {
         { title: 'Changes', body: 'Material changes to this policy will be communicated by email at least 14 days before taking effect. The date of last update is shown at the top of this page.' },
     ];
     return (
-        <div className="min-h-screen bg-[#0A0A0B] text-zinc-300 font-sans flex flex-col">
+        <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-foreground)] font-sans flex flex-col transition-colors duration-300">
             <SiteHeader />
             <main className="flex-1 pt-28 max-w-2xl mx-auto px-6 py-16 space-y-10 w-full">
                 <div>
-                    <h1 className="text-3xl font-semibold text-white mb-2">Privacy Policy</h1>
-                    <p className="text-xs text-zinc-600">Last updated: March 3, 2026</p>
+                    <h1 className="text-3xl font-semibold mb-2">Privacy Policy</h1>
+                    <p className="text-xs text-[var(--color-text-dim)]">Last updated: March 3, 2026</p>
                 </div>
                 {sections.map(({ title, body }) => (
                     <section key={title} className="space-y-2">
-                        <h2 className="text-sm font-bold text-white">{title}</h2>
-                        <p className="text-sm text-zinc-400 leading-relaxed">{body}</p>
+                        <h2 className="text-sm font-bold">{title}</h2>
+                        <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">{body}</p>
                     </section>
                 ))}
-                <div className="pt-4 border-t border-white/5 text-xs text-zinc-600">
-                    Data inquiries: <a href="mailto:privacy@restoreit.app" className="text-[#8A2BE2] hover:underline">privacy@restoreit.app</a>
+                <div className="pt-4 border-t border-[var(--color-border-subtle)] text-xs text-[var(--color-text-dim)]">
+                    Data inquiries: <a href="mailto:privacy@restoreit.app" className="text-[var(--color-accent)] hover:underline">privacy@restoreit.app</a>
                 </div>
             </main>
             <SiteFooter />

@@ -4,7 +4,6 @@ import { StepType } from '../types';
 
 interface HorizontalStepperProps {
     currentStep: StepType;
-    darkMode: boolean;
 }
 
 const steps = [
@@ -15,7 +14,7 @@ const steps = [
     { id: 5 as StepType, label: 'Extraction' },
 ];
 
-export default function HorizontalStepper({ currentStep, darkMode }: HorizontalStepperProps) {
+export default function HorizontalStepper({ currentStep }: HorizontalStepperProps) {
     return (
         <div className="w-full py-8 mb-4">
             <div className="flex items-center justify-between max-w-2xl mx-auto">
@@ -26,14 +25,14 @@ export default function HorizontalStepper({ currentStep, darkMode }: HorizontalS
                         <div key={step.id} className="flex items-center flex-1 last:flex-none">
                             <div className="flex flex-col items-center relative group">
                                 <div className={`w-8 h-8 rounded-full flex items-center justify-center border-2 transition-all duration-500 ${done
-                                        ? 'bg-[#8A2BE2] border-[#8A2BE2] text-white'
+                                        ? 'bg-[var(--color-accent)] border-[var(--color-accent)] text-white'
                                         : active
-                                            ? 'border-[#8A2BE2] bg-white text-[#8A2BE2] shadow-[0_0_15px_rgba(138,43,226,0.3)]'
-                                            : darkMode ? 'border-zinc-800 bg-[#0A0A0B] text-zinc-700' : 'border-zinc-200 bg-white text-zinc-300'
+                                            ? 'border-[var(--color-accent)] bg-white text-[var(--color-accent)] shadow-[0_0_15px_rgba(138,43,226,0.3)]'
+                                            : 'border-[var(--color-disabled-bg)] bg-[var(--color-background)] text-[var(--color-disabled-text)]'
                                     }`}>
                                     {done ? <Check size={14} strokeWidth={3} /> : <span className="text-xs font-black">{step.id}</span>}
                                 </div>
-                                <span className={`absolute -bottom-6 text-[9px] font-black uppercase tracking-widest whitespace-nowrap transition-colors duration-300 ${active ? '#8A2BE2' : done ? 'text-zinc-500' : 'text-zinc-700'
+                                <span className={`absolute -bottom-6 text-[9px] font-black uppercase tracking-widest whitespace-nowrap transition-colors duration-300 ${active ? 'text-[var(--color-accent)]' : done ? 'text-[var(--color-text-tertiary)]' : 'text-[var(--color-disabled-text)]'
                                     }`}>
                                     {step.label}
                                 </span>
@@ -41,9 +40,9 @@ export default function HorizontalStepper({ currentStep, darkMode }: HorizontalS
 
                             {index < steps.length - 1 && (
                                 <div className="flex-1 mx-4 h-0.5 relative">
-                                    <div className={`absolute inset-0 ${darkMode ? 'bg-zinc-800' : 'bg-zinc-100'}`} />
+                                    <div className="absolute inset-0 bg-[var(--color-disabled-bg)]" />
                                     <div
-                                        className="absolute inset-0 bg-[#8A2BE2] transition-all duration-1000 ease-in-out origin-left"
+                                        className="absolute inset-0 bg-[var(--color-accent)] transition-all duration-1000 ease-in-out origin-left"
                                         style={{ transform: `scaleX(${done ? 1 : 0})` }}
                                     />
                                 </div>

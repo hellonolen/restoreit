@@ -52,20 +52,20 @@ const disclaimers = [
 
 export default function DisclaimersPage() {
     return (
-        <div className="min-h-screen bg-black text-white font-sans flex flex-col">
+        <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-foreground)] font-sans flex flex-col transition-colors duration-300">
             <SiteHeader />
 
             <main className="flex-1 pt-28 pb-20">
                 <div className="max-w-2xl mx-auto px-6 md:px-8 space-y-10">
                     <div>
                         <h1 className="text-4xl md:text-5xl font-black tracking-tighter mb-2">Disclaimers</h1>
-                        <p className="text-xs text-zinc-600">Last updated: March 3, 2026</p>
+                        <p className="text-xs text-[var(--color-text-dim)]">Last updated: March 3, 2026</p>
                     </div>
 
                     {disclaimers.map(({ title, body }) => (
                         <section key={title} className="space-y-2">
-                            <h2 className="text-sm font-bold text-white">{title}</h2>
-                            <p className="text-sm text-zinc-400 leading-relaxed">{body}</p>
+                            <h2 className="text-sm font-bold">{title}</h2>
+                            <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">{body}</p>
                         </section>
                     ))}
                 </div>

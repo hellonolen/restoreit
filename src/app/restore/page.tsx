@@ -14,10 +14,11 @@ import { AgentChat } from '@/components/AgentChat';
 import { ScanHistory } from '@/components/ScanHistory';
 import DiagnosticBriefing from '@/components/DiagnosticBriefing';
 import HorizontalStepper from '@/components/HorizontalStepper';
+import { useEngine } from '@/hooks/useEngine';
 import {
   StepType, DriveInfo, ScanStats, ScanSession, Notification, ScanMode, FileCategory, NetworkStatus
 } from '@/types';
-import { AlertCircle, History, Moon, Sun, HelpCircle } from 'lucide-react';
+import { AlertCircle, Moon, Sun } from 'lucide-react';
 import Link from 'next/link';
 
 // Static timestamps — defined outside component to avoid impure render calls
@@ -77,6 +78,7 @@ const defaultScanStats: ScanStats = {
 
 export default function Home() {
   const [mounted, setMounted] = useState(false);
+  const engine = useEngine();
   const [currentStep, setCurrentStep] = useState<StepType>(1);
   const [selectedDrive, setSelectedDrive] = useState<string | null>(null);
   const [scanMode, setScanMode] = useState<ScanMode>('deep');
@@ -89,6 +91,23 @@ export default function Home() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [darkMode, setDarkMode] = useState(true);
   const [showKeyboardShortcuts, setShowKeyboardShortcuts] = useState(false);
+
+  // Persist dark mode preference and toggle html class
+  useEffect(() => {
+    const stored = localStorage.getItem('restoreit-theme');
+    if (stored === 'light') {
+      setDarkMode(false);
+      document.documentElement.classList.add('light-mode');
+    }
+  }, []);
+  useEffect(() => {
+    localStorage.setItem('restoreit-theme', darkMode ? 'dark' : 'light');
+    if (darkMode) {
+      document.documentElement.classList.remove('light-mode');
+    } else {
+      document.documentElement.classList.add('light-mode');
+    }
+  }, [darkMode]);
   const [showHistory, setShowHistory] = useState(false);
   const [showOnboarding, setShowOnboarding] = useState(true);
   const [showAgentChat, setShowAgentChat] = useState(false);
@@ -219,34 +238,34 @@ export default function Home() {
   if (!mounted) return null;
 
   return (
-    <div className={`flex flex-col min-h-screen ${darkMode ? 'bg-[#0A0A0B] text-zinc-300' : 'bg-[#F5F5F7] text-zinc-800'} font-sans selection:bg-[#8A2BE2]/20 overflow-auto transition-colors duration-300`}>
-      <header className={`flex items-center justify-between px-8 lg:px-12 py-6 shrink-0 border-b ${darkMode ? 'border-[#ffffff08] bg-[#0A0A0B]' : 'border-black/10 bg-white'} sticky top-0 z-40 transition-colors duration-300`}>
+    <div className="flex flex-col min-h-screen bg-[var(--color-background)] text-[var(--color-text-secondary)] font-sans selection:bg-[var(--color-accent)]/20 overflow-auto transition-colors duration-300">
+      <header className="flex items-center justify-between px-8 lg:px-12 py-6 shrink-0 border-b border-[var(--color-border)] bg-[var(--color-background)] sticky top-0 z-40 transition-colors duration-300">
         <div className="flex items-center gap-10">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-8 h-8 rounded-md bg-[#8A2BE2] flex items-center justify-center shadow-lg shadow-[#8A2BE2]/20 group-hover:scale-105 transition-all">
+            <div className="w-8 h-8 rounded-md bg-[var(--color-accent)] flex items-center justify-center shadow-lg shadow-[var(--color-accent)]/20 group-hover:scale-105 transition-all">
               <div className="w-2.5 h-2.5 bg-white rounded-sm"></div>
             </div>
             <h1 className="text-base font-semibold tracking-wide">restoreit</h1>
           </Link>
-          <nav className="hidden xl:flex items-center gap-8 text-[10px] font-black uppercase tracking-[0.15em] text-zinc-600">
-            <Link href="/" className="hover:text-white transition-colors">Home</Link>
-            <Link href="/#about" className="hover:text-white transition-colors">About</Link>
-            <Link href="/#how-it-works" className="hover:text-white transition-colors">How It Works</Link>
-            <Link href="/#pricing" className="hover:text-white transition-colors">Pricing</Link>
+          <nav className="hidden xl:flex items-center gap-8 text-[10px] font-black uppercase tracking-[0.15em] text-[var(--color-text-dim)]">
+            <Link href="/" className="hover:text-[var(--color-foreground)] transition-colors">Home</Link>
+            <Link href="/#about" className="hover:text-[var(--color-foreground)] transition-colors">About</Link>
+            <Link href="/#how-it-works" className="hover:text-[var(--color-foreground)] transition-colors">How It Works</Link>
+            <Link href="/#pricing" className="hover:text-[var(--color-foreground)] transition-colors">Pricing</Link>
           </nav>
         </div>
         <div className="flex items-center gap-2">
-          <Link href="/login" className="text-[10px] font-black uppercase tracking-widest text-zinc-500 hover:text-white transition-colors mr-4 px-4 py-2">Log In</Link>
-          <button onClick={() => setDarkMode(prev => !prev)} className={`p-2.5 rounded-lg border transition-all ${darkMode ? 'border-white/10 text-zinc-400 hover:text-white' : 'border-black/10 text-zinc-500 hover:text-zinc-900'}`}>{darkMode ? <Sun size={16} /> : <Moon size={16} />}</button>
+          <Link href="/login" className="text-[10px] font-black uppercase tracking-widest text-[var(--color-text-tertiary)] hover:text-[var(--color-foreground)] transition-colors mr-4 px-4 py-2">Log In</Link>
+          <button onClick={() => setDarkMode(prev => !prev)} className="p-2.5 rounded-lg border transition-all border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-foreground)]">{darkMode ? <Sun size={16} /> : <Moon size={16} />}</button>
         </div>
       </header>
 
       <main className="flex-1 flex max-w-[1400px] w-full mx-auto pb-16">
-        <Sidebar currentStep={currentStep} darkMode={darkMode} onRestart={handleRestart} />
+        <Sidebar currentStep={currentStep} onRestart={handleRestart} />
         <section className="flex-1 flex flex-col px-8 lg:px-16 pt-6">
-          <HorizontalStepper currentStep={currentStep} darkMode={darkMode} />
+          <HorizontalStepper currentStep={currentStep} />
 
-          {currentStep === 1 && <DiagnosticBriefing onComplete={handleDiagnosticComplete} darkMode={darkMode} />}
+          {currentStep === 1 && <DiagnosticBriefing onComplete={handleDiagnosticComplete} />}
           {currentStep === 2 && (
             <DriveSelector
               drives={mockDrives}
@@ -255,7 +274,6 @@ export default function Home() {
               onStartScan={startScan}
               scanMode={scanMode}
               onScanModeChange={setScanMode}
-              darkMode={darkMode}
               onBack={() => setCurrentStep(1)}
             />
           )}
@@ -267,7 +285,6 @@ export default function Home() {
               onPause={handlePauseScan}
               onCancel={() => setShowCancelConfirm(true)}
               paused={scanPaused}
-              darkMode={darkMode}
               onBack={() => {
                 setScanProgress(0);
                 setCurrentStep(2);
@@ -281,7 +298,6 @@ export default function Home() {
               stats={scanStats}
               onRestart={handleRestart}
               onCheckout={() => setShowCheckout(true)}
-              darkMode={darkMode}
               onBack={() => {
                 setScanProgress(0);
                 setCurrentStep(2);
@@ -293,7 +309,6 @@ export default function Home() {
               sessionStats={scanHistory[0]}
               onAccept={() => addNotification('success', 'Pro subscription activated.')}
               onRestart={() => handleRestart()}
-              darkMode={darkMode}
               onBack={() => setCurrentStep(4)}
             />
           )}
@@ -303,26 +318,26 @@ export default function Home() {
       {showCheckout && <CheckoutModal onClose={() => setShowCheckout(false)} onSuccess={handlePaymentSuccess} totalFiles={scanStats.filesDetected} dataSize={scanStats.dataRestorable} />}
       {showCancelConfirm && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className={`w-full max-w-md ${darkMode ? 'bg-[#111113] border-white/10' : 'bg-white border-black/10'} border rounded-2xl p-8 shadow-2xl`}>
+          <div className="w-full max-w-md bg-[var(--color-background-elevated)] border-[var(--color-border)] border rounded-2xl p-8 shadow-2xl">
             <div className="w-12 h-12 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 flex items-center justify-center mb-6"><AlertCircle size={24} /></div>
-            <h3 className={`text-lg font-semibold mb-2 ${darkMode ? 'text-white' : 'text-zinc-900'}`}>Cancel this scan?</h3>
-            <p className={`text-sm mb-8 leading-relaxed ${darkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>Stopping the scan now will discard all detected file data. Fragments located so far will be lost.</p>
+            <h3 className="text-lg font-semibold mb-2 text-[var(--color-foreground)]">Cancel this scan?</h3>
+            <p className="text-sm mb-8 leading-relaxed text-[var(--color-text-secondary)]">Stopping the scan now will discard all detected file data. Fragments located so far will be lost.</p>
             <div className="flex gap-3">
-              <button onClick={() => setShowCancelConfirm(false)} className={`flex-1 py-3 rounded-xl text-sm font-medium border ${darkMode ? 'border-white/10 text-zinc-300' : 'border-black/10 text-zinc-700'}`}>Continue Scanning</button>
+              <button onClick={() => setShowCancelConfirm(false)} className="flex-1 py-3 rounded-xl text-sm font-medium border border-[var(--color-border)] text-[var(--color-text-secondary)]">Continue Scanning</button>
               <button onClick={() => { setShowCancelConfirm(false); handleRestart(); }} className="flex-1 py-3 rounded-xl text-sm font-medium bg-red-600 text-white">Cancel Scan</button>
             </div>
           </div>
         </div>
       )}
 
-      <button onClick={() => setShowAgentChat(prev => !prev)} className={`fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all ${showAgentChat ? 'bg-zinc-700 rotate-45' : 'bg-[#8A2BE2] hover:bg-[#7e22ce]'}`}>
+      <button onClick={() => setShowAgentChat(prev => !prev)} className={`fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all ${showAgentChat ? 'bg-[var(--color-disabled-bg)] rotate-45' : 'bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)]'}`}>
         <div className="w-3 h-3 bg-white rounded-sm" />
       </button>
-      {showAgentChat && <AgentChat onClose={() => setShowAgentChat(false)} darkMode={darkMode} />}
-      <Notifications notifications={notifications} darkMode={darkMode} />
-      {showOnboarding && <OnboardingOverlay onComplete={() => setShowOnboarding(false)} darkMode={darkMode} />}
-      {showKeyboardShortcuts && <KeyboardShortcutsModal isOpen={showKeyboardShortcuts} onClose={() => setShowKeyboardShortcuts(false)} darkMode={darkMode} />}
-      {showHistory && <ScanHistory sessions={scanHistory} onClose={() => setShowHistory(false)} darkMode={darkMode} />}
+      {showAgentChat && <AgentChat onClose={() => setShowAgentChat(false)} messages={engine.messages} isStreaming={engine.isStreaming} onSend={engine.send} />}
+      <Notifications notifications={notifications} />
+      {showOnboarding && <OnboardingOverlay onComplete={() => setShowOnboarding(false)} />}
+      {showKeyboardShortcuts && <KeyboardShortcutsModal isOpen={showKeyboardShortcuts} onClose={() => setShowKeyboardShortcuts(false)} />}
+      {showHistory && <ScanHistory sessions={scanHistory} onClose={() => setShowHistory(false)} />}
     </div>
   );
 }

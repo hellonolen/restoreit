@@ -89,7 +89,7 @@ export const DEMO_SCAN_HISTORY: (Omit<ScanSession, 'dataSize' | 'restoreRate'> &
   },
 ]
 
-export const DEMO_VAULT_FILES = [
+export const DEMO_CLOUD_FILES = [
   { id: 'vf-1', fileName: 'Wedding_001.jpg', fileType: 'image/jpeg', sizeDisplay: '12.4 MB', date: 'Jun 12, 2025', scanId: 'demo-scan-1' },
   { id: 'vf-2', fileName: 'Wedding_002.jpg', fileType: 'image/jpeg', sizeDisplay: '11.8 MB', date: 'Jun 12, 2025', scanId: 'demo-scan-1' },
   { id: 'vf-3', fileName: 'Ceremony_Video.mov', fileType: 'video/quicktime', sizeDisplay: '1.2 GB', date: 'Jun 12, 2025', scanId: 'demo-scan-1' },

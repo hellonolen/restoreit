@@ -26,7 +26,6 @@ interface ExtractionBrowserProps {
     stats: ScanStats;
     onRestart: () => void;
     onCheckout: () => void;
-    darkMode: boolean;
     onBack?: () => void;
 }
 
@@ -64,7 +63,7 @@ function FileCategoryIcon({ cat, size = 14 }: { cat: FileCategory; size?: number
     return <Cpu size={size} />;
 }
 
-export default function ExtractionBrowser({ totalFiles, files, stats, onRestart, onCheckout, darkMode, onBack }: ExtractionBrowserProps) {
+export default function ExtractionBrowser({ totalFiles, files, stats, onRestart, onCheckout, onBack }: ExtractionBrowserProps) {
     const [search, setSearch] = useState('');
     const [categoryFilter, setCategoryFilter] = useState<FileCategory>('all');
     const [viewMode, setViewMode] = useState<ViewMode>('list');
@@ -102,11 +101,7 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
     };
 
     const toggleSelectAll = () => {
-        if (selectAll) {
-            setSelectedIds(new Set());
-        } else {
-            setSelectedIds(new Set(filtered.map(f => f.id)));
-        }
+        if (selectAll) { setSelectedIds(new Set()); } else { setSelectedIds(new Set(filtered.map(f => f.id))); }
         setSelectAll(prev => !prev);
     };
 
@@ -116,90 +111,60 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
         return (
             <div className="animate-in fade-in slide-in-from-right-4 duration-500 w-full max-w-4xl mx-auto space-y-8">
                 <div className="flex items-center justify-between">
-                    <button onClick={() => setIsReviewing(false)} className="group flex items-center gap-2 text-zinc-500 hover:text-white transition-colors text-sm font-semibold">
+                    <button onClick={() => setIsReviewing(false)} className="group flex items-center gap-2 text-[var(--color-text-tertiary)] hover:text-[var(--color-foreground)] transition-colors text-sm font-semibold">
                         <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> Back to Browser
                     </button>
                     <div className="text-right">
-                        <div className="text-[10px] font-bold text-[#8A2BE2] uppercase tracking-widest mb-1">Review</div>
-                        <div className="text-xl font-semibold text-white">Restoration Summary</div>
+                        <div className="text-[10px] font-bold text-[var(--color-accent)] uppercase tracking-widest mb-1">Review</div>
+                        <div className="text-xl font-semibold text-[var(--color-foreground)]">Restoration Summary</div>
                     </div>
                 </div>
-
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div className="lg:col-span-2 space-y-4">
-                        <div className={`rounded-2xl border ${darkMode ? 'border-white/10 bg-black/40' : 'border-black/5 bg-zinc-50/50'} overflow-hidden`}>
-                            <div className={`px-6 py-4 border-b ${darkMode ? 'border-white/10 bg-white/[0.02]' : 'border-black/5 bg-black/[0.02]'} flex items-center justify-between`}>
-                                <span className="text-xs font-bold text-zinc-500 uppercase tracking-widest">Selected Files ({selectedFiles.length})</span>
-                                <span className="text-xs font-mono text-zinc-400">{formatBytes(selectedSize)} total</span>
+                        <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] overflow-hidden">
+                            <div className="px-6 py-4 border-b border-[var(--color-border)] bg-[var(--color-card-hover)] flex items-center justify-between">
+                                <span className="text-xs font-bold text-[var(--color-text-tertiary)] uppercase tracking-widest">Selected Files ({selectedFiles.length})</span>
+                                <span className="text-xs font-mono text-[var(--color-text-secondary)]">{formatBytes(selectedSize)} total</span>
                             </div>
-                            <div className="max-h-[400px] overflow-y-auto divide-y divide-white/5">
+                            <div className="max-h-[400px] overflow-y-auto divide-y divide-[var(--color-border-subtle)]">
                                 {selectedFiles.map(file => (
-                                    <div key={file.id} className="px-6 py-4 flex items-center justify-between hover:bg-white/[0.01] transition-colors">
+                                    <div key={file.id} className="px-6 py-4 flex items-center justify-between hover:bg-[var(--color-card-hover)] transition-colors">
                                         <div className="flex items-center gap-3">
-                                            <div className={`w-8 h-8 rounded-lg ${darkMode ? 'bg-white/5 text-zinc-500' : 'bg-black/5 text-zinc-400'} flex items-center justify-center`}>
-                                                <FileCategoryIcon cat={file.category} />
-                                            </div>
+                                            <div className="w-8 h-8 rounded-lg bg-[var(--color-card-hover)] text-[var(--color-text-tertiary)] flex items-center justify-center"><FileCategoryIcon cat={file.category} /></div>
                                             <div>
-                                                <div className={`text-sm font-medium ${darkMode ? 'text-zinc-200' : 'text-zinc-900'}`}>{file.name}</div>
-                                                <div className="text-[10px] text-zinc-600 font-mono">{file.path}</div>
+                                                <div className="text-sm font-medium text-[var(--color-foreground)]">{file.name}</div>
+                                                <div className="text-[10px] text-[var(--color-text-dim)] font-mono">{file.path}</div>
                                             </div>
                                         </div>
                                         <div className="text-right">
-                                            <div className={`text-xs font-mono ${darkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>{formatBytes(file.size)}</div>
+                                            <div className="text-xs font-mono text-[var(--color-text-secondary)]">{formatBytes(file.size)}</div>
                                             <IntegrityBadge score={file.integrity} status={file.status} />
                                         </div>
                                     </div>
                                 ))}
                             </div>
                         </div>
-
-                        <div className={`p-6 rounded-2xl border ${darkMode ? 'border-[#8A2BE2]/20 bg-[#8A2BE2]/5' : 'border-[#8A2BE2]/10 bg-[#8A2BE2]/5'} flex items-start gap-4`}>
-                            <div className="w-10 h-10 rounded-xl bg-[#8A2BE2]/20 text-[#8A2BE2] flex items-center justify-center shrink-0">
-                                <Shield size={20} />
-                            </div>
+                        <div className="p-6 rounded-2xl border border-[var(--color-accent)]/20 bg-[var(--color-accent)]/5 flex items-start gap-4">
+                            <div className="w-10 h-10 rounded-xl bg-[var(--color-accent)]/20 text-[var(--color-accent)] flex items-center justify-center shrink-0"><Shield size={20} /></div>
                             <div className="flex-1">
-                                <h4 className={`text-sm font-bold mb-1 uppercase tracking-tight ${darkMode ? 'text-white' : 'text-zinc-900'}`}>Safe Restoration</h4>
-                                <p className={`text-xs leading-relaxed ${darkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>
-                                    These files will be restored from the cloud directly. Your local disk stays in read-only mode, so nothing gets overwritten.
-                                </p>
+                                <h4 className="text-sm font-bold mb-1 uppercase tracking-tight text-[var(--color-foreground)]">Safe Restoration</h4>
+                                <p className="text-xs leading-relaxed text-[var(--color-text-secondary)]">Files are processed in the cloud. Your local disk stays in read-only mode throughout the process.</p>
                             </div>
                         </div>
                     </div>
-
                     <div className="space-y-4">
-                        <div className={`p-6 rounded-2xl border ${darkMode ? 'border-white/10 bg-black/40' : 'border-black/10 bg-white'} space-y-6 shadow-xl`}>
+                        <div className="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-background-elevated)] space-y-6 shadow-xl">
                             <div className="space-y-4">
-                                <div className="flex justify-between text-sm">
-                                    <span className="text-zinc-500">File Count</span>
-                                    <span className={`font-mono ${darkMode ? 'text-white' : 'text-zinc-900'}`}>{selectedFiles.length}</span>
-                                </div>
-                                <div className="flex justify-between text-sm">
-                                    <span className="text-zinc-500">Total Weight</span>
-                                    <span className={`font-mono ${darkMode ? 'text-white' : 'text-zinc-900'}`}>{formatBytes(selectedSize)}</span>
-                                </div>
-                                <div className="flex justify-between text-sm">
-                                    <span className="text-zinc-500">restore</span>
-                                    <span className="text-[#8A2BE2] font-bold uppercase tracking-widest text-[10px] flex items-center gap-1">
-                                        <Cpu size={10} /> Restoration Tier
-                                    </span>
-                                </div>
+                                <div className="flex justify-between text-sm"><span className="text-[var(--color-text-tertiary)]">File Count</span><span className="font-mono text-[var(--color-foreground)]">{selectedFiles.length}</span></div>
+                                <div className="flex justify-between text-sm"><span className="text-[var(--color-text-tertiary)]">Total Weight</span><span className="font-mono text-[var(--color-foreground)]">{formatBytes(selectedSize)}</span></div>
+                                <div className="flex justify-between text-sm"><span className="text-[var(--color-text-tertiary)]">restore</span><span className="text-[var(--color-accent)] font-bold uppercase tracking-widest text-[10px] flex items-center gap-1"><Cpu size={10} /> Restoration Tier</span></div>
                             </div>
-
-                            <div className={`pt-4 border-t ${darkMode ? 'border-white/10' : 'border-black/5'}`}>
-                                <div className="flex justify-between items-end mb-6">
-                                    <span className="text-xs font-bold text-zinc-500 uppercase">Total Access Fee</span>
-                                    <span className={`text-3xl font-bold ${darkMode ? 'text-white' : 'text-zinc-900'}`}>$89.00</span>
-                                </div>
-                                <button onClick={onCheckout} className="w-full bg-[#8A2BE2] hover:bg-[#7e22ce] text-white py-4 rounded-xl text-sm font-bold transition-all shadow-lg shadow-[#8A2BE2]/25 flex items-center justify-center gap-2 group">
-                                    Restore Files <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                                </button>
+                            <div className="pt-4 border-t border-[var(--color-border)]">
+                                <div className="flex justify-between items-end mb-6"><span className="text-xs font-bold text-[var(--color-text-tertiary)] uppercase">Total Access Fee</span><span className="text-sm font-bold text-[var(--color-text-secondary)]">See pricing</span></div>
+                                <button onClick={onCheckout} className="w-full bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white py-4 rounded-xl text-sm font-bold transition-all shadow-lg shadow-[var(--color-accent)]/25 flex items-center justify-center gap-2 group">Restore Files <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" /></button>
                             </div>
                         </div>
-
-                        <div className="p-4 rounded-xl border border-white/5 bg-white/[0.01] flex items-center gap-3">
-                            <Lock size={14} className="text-zinc-600" />
-                            <span className="text-[10px] text-zinc-500 uppercase tracking-widest font-bold">Encrypted TLS 1.3 Baseline</span>
-                        </div>
+                        <div className="p-4 rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-card)] flex items-center gap-3"><Lock size={14} className="text-[var(--color-text-dim)]" /><span className="text-[10px] text-[var(--color-text-tertiary)] uppercase tracking-widest font-bold">Encrypted TLS 1.3 Baseline</span></div>
                     </div>
                 </div>
             </div>
@@ -208,325 +173,138 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
 
     return (
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 w-full space-y-6 relative">
-
-            {/* Advanced Repair Workspace Modal */}
             {repairingFileId && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/90 backdrop-blur-md">
-                    <div className={`max-w-4xl w-full border shadow-2xl rounded-[32px] overflow-hidden ${darkMode ? 'bg-[#0D0D0F] border-white/10' : 'bg-white border-black/10'}`}>
-                        <div className={`p-8 border-b flex items-center justify-between ${darkMode ? 'border-white/5' : 'border-black/5'}`}>
+                    <div className="max-w-4xl w-full border shadow-2xl rounded-[32px] overflow-hidden bg-[var(--color-background)] border-[var(--color-border)]">
+                        <div className="p-8 border-b flex items-center justify-between border-[var(--color-border-subtle)]">
                             <div>
-                                <div className="text-[10px] font-bold text-[#8A2BE2] uppercase tracking-widest mb-1">File Repair</div>
-                                <h3 className={`text-2xl font-semibold ${darkMode ? 'text-white' : 'text-zinc-900'}`}>
-                                    Restoring: <span className="font-mono text-[#8A2BE2]">{MOCK_FILES.find(f => f.id === repairingFileId)?.name}</span>
-                                </h3>
+                                <div className="text-[10px] font-bold text-[var(--color-accent)] uppercase tracking-widest mb-1">File Repair</div>
+                                <h3 className="text-2xl font-semibold text-[var(--color-foreground)]">Restoring: <span className="font-mono text-[var(--color-accent)]">{MOCK_FILES.find(f => f.id === repairingFileId)?.name}</span></h3>
                             </div>
-                            <button onClick={() => setRepairingFileId(null)} className="p-3 hover:bg-[#8A2BE2]/10 rounded-full transition-all text-zinc-500 hover:text-[#8A2BE2]">
-                                <X size={24} />
-                            </button>
+                            <button onClick={() => setRepairingFileId(null)} className="p-3 hover:bg-[var(--color-accent)]/10 rounded-full transition-all text-[var(--color-text-tertiary)] hover:text-[var(--color-accent)]"><X size={24} /></button>
                         </div>
-
                         <div className="p-8 grid grid-cols-1 lg:grid-cols-2 gap-12">
                             <div className="space-y-4">
-                                <div className={`aspect-square rounded-3xl flex items-center justify-center border relative group overflow-hidden ${darkMode ? 'bg-black/40 border-white/5' : 'bg-zinc-100 border-black/5'}`}>
+                                <div className="aspect-square rounded-3xl flex items-center justify-center border relative group overflow-hidden bg-[var(--color-card)] border-[var(--color-border-subtle)]">
                                     <span className="absolute top-4 left-4 px-2 py-1 rounded bg-red-500/10 border border-red-500/20 text-[10px] font-bold text-red-500 uppercase tracking-widest z-10">Initial Fragment</span>
-                                    <div className="grid grid-cols-6 gap-2 w-3/4 h-3/4 opacity-20">
-                                        {[...Array(36)].map((_, i) => (
-                                            <div key={i} className={`bg-zinc-600 rounded-sm ${i % 4 === 0 ? 'opacity-0' : ''}`} />
-                                        ))}
-                                    </div>
-                                    <AlertCircle size={48} className="text-zinc-800 absolute opacity-50" />
+                                    <div className="grid grid-cols-6 gap-2 w-3/4 h-3/4 opacity-20">{[...Array(36)].map((_, i) => (<div key={i} className={`bg-[var(--color-text-dim)] rounded-sm ${i % 4 === 0 ? 'opacity-0' : ''}`} />))}</div>
+                                    <AlertCircle size={48} className="text-[var(--color-disabled-text)] absolute opacity-50" />
                                     <div className="absolute inset-0 bg-gradient-to-t from-red-500/10 to-transparent" />
                                 </div>
-                                <div>
-                                    <h4 className="text-sm font-bold text-zinc-500 uppercase mb-2">Damaged File</h4>
-                                    <p className="text-xs text-zinc-600 leading-relaxed">Detected 42 missing sections in the file. Parts of this file are fragmented and need repair.</p>
-                                </div>
+                                <div><h4 className="text-sm font-bold text-[var(--color-text-tertiary)] uppercase mb-2">Damaged File</h4><p className="text-xs text-[var(--color-text-dim)] leading-relaxed">Detected 42 missing sections in the file. Parts of this file are fragmented and need repair.</p></div>
                             </div>
-
                             <div className="space-y-4">
-                                <div className={`aspect-square rounded-3xl flex items-center justify-center border relative overflow-hidden ${darkMode ? 'bg-[#8A2BE2]/5 border-[#8A2BE2]/30' : 'bg-[#8A2BE2]/5 border-[#8A2BE2]/20'}`}>
+                                <div className="aspect-square rounded-3xl flex items-center justify-center border relative overflow-hidden bg-[var(--color-accent)]/5 border-[var(--color-accent)]/30">
                                     <span className="absolute top-4 left-4 px-2 py-1 rounded bg-green-500/10 border border-green-500/20 text-[10px] font-bold text-green-400 uppercase tracking-widest z-10">Repaired</span>
-                                    <div className="absolute inset-0 bg-gradient-to-br from-[#8A2BE2]/20 to-transparent animate-pulse" />
-                                    <NextImage
-                                        src="https://images.unsplash.com/photo-1506744626753-140081d4cb43?q=80&w=600&auto=format&fit=crop"
-                                        width={400}
-                                        height={400}
-                                        alt="Repaired visual preview"
-                                        className="w-full h-full object-cover opacity-90 scale-105"
-                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-br from-[var(--color-accent)]/20 to-transparent animate-pulse" />
+                                    <NextImage src="https://images.unsplash.com/photo-1506744626753-140081d4cb43?q=80&w=600&auto=format&fit=crop" width={400} height={400} alt="Repaired visual preview" className="w-full h-full object-cover opacity-90 scale-105" />
                                     <div className="absolute inset-x-0 bottom-0 p-6 bg-gradient-to-t from-black/90 via-black/40 to-transparent">
                                         <div className="flex items-center gap-3 text-white">
-                                            <div className="w-16 h-16 rounded-[24px] bg-[#8A2BE2]/10 border border-[#8A2BE2]/30 flex items-center justify-center agent-pulse">
-                                                <Activity size={12} className="text-[#8A2BE2]" />
-                                            </div>
-                                            <div>
-                                                <div className="text-[10px] font-bold uppercase tracking-widest text-green-400">Status: Restorable</div>
-                                                <div className="text-sm font-semibold">98.4% Integrity Restored</div>
-                                            </div>
+                                            <div className="w-16 h-16 rounded-[24px] bg-[var(--color-accent)]/10 border border-[var(--color-accent)]/30 flex items-center justify-center agent-pulse"><Activity size={12} className="text-[var(--color-accent)]" /></div>
+                                            <div><div className="text-[10px] font-bold uppercase tracking-widest text-green-400">Status: Restorable</div><div className="text-sm font-semibold">98.4% Integrity Restored</div></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div>
-                                    <h4 className="text-sm font-bold text-zinc-500 uppercase mb-2">Repair Complete</h4>
-                                    <p className="text-xs text-zinc-600 leading-relaxed">Missing data has been reconstructed. This file is ready for download.</p>
-                                </div>
+                                <div><h4 className="text-sm font-bold text-[var(--color-text-tertiary)] uppercase mb-2">Repair Complete</h4><p className="text-xs text-[var(--color-text-dim)] leading-relaxed">Missing data has been reconstructed. This file is ready for download.</p></div>
                             </div>
                         </div>
-
-                        <div className={`p-8 flex flex-col sm:flex-row items-center justify-between gap-6 ${darkMode ? 'bg-white/[0.02] border-t border-white/5' : 'bg-black/[0.02] border-t border-black/5'}`}>
+                        <div className="p-8 flex flex-col sm:flex-row items-center justify-between gap-6 bg-[var(--color-card-hover)] border-t border-[var(--color-border-subtle)]">
                             <div className="flex items-center gap-4">
-                                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${darkMode ? 'bg-black/40 text-zinc-500' : 'bg-white text-zinc-400'} border border-white/5 shadow-inner`}>
-                                    <div className="w-6 h-6 rounded bg-[#8A2BE2]/10 border border-[#8A2BE2]/30 flex items-center justify-center">
-                                        <div className="w-1.5 h-1.5 bg-[#8A2BE2] rounded-sm" />
-                                    </div>
-                                </div>
-                                <div className="max-w-md">
-                                    <p className="text-xs font-medium text-zinc-400 italic">&quot;I&apos;ve cross-referenced the file system journal and mapped the orphaned clusters back to this JPG header. The preview looks stable.&quot;</p>
-                                </div>
+                                <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-[var(--color-card)] text-[var(--color-text-tertiary)] border border-[var(--color-border-subtle)] shadow-inner"><div className="w-6 h-6 rounded bg-[var(--color-accent)]/10 border border-[var(--color-accent)]/30 flex items-center justify-center"><div className="w-1.5 h-1.5 bg-[var(--color-accent)] rounded-sm" /></div></div>
+                                <div className="max-w-md"><p className="text-xs font-medium text-[var(--color-text-secondary)] italic">&quot;I&apos;ve cross-referenced the file system journal and mapped the orphaned clusters back to this JPG header. The preview looks stable.&quot;</p></div>
                             </div>
-                            <button
-                                onClick={() => setRepairingFileId(null)}
-                                className="w-full sm:w-auto px-10 py-4 rounded-2xl bg-[#8A2BE2] text-white text-sm font-bold hover:bg-[#7e22ce] transition-all shadow-lg shadow-[#8A2BE2]/20 flex items-center justify-center gap-2 group"
-                            >
-                                Apply Repair <Activity size={16} className="group-hover:animate-pulse" />
-                            </button>
+                            <button onClick={() => setRepairingFileId(null)} className="w-full sm:w-auto px-10 py-4 rounded-2xl bg-[var(--color-accent)] text-white text-sm font-bold hover:bg-[var(--color-accent-hover)] transition-all shadow-lg shadow-[var(--color-accent)]/20 flex items-center justify-center gap-2 group">Apply Repair <Activity size={16} className="group-hover:animate-pulse" /></button>
                         </div>
                     </div>
                 </div>
             )}
-
-            {/* Main Browser Header */}
             <div className="flex items-start justify-between flex-wrap gap-4">
                 <div className="animate-in slide-in-from-left-4 duration-500">
-                    <div className="text-[#8A2BE2] text-[10px] font-bold tracking-[0.2em] uppercase mb-2 flex items-center gap-2">
-                        <span className="w-8 h-[1px] bg-[#8A2BE2]"></span> Step 4/5 — Restored Files
-                    </div>
+                    <div className="text-[var(--color-accent)] text-[10px] font-bold tracking-[0.2em] uppercase mb-2 flex items-center gap-2"><span className="w-8 h-[1px] bg-[var(--color-accent)]"></span> Step 4/5 — Restored Files</div>
                     <div className="flex items-center gap-4 mb-1">
-                        <div className="w-10 h-10 rounded-2xl bg-green-500/10 text-green-400 flex items-center justify-center border border-green-500/20 shadow-[0_0_20px_rgba(34,197,94,0.1)]">
-                            <CheckCircle2 size={24} strokeWidth={2} />
-                        </div>
-                        <h2 className={`text-3xl font-bold tracking-tight ${darkMode ? 'text-white' : 'text-zinc-900'}`}>Scan Successful</h2>
-                        {onBack && (
-                            <button
-                                onClick={onBack}
-                                className={`ml-4 px-3 py-1.5 rounded-xl border text-[9px] font-black uppercase tracking-widest transition-all ${darkMode ? 'border-white/10 text-zinc-500 hover:text-white' : 'border-black/5 text-zinc-400 hover:text-zinc-900'
-                                    }`}
-                            >
-                                ← Refine Target
-                            </button>
-                        )}
+                        <div className="w-10 h-10 rounded-2xl bg-green-500/10 text-green-400 flex items-center justify-center border border-green-500/20 shadow-[0_0_20px_rgba(34,197,94,0.1)]"><CheckCircle2 size={24} strokeWidth={2} /></div>
+                        <h2 className="text-3xl font-bold tracking-tight text-[var(--color-foreground)]">Scan Successful</h2>
+                        {onBack && (<button onClick={onBack} className="ml-4 px-3 py-1.5 rounded-xl border text-[9px] font-black uppercase tracking-widest transition-all border-[var(--color-border)] text-[var(--color-text-tertiary)] hover:text-[var(--color-foreground)]">← Refine Target</button>)}
                     </div>
-                    <p className={`text-sm ml-14 ${darkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
-                        Detected <strong className={darkMode ? 'text-zinc-200' : 'text-zinc-900'}>{totalFiles.toLocaleString()} files</strong> matching restore patterns · {restoreRate}% intact
-                    </p>
+                    <p className="text-sm ml-14 text-[var(--color-text-secondary)]">Detected <strong className="text-[var(--color-foreground)]">{totalFiles.toLocaleString()} files</strong> matching restore patterns · {restoreRate}% intact</p>
                 </div>
                 <div className="flex items-center gap-3">
-                    <div className={`text-xs px-4 py-2.5 rounded-2xl border font-mono font-bold ${darkMode ? 'border-white/10 text-zinc-400 bg-black/40' : 'border-black/5 text-zinc-600 bg-zinc-50'}`}>
-                        {formatBytes(stats.dataRestorable)}
-                    </div>
-                    <div className="flex items-center gap-2 px-4 py-2.5 rounded-2xl border border-[#8A2BE2]/30 bg-[#8A2BE2]/10 text-[#8A2BE2] text-xs font-bold uppercase tracking-widest shadow-[0_0_15px_rgba(138,43,226,0.1)]">
-                        <Shield size={14} /> Restore Verified
-                    </div>
+                    <div className="text-xs px-4 py-2.5 rounded-2xl border font-mono font-bold border-[var(--color-border)] text-[var(--color-text-secondary)] bg-[var(--color-card)]">{formatBytes(stats.dataRestorable)}</div>
+                    <div className="flex items-center gap-2 px-4 py-2.5 rounded-2xl border border-[var(--color-accent)]/30 bg-[var(--color-accent)]/10 text-[var(--color-accent)] text-xs font-bold uppercase tracking-widest shadow-[0_0_15px_rgba(138,43,226,0.1)]"><Shield size={14} /> Restore Verified</div>
                 </div>
             </div>
-
-            {/* Warning Alert */}
-            <div className={`${darkMode ? 'bg-orange-500/[0.03] border-orange-500/20' : 'bg-orange-50 border-orange-200'} border rounded-2xl p-5 flex items-start gap-4 relative overflow-hidden group`}>
+            <div className="bg-orange-500/[0.03] border-orange-500/20 border rounded-2xl p-5 flex items-start gap-4 relative overflow-hidden group">
                 <div className="absolute inset-y-0 left-0 w-1.5 bg-orange-500 opacity-40 group-hover:opacity-100 transition-opacity"></div>
                 <AlertTriangle size={20} className="text-orange-500 shrink-0 mt-0.5" />
-                <div>
-                    <h4 className={`text-sm font-bold mb-1 ${darkMode ? 'text-orange-100' : 'text-orange-900'}`}>Read-Only Barrier Active</h4>
-                    <p className={`text-xs leading-relaxed max-w-2xl ${darkMode ? 'text-orange-100/60' : 'text-orange-800/70'}`}>
-                        RestoreIt has locked disk writes to &quot;Macintosh HD&quot; to prevent overwriting. To restore these files, proceed to the next step.
-                    </p>
-                </div>
+                <div><h4 className="text-sm font-bold mb-1 text-[var(--color-foreground)]">Read-Only Barrier Active</h4><p className="text-xs leading-relaxed max-w-2xl text-[var(--color-text-secondary)]">RestoreIt has locked disk writes to &quot;Macintosh HD&quot; to prevent overwriting. To restore these files, proceed to the next step.</p></div>
             </div>
-
             <div className="flex flex-col lg:flex-row gap-8 items-start">
-                {/* Left: File Browser */}
                 <div className="flex-1 w-full min-w-0 space-y-4">
                     <div className="flex items-center gap-3 flex-wrap">
-                        <div className={`flex p-1 rounded-2xl border shrink-0 ${darkMode ? 'bg-black/40 border-white/10' : 'bg-zinc-50 border-black/5'}`}>
-                            {categories.map(({ key, label, count }) => (
-                                <button key={key} onClick={() => setCategoryFilter(key)}
-                                    className={`px-4 py-2 rounded-xl text-[11px] font-bold uppercase tracking-widest transition-all ${categoryFilter === key
-                                        ? 'bg-[#8A2BE2] text-white shadow-lg shadow-[#8A2BE2]/30'
-                                        : darkMode ? 'text-zinc-600 hover:text-white' : 'text-zinc-400 hover:text-zinc-900'
-                                        }`}>
-                                    {label} <span className="opacity-40 ml-1.5 font-mono">{count}</span>
-                                </button>
-                            ))}
+                        <div className="flex p-1 rounded-2xl border shrink-0 bg-[var(--color-card)] border-[var(--color-border)]">
+                            {categories.map(({ key, label, count }) => (<button key={key} onClick={() => setCategoryFilter(key)} className={`px-4 py-2 rounded-xl text-[11px] font-bold uppercase tracking-widest transition-all ${categoryFilter === key ? 'bg-[var(--color-accent)] text-white shadow-lg shadow-[var(--color-accent)]/30' : 'text-[var(--color-text-dim)] hover:text-[var(--color-foreground)]'}`}>{label} <span className="opacity-40 ml-1.5 font-mono">{count}</span></button>))}
                         </div>
-
-                        <div className={`flex-1 flex items-center gap-3 px-4 py-3 rounded-2xl border transition-all ${darkMode ? 'bg-black/40 border-white/10 focus-within:border-[#8A2BE2]/50' : 'bg-white border-black/10 focus-within:border-[#8A2BE2]/50'}`}>
-                            <Search size={16} className="text-zinc-600 shrink-0" />
-                            <input
-                                type="text"
-                                placeholder="Lookup by filename, extension, or original volume path..."
-                                value={search}
-                                onChange={e => setSearch(e.target.value)}
-                                className="bg-transparent text-sm outline-none flex-1 placeholder-zinc-700 font-medium"
-                            />
+                        <div className="flex-1 flex items-center gap-3 px-4 py-3 rounded-2xl border transition-all bg-[var(--color-card)] border-[var(--color-border)] focus-within:border-[var(--color-accent)]/50">
+                            <Search size={16} className="text-[var(--color-text-dim)] shrink-0" />
+                            <input type="text" placeholder="Lookup by filename, extension, or original volume path..." value={search} onChange={e => setSearch(e.target.value)} className="bg-transparent text-sm outline-none flex-1 placeholder-[var(--color-placeholder)] font-medium" />
                         </div>
-
-                        <div className={`flex p-1 rounded-2xl border ${darkMode ? 'bg-black/40 border-white/10' : 'bg-zinc-50 border-black/10'}`}>
-                            {([['list', List], ['grid', Grid3X3], ['timeline', Clock]] as const).map(([mode, Icon]) => (
-                                <button key={mode} onClick={() => setViewMode(mode as ViewMode)}
-                                    className={`p-2.5 rounded-xl transition-all ${viewMode === mode ? 'bg-[#8A2BE2] text-white shadow-md' : darkMode ? 'text-zinc-600 hover:text-white' : 'text-zinc-400 hover:text-zinc-900'}`}>
-                                    <Icon size={16} />
-                                </button>
-                            ))}
+                        <div className="flex p-1 rounded-2xl border bg-[var(--color-card)] border-[var(--color-border)]">
+                            {([['list', List], ['grid', Grid3X3], ['timeline', Clock]] as const).map(([mode, Icon]) => (<button key={mode} onClick={() => setViewMode(mode as ViewMode)} className={`p-2.5 rounded-xl transition-all ${viewMode === mode ? 'bg-[var(--color-accent)] text-white shadow-md' : 'text-[var(--color-text-dim)] hover:text-[var(--color-foreground)]'}`}><Icon size={16} /></button>))}
                         </div>
                     </div>
-
                     <div className="flex items-center justify-between px-2">
-                        <label className="group flex items-center gap-3 text-xs font-bold text-zinc-500 uppercase tracking-widest cursor-pointer hover:text-[#8A2BE2] transition-colors">
-                            <input type="checkbox" checked={selectAll} onChange={toggleSelectAll}
-                                className="w-5 h-5 rounded-lg border-white/10 accent-[#8A2BE2] cursor-pointer" />
-                            Select All ({filtered.length})
+                        <label className="group flex items-center gap-3 text-xs font-bold text-[var(--color-text-tertiary)] uppercase tracking-widest cursor-pointer hover:text-[var(--color-accent)] transition-colors">
+                            <input type="checkbox" checked={selectAll} onChange={toggleSelectAll} className="w-5 h-5 rounded-lg border-[var(--color-border)] accent-[var(--color-accent)] cursor-pointer" />Select All ({filtered.length})
                         </label>
-                        {selectedIds.size > 0 && (
-                            <div className="flex items-center gap-2">
-                                <span className="w-1.5 h-1.5 rounded-full bg-[#8A2BE2] animate-pulse" />
-                                <span className="text-xs text-[#8A2BE2] font-black uppercase tracking-tighter">{selectedIds.size} files queued</span>
-                            </div>
-                        )}
+                        {selectedIds.size > 0 && (<div className="flex items-center gap-2"><span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] animate-pulse" /><span className="text-xs text-[var(--color-accent)] font-black uppercase tracking-tighter">{selectedIds.size} files queued</span></div>)}
                     </div>
-
-                    <div className={`rounded-[24px] border overflow-hidden transition-all ${darkMode ? 'border-white/10 bg-black/20 shadow-2xl' : 'border-black/5 bg-white shadow-sm'}`}>
-                        <div className={`max-h-[600px] overflow-y-auto custom-scrollbar`}>
+                    <div className="rounded-[24px] border overflow-hidden transition-all border-[var(--color-border)] bg-[var(--color-card)] shadow-2xl">
+                        <div className="max-h-[600px] overflow-y-auto custom-scrollbar">
                             {filtered.length === 0 ? (
-                                <div className="p-20 text-center space-y-4">
-                                    <div className="w-16 h-16 rounded-full bg-zinc-900 border border-white/5 flex items-center justify-center mx-auto text-zinc-700">
-                                        <Search size={32} />
-                                    </div>
-                                    <p className="text-sm text-zinc-500 font-medium">Empty results for your current filter query.</p>
-                                </div>
+                                <div className="p-20 text-center space-y-4"><div className="w-16 h-16 rounded-full bg-[var(--color-background)] border border-[var(--color-border-subtle)] flex items-center justify-center mx-auto text-[var(--color-disabled-text)]"><Search size={32} /></div><p className="text-sm text-[var(--color-text-tertiary)] font-medium">Empty results for your current filter query.</p></div>
                             ) : filtered.map((file, i) => (
-                                <div key={file.id}
-                                    onClick={() => toggleSelect(file.id)}
-                                    className={`flex items-center gap-5 p-5 transition-all cursor-pointer group hover:bg-[#8A2BE2]/[0.02]
-                    ${selectedIds.has(file.id) ? darkMode ? 'bg-[#8A2BE2]/[0.04]' : 'bg-[#8A2BE2]/[0.03]' : ''}
-                    ${i > 0 ? darkMode ? 'border-t border-white/5' : 'border-t border-black/5' : ''}
-                  `}
-                                >
-                                    <input type="checkbox" checked={selectedIds.has(file.id)} onChange={() => toggleSelect(file.id)}
-                                        className="w-5 h-5 rounded-lg accent-[#8A2BE2] shrink-0 cursor-pointer" onClick={e => e.stopPropagation()} />
-
-                                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-110 duration-300 ${darkMode ? 'bg-white/5 text-zinc-500 shadow-inner' : 'bg-black/5 text-zinc-400'}`}>
-                                        <FileCategoryIcon cat={file.category} size={20} />
-                                    </div>
-
+                                <div key={file.id} onClick={() => toggleSelect(file.id)} className={`flex items-center gap-5 p-5 transition-all cursor-pointer group hover:bg-[var(--color-accent)]/[0.02] ${selectedIds.has(file.id) ? 'bg-[var(--color-accent)]/[0.04]' : ''} ${i > 0 ? 'border-t border-[var(--color-border-subtle)]' : ''}`}>
+                                    <input type="checkbox" checked={selectedIds.has(file.id)} onChange={() => toggleSelect(file.id)} className="w-5 h-5 rounded-lg accent-[var(--color-accent)] shrink-0 cursor-pointer" onClick={e => e.stopPropagation()} />
+                                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-110 duration-300 bg-[var(--color-card-hover)] text-[var(--color-text-tertiary)] shadow-inner"><FileCategoryIcon cat={file.category} size={20} /></div>
                                     <div className="flex-1 min-w-0">
                                         <div className="flex items-center gap-2 flex-wrap mb-1">
-                                            <span className={`text-sm font-bold tracking-tight ${darkMode ? 'text-zinc-200' : 'text-zinc-800'}`}>{file.name}</span>
+                                            <span className="text-sm font-bold tracking-tight text-[var(--color-text-secondary)]">{file.name}</span>
                                             <IntegrityBadge score={file.integrity} status={file.status} />
-                                            {file.isDuplicate && (
-                                                <span className="text-[9px] px-2 py-0.5 rounded-full bg-zinc-500/10 border border-zinc-500/20 text-zinc-500 font-black uppercase tracking-widest flex items-center gap-1.5">
-                                                    <Copy size={9} /> Clone
-                                                </span>
-                                            )}
-                                            {(file.status === 'corrupted' || file.status === 'fragmented') && (
-                                                <button
-                                                    onClick={(e) => { e.stopPropagation(); setRepairingFileId(file.id); }}
-                                                    className="text-[9px] px-2 py-0.5 rounded-full bg-[#8A2BE2]/10 border border-[#8A2BE2]/20 text-[#8A2BE2] font-black uppercase tracking-widest hover:bg-[#8A2BE2]/20 transition-all flex items-center gap-1.5 group/btn shadow-lg shadow-[#8A2BE2]/5 agent-pulse"
-                                                >
-                                                    <Cpu size={9} className="animate-pulse" /> File Repair
-                                                </button>
-                                            )}
+                                            {file.isDuplicate && (<span className="text-[9px] px-2 py-0.5 rounded-full bg-[var(--color-text-tertiary)]/10 border border-[var(--color-text-tertiary)]/20 text-[var(--color-text-tertiary)] font-black uppercase tracking-widest flex items-center gap-1.5"><Copy size={9} /> Clone</span>)}
+                                            {(file.status === 'corrupted' || file.status === 'fragmented') && (<button onClick={(e) => { e.stopPropagation(); setRepairingFileId(file.id); }} className="text-[9px] px-2 py-0.5 rounded-full bg-[var(--color-accent)]/10 border border-[var(--color-accent)]/20 text-[var(--color-accent)] font-black uppercase tracking-widest hover:bg-[var(--color-accent)]/20 transition-all flex items-center gap-1.5 group/btn shadow-lg shadow-[var(--color-accent)]/5 agent-pulse"><Cpu size={9} className="animate-pulse" /> File Repair</button>)}
                                         </div>
-                                        <div className={`text-[11px] font-medium flex items-center gap-3 overflow-hidden ${darkMode ? 'text-zinc-600' : 'text-zinc-400'}`}>
-                                            <span className="truncate max-w-[150px] font-mono">{file.path}</span>
-                                            <span className="w-1 h-1 rounded-full bg-zinc-800" />
-                                            <span className="shrink-0">{formatBytes(file.size)}</span>
-                                            <span className="w-1 h-1 rounded-full bg-zinc-800" />
-                                            <span className="shrink-0 font-mono text-[9px] text-[#8A2BE2] opacity-60">SHA-256: {file.hash}</span>
-                                            <span className="w-1 h-1 rounded-full bg-zinc-800" />
-                                            <span className="shrink-0 font-mono text-[9px]">{file.clusterOffset}</span>
+                                        <div className="text-[11px] font-medium flex items-center gap-3 overflow-hidden text-[var(--color-text-dim)]">
+                                            <span className="truncate max-w-[150px] font-mono">{file.path}</span><span className="w-1 h-1 rounded-full bg-[var(--color-disabled-text)]" /><span className="shrink-0">{formatBytes(file.size)}</span><span className="w-1 h-1 rounded-full bg-[var(--color-disabled-text)]" /><span className="shrink-0 font-mono text-[9px] text-[var(--color-accent)] opacity-60">SHA-256: {file.hash}</span><span className="w-1 h-1 rounded-full bg-[var(--color-disabled-text)]" /><span className="shrink-0 font-mono text-[9px]">{file.clusterOffset}</span>
                                         </div>
                                     </div>
-
-                                    <div className="opacity-0 group-hover:opacity-100 transition-opacity">
-                                        <Download size={16} className="text-zinc-700" />
-                                    </div>
+                                    <div className="opacity-0 group-hover:opacity-100 transition-opacity"><Download size={16} className="text-[var(--color-disabled-text)]" /></div>
                                 </div>
                             ))}
                         </div>
                     </div>
                 </div>
-
-                {/* Right: Insights + Summary */}
                 <div className="w-full lg:w-80 shrink-0 space-y-6">
-                    <div className={`rounded-[32px] border overflow-hidden shadow-2xl ${darkMode ? 'border-[#8A2BE2]/30 bg-black' : 'border-black/5 bg-white'}`}>
-                        <div className="px-6 py-4 border-b border-[#8A2BE2]/20 bg-[#8A2BE2]/5 flex items-center justify-between">
-                            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#8A2BE2]">Proof of Life</span>
-                            <div className="flex items-center gap-1.5">
-                                <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
-                                <span className="text-[9px] font-bold text-green-500 uppercase tracking-widest">Active</span>
-                            </div>
-                        </div>
+                    <div className="rounded-[32px] border overflow-hidden shadow-2xl border-[var(--color-accent)]/30 bg-[var(--color-background)]">
+                        <div className="px-6 py-4 border-b border-[var(--color-accent)]/20 bg-[var(--color-accent)]/5 flex items-center justify-between"><span className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--color-accent)]">Proof of Life</span><div className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-green-500" /><span className="text-[9px] font-bold text-green-500 uppercase tracking-widest">Active</span></div></div>
                         <div className="p-5">
                             <div className="grid grid-cols-2 gap-3 mb-5">
-                                {[
-                                    'https://images.unsplash.com/photo-1506744626753-140081d4cb43?q=80&w=200&auto=format&fit=crop',
-                                    'https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=200&auto=format&fit=crop',
-                                    'https://images.unsplash.com/photo-1534008897995-27a23e859048?q=80&w=200&auto=format&fit=crop',
-                                    'https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=200&auto=format&fit=crop',
-                                ].map((src, i) => (
-                                    <div key={i} className="aspect-square relative rounded-2xl overflow-hidden group/thumb">
-                                        <NextImage src={src} width={200} height={200} alt="Restored thumbnail" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
-                                        <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] flex items-center justify-center transition-all group-hover:opacity-0">
-                                            <Lock size={20} className="text-white/20" />
-                                        </div>
-                                    </div>
-                                ))}
+                                {['https://images.unsplash.com/photo-1506744626753-140081d4cb43?q=80&w=200&auto=format&fit=crop','https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=200&auto=format&fit=crop','https://images.unsplash.com/photo-1534008897995-27a23e859048?q=80&w=200&auto=format&fit=crop','https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=200&auto=format&fit=crop'].map((src, i) => (<div key={i} className="aspect-square relative rounded-2xl overflow-hidden group/thumb"><NextImage src={src} width={200} height={200} alt="Restored thumbnail" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" /><div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] flex items-center justify-center transition-all group-hover:opacity-0"><Lock size={20} className="text-white/20" /></div></div>))}
                             </div>
-                            <p className="text-center">
-                                <span className={`text-[11px] font-black uppercase tracking-widest ${darkMode ? 'text-zinc-600' : 'text-zinc-400'}`}>
-                                    + {(totalFiles - 4).toLocaleString()} files encrypted
-                                </span>
-                            </p>
+                            <p className="text-center"><span className="text-[11px] font-black uppercase tracking-widest text-[var(--color-text-dim)]">+ {(totalFiles - 4).toLocaleString()} files encrypted</span></p>
                         </div>
-
-                        <div className={`p-6 border-t ${darkMode ? 'border-white/5 bg-white/[0.01]' : 'border-black/5 bg-black/[0.01]'} space-y-6`}>
+                        <div className="p-6 border-t border-[var(--color-border-subtle)] bg-[var(--color-card)] space-y-6">
                             <div className="flex items-center justify-between">
-                                <div className="space-y-1">
-                                    <div className={`text-[10px] font-bold uppercase tracking-widest ${darkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>Est. Retrieval</div>
-                                    <div className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-zinc-900'}`}>{selectedIds.size > 0 ? formatBytes(MOCK_FILES.filter(f => selectedIds.has(f.id)).reduce((a, b) => a + b.size, 0)) : formatBytes(stats.dataRestorable)}</div>
-                                </div>
-                                <div className="h-10 w-[1px] bg-white/10" />
-                                <div className="space-y-1 text-right">
-                                    <div className={`text-[10px] font-bold uppercase tracking-widest ${darkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>Selection</div>
-                                    <div className={`text-xl font-bold ${darkMode ? 'text-[#8A2BE2]' : 'text-[#8A2BE2]'}`}>{selectedIds.size > 0 ? selectedIds.size : totalFiles}</div>
-                                </div>
+                                <div className="space-y-1"><div className="text-[10px] font-bold uppercase tracking-widest text-[var(--color-text-tertiary)]">Est. Retrieval</div><div className="text-xl font-bold text-[var(--color-foreground)]">{selectedIds.size > 0 ? formatBytes(MOCK_FILES.filter(f => selectedIds.has(f.id)).reduce((a, b) => a + b.size, 0)) : formatBytes(stats.dataRestorable)}</div></div>
+                                <div className="h-10 w-[1px] bg-[var(--color-border)]" />
+                                <div className="space-y-1 text-right"><div className="text-[10px] font-bold uppercase tracking-widest text-[var(--color-text-tertiary)]">Selection</div><div className="text-xl font-bold text-[var(--color-accent)]">{selectedIds.size > 0 ? selectedIds.size : totalFiles}</div></div>
                             </div>
-
-                            <button
-                                onClick={() => setIsReviewing(true)}
-                                className="w-full bg-[#8A2BE2] hover:bg-[#7e22ce] text-white py-4 rounded-2xl text-sm font-black uppercase tracking-[0.1em] transition-all shadow-xl shadow-[#8A2BE2]/30 flex items-center justify-center gap-3 active:scale-95 group"
-                            >
-                                <Lock size={16} className="group-hover:rotate-12 transition-transform" />
-                                {selectedIds.size > 0 ? 'Review Selected' : 'Restore All'}
-                            </button>
-
-                            <div className="space-y-3">
-                                <button onClick={onRestart} className={`w-full text-[10px] font-bold uppercase tracking-widest transition-colors flex items-center justify-center gap-2 ${darkMode ? 'text-zinc-700 hover:text-red-400' : 'text-zinc-400 hover:text-red-500'}`}>
-                                    <RotateCcw size={12} /> Start Over
-                                </button>
-                            </div>
+                            <button onClick={() => setIsReviewing(true)} className="w-full bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white py-4 rounded-2xl text-sm font-black uppercase tracking-[0.1em] transition-all shadow-xl shadow-[var(--color-accent)]/30 flex items-center justify-center gap-3 active:scale-95 group"><Lock size={16} className="group-hover:rotate-12 transition-transform" />{selectedIds.size > 0 ? 'Review Selected' : 'Restore All'}</button>
+                            <div className="space-y-3"><button onClick={onRestart} className="w-full text-[10px] font-bold uppercase tracking-widest transition-colors flex items-center justify-center gap-2 text-[var(--color-disabled-text)] hover:text-red-400"><RotateCcw size={12} /> Start Over</button></div>
                         </div>
                     </div>
-
-                    <div className={`p-6 rounded-[32px] border ${darkMode ? 'border-white/10 bg-black/20 text-zinc-500' : 'border-black/5 bg-zinc-50 text-zinc-500'} space-y-4`}>
-                        <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center text-[#8A2BE2]">
-                                <Shield size={16} />
-                            </div>
-                            <span className={`text-[10px] font-black uppercase tracking-widest ${darkMode ? 'text-zinc-400' : 'text-zinc-700'}`}>Scan-First Model</span>
-                        </div>
-                        <p className="text-[11px] leading-relaxed italic">
-                            &quot;You see results before you pay. If no files are detected, you&apos;re not charged. All completed purchases are final.&quot;
-                        </p>
+                    <div className="p-6 rounded-[32px] border border-[var(--color-border)] bg-[var(--color-card)] text-[var(--color-text-tertiary)] space-y-4">
+                        <div className="flex items-center gap-3"><div className="w-8 h-8 rounded-xl bg-[var(--color-card-hover)] flex items-center justify-center text-[var(--color-accent)]"><Shield size={16} /></div><span className="text-[10px] font-black uppercase tracking-widest text-[var(--color-text-secondary)]">Scan-First Model</span></div>
+                        <p className="text-[11px] leading-relaxed italic">&quot;You see results before you pay. If no files are detected, you&apos;re not charged. All completed purchases are final.&quot;</p>
                     </div>
                 </div>
             </div>

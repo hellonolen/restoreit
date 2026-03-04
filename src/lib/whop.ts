@@ -15,6 +15,7 @@ interface CreateCheckoutParams {
   planId: string
   userId: string
   tier: 'standard' | 'pro' | 'protection'
+  quantity?: number
   redirectUrl: string
 }
 
@@ -22,6 +23,7 @@ export async function createCheckoutSession({
   planId,
   userId,
   tier,
+  quantity = 1,
   redirectUrl,
 }: CreateCheckoutParams): Promise<string> {
   const response = await fetch(`${WHOP_API_URL}/checkout_sessions`, {
@@ -29,9 +31,11 @@ export async function createCheckoutSession({
     headers: getHeaders(),
     body: JSON.stringify({
       plan_id: planId,
+      quantity,
       metadata: {
         user_id: userId,
         tier,
+        devices: String(quantity),
       },
       redirect_url: redirectUrl,
     }),

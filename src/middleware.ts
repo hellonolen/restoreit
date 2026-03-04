@@ -2,8 +2,16 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
-    const isAuthenticated = request.cookies.has('restoreit_session');
     const { pathname } = request.nextUrl;
+
+    // Public API routes use API key auth, not cookies — skip middleware
+    if (pathname.startsWith('/api/v1/')) {
+        const response = NextResponse.next();
+        response.headers.set('X-Content-Type-Options', 'nosniff');
+        return response;
+    }
+
+    const isAuthenticated = request.cookies.has('restoreit_session');
 
     // Protect authenticated routes
     const protectedPaths = ['/account', '/checkout', '/restore'];
@@ -18,9 +26,17 @@ export function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL('/restore', request.url));
     }
 
-    return NextResponse.next();
+    const response = NextResponse.next();
+
+    // Security headers
+    response.headers.set('X-Content-Type-Options', 'nosniff');
+    response.headers.set('X-Frame-Options', 'DENY');
+    response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+    response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+
+    return response;
 }
 
 export const config = {
-    matcher: ['/account/:path*', '/checkout/:path*', '/restore/:path*', '/login', '/signup'],
+    matcher: ['/account/:path*', '/checkout/:path*', '/restore/:path*', '/login', '/signup', '/api/v1/:path*'],
 };

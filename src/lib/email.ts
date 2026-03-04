@@ -50,7 +50,7 @@ export async function sendRestoreCompleteEmail(email: string, fileCount: number)
     html: `
       <h1>Restoration Complete</h1>
       <p>We restored <strong>${fileCount} files</strong> from your drive.</p>
-      <p>View and download your files at <a href="https://restoreit.app/account/vault">RestoreIt Cloud</a>.</p>
+      <p>View and download your files at <a href="https://restoreit.app/account/cloud">RestoreIt Cloud</a>.</p>
     `,
   })
 }
@@ -61,7 +61,7 @@ export async function sendSubscriptionConfirmedEmail(email: string, firstName: s
     subject: 'RestoreIt Protection Plan activated',
     html: `
       <h1>Protection Plan Active</h1>
-      <p>Hi ${firstName}, your $12/month Protection Plan is now active.</p>
+      <p>Hi ${firstName}, your $29/month Protection Plan is now active.</p>
       <p>You now have priority restore queue, extended cloud retention, and continuous disk monitoring.</p>
     `,
   })

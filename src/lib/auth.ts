@@ -1,6 +1,7 @@
 import { eq, and, gt } from 'drizzle-orm'
 import { getDb } from '@/db'
 import { users, sessions } from '@/db/schema'
+import bcrypt from 'bcryptjs'
 
 const SESSION_COOKIE_NAME = 'restoreit_session'
 const SESSION_DURATION_MS = 7 * 24 * 60 * 60 * 1000 // 7 days
@@ -97,15 +98,20 @@ export async function deleteSession(token: string): Promise<void> {
   await db.delete(sessions).where(eq(sessions.token, token))
 }
 
+const BCRYPT_ROUNDS = 12
+
 /**
- * Simple SHA-256 hash for development. Replace with bcrypt/argon2 for production.
+ * Hash password with bcrypt (salted, work-factor protected).
  */
 export async function hashPassword(password: string): Promise<string> {
-  const encoder = new TextEncoder()
-  const data = encoder.encode(password)
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data)
-  const hashArray = Array.from(new Uint8Array(hashBuffer))
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
+  return bcrypt.hash(password, BCRYPT_ROUNDS)
+}
+
+/**
+ * Constant-time password verification via bcrypt.compare.
+ */
+export async function verifyPassword(password: string, hash: string): Promise<boolean> {
+  return bcrypt.compare(password, hash)
 }
 
 /**

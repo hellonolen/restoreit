@@ -30,7 +30,7 @@ const faqCategories = [
     {
         category: 'Products & Pricing',
         questions: [
-            { q: 'What products does RestoreIt offer?', a: 'Four products: RestoreIt Scan ($89, one-time per device) for immediate restoration, RestoreIt Pro ($249, one-time per device) for deep scan and priority restoration, RestoreIt Cloud ($79/year) for 500GB encrypted storage, and RestoreIt Protection ($12/month) for ongoing disk monitoring.' },
+            { q: 'What products does RestoreIt offer?', a: 'Four products: RestoreIt Scan (one-time per device) for immediate restoration, RestoreIt Pro (one-time per device) for deep scan and priority restoration, RestoreIt Cloud (yearly) for 500GB encrypted storage, and RestoreIt Protection (monthly) for ongoing disk monitoring. See our pricing page for current rates.' },
             { q: 'Are these prices per device?', a: 'Yes. RestoreIt Scan and RestoreIt Pro are priced per device. You can add additional devices at any time.' },
             { q: 'What\'s the difference between Scan and Pro?', a: 'Scan provides a standard restoration scan with immediate download. Pro adds deep sector-level scanning, damaged file reconstruction, priority restore queue, and a 7-day download window.' },
             { q: 'Who can purchase RestoreIt Cloud?', a: 'RestoreIt Cloud is available to RestoreIt Pro customers. It provides 500GB of encrypted cloud storage for your restored files with long-term access.' },
@@ -58,7 +58,7 @@ const faqCategories = [
 
 export default function FAQPage() {
     return (
-        <div className="min-h-screen bg-black text-white font-sans flex flex-col">
+        <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-foreground)] font-sans flex flex-col transition-colors duration-300">
             <SiteHeader />
 
             <main className="flex-1 pt-28 pb-20">
@@ -67,7 +67,7 @@ export default function FAQPage() {
                         <h1 className="text-5xl md:text-6xl font-black tracking-tighter">
                             Frequently Asked Questions
                         </h1>
-                        <p className="text-lg text-zinc-400">
+                        <p className="text-lg text-[var(--color-text-secondary)]">
                             Everything you need to know about RestoreIt.
                         </p>
                     </div>
@@ -77,13 +77,13 @@ export default function FAQPage() {
                             <h2 className="text-sm font-black text-[var(--color-accent)] uppercase tracking-[0.2em]">{cat.category}</h2>
                             <div className="space-y-3">
                                 {cat.questions.map(({ q, a }) => (
-                                    <details key={q} className="group rounded-2xl border border-white/[0.06] bg-white/[0.02] overflow-hidden">
+                                    <details key={q} className="group rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] overflow-hidden">
                                         <summary className="flex items-center justify-between p-5 cursor-pointer list-none">
-                                            <span className="text-sm font-bold text-zinc-200 pr-4">{q}</span>
-                                            <ChevronRight size={16} className="text-zinc-600 shrink-0 group-open:rotate-90 transition-transform" />
+                                            <span className="text-sm font-bold pr-4">{q}</span>
+                                            <ChevronRight size={16} className="text-[var(--color-text-dim)] shrink-0 group-open:rotate-90 transition-transform" />
                                         </summary>
                                         <div className="px-5 pb-5">
-                                            <p className="text-sm text-zinc-400 leading-relaxed">{a}</p>
+                                            <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">{a}</p>
                                         </div>
                                     </details>
                                 ))}
@@ -92,12 +92,12 @@ export default function FAQPage() {
                     ))}
 
                     <div className="text-center space-y-4 pt-8">
-                        <p className="text-zinc-500">Still have questions?</p>
+                        <p className="text-[var(--color-text-tertiary)]">Still have questions?</p>
                         <div className="flex items-center justify-center gap-4">
                             <Link href="/contact" className="text-sm font-bold text-[var(--color-accent)] flex items-center gap-2 hover:opacity-80 transition-all">
                                 Contact Us <ArrowRight size={14} />
                             </Link>
-                            <Link href="/support" className="text-sm font-bold text-zinc-500 flex items-center gap-2 hover:text-white transition-all">
+                            <Link href="/support" className="text-sm font-bold text-[var(--color-text-tertiary)] flex items-center gap-2 hover:text-[var(--color-foreground)] transition-all">
                                 Support Center <ArrowRight size={14} />
                             </Link>
                         </div>

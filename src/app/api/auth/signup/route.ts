@@ -9,12 +9,22 @@ import {
   generateId,
 } from '@/lib/auth'
 import { sendWelcomeEmail } from '@/lib/email'
+import { checkRateLimit, RATE_LIMITS, getClientIp } from '@/lib/rate-limit'
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const MIN_PASSWORD_LENGTH = 8
 
 export async function POST(request: NextRequest) {
   try {
+    const ip = getClientIp(request)
+    const rl = checkRateLimit(ip, 'signup', RATE_LIMITS.signup)
+    if (!rl.allowed) {
+      return NextResponse.json(
+        { success: false, error: 'Too many signup attempts. Please try again later.' },
+        { status: 429, headers: { 'Retry-After': String(Math.ceil((rl.resetAt - Date.now()) / 1000)) } }
+      )
+    }
+
     const body = (await request.json()) as { email: string; password: string; firstName: string }
     const { email, password, firstName } = body
 

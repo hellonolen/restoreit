@@ -19,7 +19,18 @@ export async function GET(request: NextRequest) {
     const db = await getDb()
 
     const userScans = await db
-      .select()
+      .select({
+        id: scans.id,
+        userId: scans.userId,
+        driveName: scans.driveName,
+        mode: scans.mode,
+        status: scans.status,
+        filesFound: scans.filesFound,
+        dataSize: scans.dataSize,
+        restoreRate: scans.restoreRate,
+        startedAt: scans.startedAt,
+        completedAt: scans.completedAt,
+      })
       .from(scans)
       .where(eq(scans.userId, user.id))
       .orderBy(desc(scans.startedAt))
@@ -70,7 +81,7 @@ export async function POST(request: NextRequest) {
       userId: user.id,
       driveName: driveName.trim(),
       mode,
-      status: 'in-progress',
+      status: 'created',
       filesFound: 0,
       dataSize: 0,
       restoreRate: 0,

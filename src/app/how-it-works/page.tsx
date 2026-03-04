@@ -6,7 +6,7 @@ import { ArrowRight, Terminal, Shield, Cloud, Download, Monitor } from 'lucide-r
 
 export const metadata: Metadata = {
     title: 'How It Works — RestoreIt',
-    description: 'Learn how RestoreIt restores files without installing anything on your drive.',
+    description: 'Learn how RestoreIt cloud-based restoration works.',
 };
 
 const steps = [
@@ -49,7 +49,7 @@ const steps = [
 
 export default function HowItWorksPage() {
     return (
-        <div className="min-h-screen bg-black text-white font-sans flex flex-col">
+        <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-foreground)] font-sans flex flex-col transition-colors duration-300">
             <SiteHeader />
 
             <main className="flex-1 pt-28 pb-20">
@@ -59,7 +59,7 @@ export default function HowItWorksPage() {
                         <h1 className="text-5xl md:text-6xl font-black tracking-tighter">
                             Five steps. Zero disk writes.
                         </h1>
-                        <p className="text-lg text-zinc-400 leading-relaxed max-w-2xl">
+                        <p className="text-lg text-[var(--color-text-secondary)] leading-relaxed max-w-2xl">
                             RestoreIt never installs anything on your drive. A memory-only relay streams your sectors to our cloud engine for analysis. Here&apos;s the full process.
                         </p>
                     </div>
@@ -69,15 +69,15 @@ export default function HowItWorksPage() {
                             <div key={step.number} className="group relative">
                                 <div className="flex gap-8">
                                     <div className="shrink-0">
-                                        <div className="w-16 h-16 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center text-[var(--color-accent)] group-hover:border-[var(--color-accent)]/30 transition-colors">
+                                        <div className="w-16 h-16 rounded-2xl bg-[var(--color-card-hover)] border border-[var(--color-border)] flex items-center justify-center text-[var(--color-accent)] group-hover:border-[var(--color-accent)]/30 transition-colors">
                                             {step.icon}
                                         </div>
-                                        <div className="text-zinc-800 text-3xl font-black text-center mt-3">{step.number}</div>
+                                        <div className="text-[var(--color-text-dim)] text-3xl font-black text-center mt-3">{step.number}</div>
                                     </div>
                                     <div className="space-y-3 pt-2">
                                         <h3 className="text-xl font-black tracking-tight">{step.title}</h3>
-                                        <p className="text-zinc-400 leading-relaxed">{step.desc}</p>
-                                        <p className="text-sm text-zinc-600 leading-relaxed">{step.detail}</p>
+                                        <p className="text-[var(--color-text-secondary)] leading-relaxed">{step.desc}</p>
+                                        <p className="text-sm text-[var(--color-text-dim)] leading-relaxed">{step.detail}</p>
                                     </div>
                                 </div>
                             </div>
@@ -85,19 +85,19 @@ export default function HowItWorksPage() {
                     </div>
 
                     {/* Relay Explainer */}
-                    <div className="p-8 rounded-2xl border border-white/[0.08] bg-white/[0.02] space-y-6">
+                    <div className="p-8 rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] space-y-6">
                         <h2 className="text-2xl font-black tracking-tight">The Secure Relay</h2>
-                        <p className="text-zinc-400 leading-relaxed">
+                        <p className="text-[var(--color-text-secondary)] leading-relaxed">
                             The RestoreIt relay is a lightweight script that runs entirely in your computer&apos;s RAM. It reads raw sector data from your drive and streams it over an encrypted TLS connection to our cloud engine. The relay never writes to your disk — it only reads.
                         </p>
-                        <div className="font-mono text-xs bg-black border border-white/10 rounded-xl p-4 text-[var(--color-accent)] flex items-center gap-3">
+                        <div className="font-mono text-xs bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl p-4 text-[var(--color-accent)] flex items-center gap-3">
                             <Terminal size={14} />
                             curl -sL https://restoreit.app/relay | bash
                         </div>
                         <div className="grid grid-cols-3 gap-3">
                             {['Zero disk writes', 'Memory-only execution', 'TLS encrypted stream'].map((label) => (
-                                <div key={label} className="flex items-center gap-2 p-3 rounded-xl bg-white/[0.02] border border-white/5 text-xs text-[var(--color-accent)]">
-                                    <Shield size={14} /><span className="text-zinc-400">{label}</span>
+                                <div key={label} className="flex items-center gap-2 p-3 rounded-xl bg-[var(--color-card)] border border-[var(--color-border-subtle)] text-xs text-[var(--color-accent)]">
+                                    <Shield size={14} /><span className="text-[var(--color-text-secondary)]">{label}</span>
                                 </div>
                             ))}
                         </div>

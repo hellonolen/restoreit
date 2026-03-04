@@ -15,8 +15,9 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const body = (await request.json()) as { tier: Tier }
+    const body = (await request.json()) as { tier: Tier; devices?: number }
     const { tier } = body
+    const devices = Math.max(1, Math.min(5, Math.floor(Number(body.devices) || 1)))
 
     if (!tier || !VALID_TIERS.includes(tier)) {
       return NextResponse.json(
@@ -33,12 +34,13 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const origin = request.headers.get('origin') ?? 'https://restoreit.app'
+    const origin = process.env.NEXT_PUBLIC_APP_URL ?? 'https://restoreit.app'
 
     const checkoutUrl = await createCheckoutSession({
       planId,
       userId: user.id,
       tier,
+      quantity: devices,
       redirectUrl: `${origin}/account?checkout=success`,
     })
 

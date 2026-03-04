@@ -2,10 +2,20 @@ import { NextRequest, NextResponse } from 'next/server'
 import { eq } from 'drizzle-orm'
 import { getDb } from '@/db'
 import { users } from '@/db/schema'
-import { hashPassword, createSession, buildSessionCookie } from '@/lib/auth'
+import { verifyPassword, createSession, buildSessionCookie } from '@/lib/auth'
+import { checkRateLimit, RATE_LIMITS, getClientIp } from '@/lib/rate-limit'
 
 export async function POST(request: NextRequest) {
   try {
+    const ip = getClientIp(request)
+    const rl = checkRateLimit(ip, 'login', RATE_LIMITS.login)
+    if (!rl.allowed) {
+      return NextResponse.json(
+        { success: false, error: 'Too many login attempts. Please try again later.' },
+        { status: 429, headers: { 'Retry-After': String(Math.ceil((rl.resetAt - Date.now()) / 1000)) } }
+      )
+    }
+
     const body = (await request.json()) as { email: string; password: string }
     const { email, password } = body
 
@@ -32,9 +42,9 @@ export async function POST(request: NextRequest) {
     }
 
     const user = userRows[0]
-    const hashedInput = await hashPassword(password)
+    const passwordValid = await verifyPassword(password, user.passwordHash)
 
-    if (hashedInput !== user.passwordHash) {
+    if (!passwordValid) {
       return NextResponse.json(
         { success: false, error: 'Invalid email or password' },
         { status: 401 }

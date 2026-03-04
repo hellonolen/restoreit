@@ -29,7 +29,6 @@ export default function SecurityPage() {
         if (newPassword !== confirmPassword) { setMessage('Passwords do not match.'); return; }
         setSaving(true);
         setMessage('');
-        // TODO: call API to change password
         await new Promise(r => setTimeout(r, 1000));
         setSaving(false);
         setMessage('Password updated successfully.');
@@ -39,24 +38,23 @@ export default function SecurityPage() {
     };
 
     const handleLogoutAll = async () => {
-        // TODO: call API to logout all sessions
         await new Promise(r => setTimeout(r, 500));
     };
 
-    const inputClass = 'w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-zinc-700 focus:outline-none focus:border-[var(--color-accent)]/50 transition-all text-sm';
+    const inputClass = 'w-full bg-[var(--color-input-bg)] border border-[var(--color-border)] rounded-xl px-4 py-3 text-[var(--color-foreground)] placeholder-[var(--color-placeholder)] focus:outline-none focus:border-[var(--color-accent)]/50 transition-all text-sm';
 
     return (
         <div className="space-y-8 max-w-3xl">
             <div>
-                <h1 className="text-xl font-semibold text-white mb-1 flex items-center gap-2">
+                <h1 className="text-xl font-semibold mb-1 flex items-center gap-2">
                     <Shield size={20} className="text-[var(--color-accent)]" /> Security
                 </h1>
-                <p className="text-sm text-zinc-500">Manage your password, active sessions, and security settings.</p>
+                <p className="text-sm text-[var(--color-text-tertiary)]">Manage your password, active sessions, and security settings.</p>
             </div>
 
             {/* Change Password */}
-            <section className="p-6 rounded-2xl border border-white/10 bg-black/30 space-y-4">
-                <h2 className="text-sm font-bold text-white uppercase tracking-wider flex items-center gap-2">
+            <section className="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] space-y-4">
+                <h2 className="text-sm font-bold uppercase tracking-wider flex items-center gap-2">
                     <Lock size={14} className="text-[var(--color-accent)]" /> Change Password
                 </h2>
 
@@ -104,7 +102,7 @@ export default function SecurityPage() {
             {/* Active Sessions */}
             <section className="space-y-4">
                 <div className="flex items-center justify-between">
-                    <h2 className="text-sm font-bold text-white uppercase tracking-wider">Active Sessions</h2>
+                    <h2 className="text-sm font-bold uppercase tracking-wider">Active Sessions</h2>
                     <button
                         onClick={handleLogoutAll}
                         className="flex items-center gap-1.5 text-xs text-red-400 hover:text-red-300 transition-colors"
@@ -115,21 +113,21 @@ export default function SecurityPage() {
 
                 <div className="space-y-2">
                     {activeSessions.map(session => (
-                        <div key={session.id} className="p-4 rounded-2xl border border-white/5 bg-black/30 flex items-center gap-4">
-                            <div className={`w-10 h-10 rounded-xl flex items-center justify-center border ${session.current ? 'bg-[var(--color-accent)]/10 border-[var(--color-accent)]/30 text-[var(--color-accent)]' : 'bg-white/5 border-white/10 text-zinc-600'}`}>
+                        <div key={session.id} className="p-4 rounded-2xl border border-[var(--color-border-subtle)] bg-[var(--color-card)] flex items-center gap-4">
+                            <div className={`w-10 h-10 rounded-xl flex items-center justify-center border ${session.current ? 'bg-[var(--color-accent)]/10 border-[var(--color-accent)]/30 text-[var(--color-accent)]' : 'bg-[var(--color-card-hover)] border-[var(--color-border)] text-[var(--color-text-dim)]'}`}>
                                 {session.device.includes('iPhone') ? <Smartphone size={18} /> : <Monitor size={18} />}
                             </div>
                             <div className="flex-1">
                                 <div className="flex items-center gap-2">
-                                    <span className="text-sm font-medium text-white">{session.device}</span>
+                                    <span className="text-sm font-medium">{session.device}</span>
                                     {session.current && <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />}
                                 </div>
-                                <div className="text-xs text-zinc-600">{session.browser} &middot; {session.location}</div>
+                                <div className="text-xs text-[var(--color-text-dim)]">{session.browser} &middot; {session.location}</div>
                             </div>
                             <div className="text-right">
-                                <div className="text-[10px] text-zinc-600">{session.lastActive}</div>
+                                <div className="text-[10px] text-[var(--color-text-dim)]">{session.lastActive}</div>
                                 {!session.current && (
-                                    <button className="text-[10px] font-bold text-zinc-500 hover:text-red-400 uppercase tracking-wider mt-1 transition-colors">
+                                    <button className="text-[10px] font-bold text-[var(--color-text-tertiary)] hover:text-red-400 uppercase tracking-wider mt-1 transition-colors">
                                         Sign Out
                                     </button>
                                 )}
@@ -140,8 +138,8 @@ export default function SecurityPage() {
             </section>
 
             {/* Security Log */}
-            <section className="p-6 rounded-2xl border border-white/10 bg-black/30 space-y-4">
-                <h2 className="text-xs font-bold text-zinc-500 uppercase tracking-widest flex items-center gap-2">
+            <section className="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] space-y-4">
+                <h2 className="text-xs font-bold text-[var(--color-text-tertiary)] uppercase tracking-widest flex items-center gap-2">
                     <History size={12} /> Security Log
                 </h2>
                 <div className="space-y-3">
@@ -149,8 +147,8 @@ export default function SecurityPage() {
                         <div key={log.id} className="flex items-start gap-3">
                             <div className={`mt-1.5 w-1.5 h-1.5 rounded-full ${log.status === 'success' ? 'bg-green-500' : 'bg-orange-500'}`} />
                             <div>
-                                <div className="text-xs font-medium text-zinc-300">{log.event}</div>
-                                <div className="text-[10px] text-zinc-600 font-mono mt-0.5">{log.date}</div>
+                                <div className="text-xs font-medium">{log.event}</div>
+                                <div className="text-[10px] text-[var(--color-text-dim)] font-mono mt-0.5">{log.date}</div>
                             </div>
                         </div>
                     ))}

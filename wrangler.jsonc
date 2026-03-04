@@ -4,11 +4,16 @@
   "compatibility_date": "2025-03-03",
   "compatibility_flags": ["nodejs_compat"],
 
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "restoreit-db",
-      "database_id": "LOCAL_DEV",
+      "database_id": "fa42d192-04c8-4d7f-9ecc-8c8cbe42ec4d",
       "migrations_dir": "drizzle"
     }
   ],

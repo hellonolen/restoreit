@@ -61,12 +61,36 @@ async function handlePaymentSucceeded(
 
   const metadata = data.metadata as Record<string, string> | undefined
   const userId = metadata?.user_id
-  const tier = (metadata?.tier ?? 'standard') as 'standard' | 'pro'
+  const tier = (metadata?.tier ?? 'standard') as 'standard' | 'pro' | 'protection'
   const whopPaymentId = data.id as string | undefined
   const amount = (data.amount as number) ?? 0
 
   if (!userId) {
     console.error('Whop webhook: payment.succeeded missing user_id in metadata')
+    return
+  }
+
+  // Idempotency: skip if we already processed this payment
+  if (whopPaymentId) {
+    const existing = await db
+      .select({ id: payments.id })
+      .from(payments)
+      .where(eq(payments.whopPaymentId, whopPaymentId))
+      .limit(1)
+    if (existing.length > 0) {
+      console.log(`Whop webhook: payment ${whopPaymentId} already processed, skipping`)
+      return
+    }
+  }
+
+  // Verify userId exists
+  const userRows = await db
+    .select({ id: users.id })
+    .from(users)
+    .where(eq(users.id, userId))
+    .limit(1)
+  if (userRows.length === 0) {
+    console.error(`Whop webhook: user ${userId} not found`)
     return
   }
 
@@ -104,6 +128,30 @@ async function handleSubscriptionCreated(
 
   if (!userId) {
     console.error('Whop webhook: subscription.created missing user_id in metadata')
+    return
+  }
+
+  // Idempotency: skip if we already processed this subscription
+  if (whopSubscriptionId) {
+    const existing = await db
+      .select({ id: subscriptions.id })
+      .from(subscriptions)
+      .where(eq(subscriptions.whopSubscriptionId, whopSubscriptionId))
+      .limit(1)
+    if (existing.length > 0) {
+      console.log(`Whop webhook: subscription ${whopSubscriptionId} already processed, skipping`)
+      return
+    }
+  }
+
+  // Verify userId exists
+  const userRows = await db
+    .select({ id: users.id })
+    .from(users)
+    .where(eq(users.id, userId))
+    .limit(1)
+  if (userRows.length === 0) {
+    console.error(`Whop webhook: user ${userId} not found`)
     return
   }
 

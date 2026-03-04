@@ -1,15 +1,18 @@
 "use client";
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { Shield, ArrowRight, Check, Cloud, HardDrive, Lock } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function CheckoutPage() {
+function CheckoutContent() {
     const [isProcessing, setIsProcessing] = useState(false);
     const [selectedPlan, setSelectedPlan] = useState<'standard' | 'pro'>('pro');
     const [error, setError] = useState('');
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const rawDevices = Number(searchParams.get('devices') ?? '1');
+    const devices = Math.max(1, Math.min(5, Math.floor(rawDevices) || 1));
 
     const handleCheckout = async () => {
         setIsProcessing(true);
@@ -19,7 +22,7 @@ export default function CheckoutPage() {
             const res = await fetch('/api/checkout', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ tier: selectedPlan }),
+                body: JSON.stringify({ tier: selectedPlan, devices }),
             });
 
             if (!res.ok) {
@@ -71,16 +74,16 @@ export default function CheckoutPage() {
     ];
 
     return (
-        <div className="min-h-screen bg-[#0A0A0B] text-white flex flex-col selection:bg-[var(--color-accent)]/30">
+        <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-foreground)] flex flex-col selection:bg-[var(--color-accent)]/30 transition-colors duration-300">
             {/* Header */}
-            <header className="flex items-center justify-between px-8 lg:px-12 py-6 border-b border-[#ffffff08]">
+            <header className="flex items-center justify-between px-8 lg:px-12 py-6 border-b border-[var(--color-border)]">
                 <Link href="/" className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-md bg-[var(--color-accent)] flex items-center justify-center shadow-lg shadow-[var(--color-accent)]/20">
                         <div className="w-2.5 h-2.5 bg-white rounded-sm rotate-45"></div>
                     </div>
                     <span className="text-base font-bold tracking-wide">RESTOREIT</span>
                 </Link>
-                <div className="flex items-center gap-2 px-3 py-1.5 bg-white/5 border border-white/10 text-xs tracking-widest text-zinc-400 font-medium rounded-lg">
+                <div className="flex items-center gap-2 px-3 py-1.5 bg-[var(--color-card-hover)] border border-[var(--color-border)] text-xs tracking-widest text-[var(--color-text-secondary)] font-medium rounded-lg">
                     <Lock size={12} /> SECURE CHECKOUT
                 </div>
             </header>
@@ -90,8 +93,8 @@ export default function CheckoutPage() {
                 {/* Left: Plan Selection */}
                 <div className="flex-1 space-y-8">
                     <div>
-                        <h1 className="text-4xl font-black text-white tracking-tight mb-3">Choose Your Plan</h1>
-                        <p className="text-zinc-500 text-lg leading-relaxed max-w-lg">
+                        <h1 className="text-4xl font-black tracking-tight mb-3">Choose Your Plan</h1>
+                        <p className="text-[var(--color-text-tertiary)] text-lg leading-relaxed max-w-lg">
                             Both plans scan your drive safely without overwriting deleted files. Pick the option that works best for you.
                         </p>
                     </div>
@@ -105,7 +108,7 @@ export default function CheckoutPage() {
                                 className={`p-6 rounded-2xl border text-left transition-all relative overflow-hidden ${
                                     selectedPlan === plan.id
                                         ? 'bg-[var(--color-accent)]/5 border-[var(--color-accent)] ring-1 ring-[var(--color-accent)]'
-                                        : 'bg-black/40 border-white/10 hover:border-white/20'
+                                        : 'bg-[var(--color-card)] border-[var(--color-border)] hover:border-[var(--color-border-focus)]'
                                 }`}
                             >
                                 {plan.recommended && (
@@ -116,29 +119,34 @@ export default function CheckoutPage() {
                                         <div className={`w-10 h-10 rounded-xl flex items-center justify-center border ${
                                             selectedPlan === plan.id
                                                 ? 'bg-[var(--color-accent)]/10 border-[var(--color-accent)]/30 text-[var(--color-accent)]'
-                                                : 'bg-white/5 border-white/10 text-zinc-500'
+                                                : 'bg-[var(--color-card-hover)] border-[var(--color-border)] text-[var(--color-text-tertiary)]'
                                         }`}>
                                             {plan.icon}
                                         </div>
                                         <div>
-                                            <h3 className="text-lg font-bold text-white">{plan.name}</h3>
+                                            <h3 className="text-lg font-bold">{plan.name}</h3>
                                             {plan.recommended && (
                                                 <span className="text-[9px] font-bold text-[var(--color-accent)] uppercase tracking-wider">Recommended</span>
                                             )}
                                         </div>
                                     </div>
-                                    <div className="w-5 h-5 rounded-full border-2 border-white/20 flex items-center justify-center">
+                                    <div className="w-5 h-5 rounded-full border-2 border-[var(--color-border-focus)] flex items-center justify-center">
                                         {selectedPlan === plan.id && <div className="w-2.5 h-2.5 bg-[var(--color-accent)] rounded-full" />}
                                     </div>
                                 </div>
-                                <div className="text-3xl font-bold mb-5">${plan.price}<span className="text-zinc-600 text-base font-normal">.00</span></div>
+                                <div className="text-3xl font-bold mb-5">
+                                    ${plan.price * devices}<span className="text-[var(--color-text-dim)] text-base font-normal">.00</span>
+                                    {devices > 1 && (
+                                        <div className="text-xs text-[var(--color-text-tertiary)] font-normal mt-1">${plan.price} x {devices} devices</div>
+                                    )}
+                                </div>
                                 <ul className="space-y-2.5 text-sm">
                                     {plan.features.map((f) => (
-                                        <li key={f.text} className={`flex gap-2 ${f.included ? 'text-zinc-400' : 'text-zinc-700'}`}>
+                                        <li key={f.text} className={`flex gap-2 ${f.included ? 'text-[var(--color-text-secondary)]' : 'text-[var(--color-disabled-text)]'}`}>
                                             {f.included ? (
                                                 <Check size={14} className="text-[var(--color-accent)] mt-0.5 shrink-0" />
                                             ) : (
-                                                <span className="text-zinc-700 mt-0.5 shrink-0">&#x2715;</span>
+                                                <span className="text-[var(--color-disabled-text)] mt-0.5 shrink-0">&#x2715;</span>
                                             )}
                                             {f.text}
                                         </li>
@@ -151,8 +159,8 @@ export default function CheckoutPage() {
                     <div className="bg-[var(--color-accent)]/5 border border-[var(--color-accent)]/20 p-5 rounded-xl flex gap-4">
                         <Shield size={20} className="text-[var(--color-accent)] shrink-0 mt-0.5" />
                         <div>
-                            <h4 className="text-sm font-bold text-white mb-1">Safe Restoration Guarantee</h4>
-                            <p className="text-xs text-zinc-400 leading-relaxed">
+                            <h4 className="text-sm font-bold mb-1">Safe Restoration Guarantee</h4>
+                            <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed">
                                 RestoreIt scans your drive without writing to disk. Pro tier stores files in RestoreIt Cloud. Standard tier downloads to your own drive.
                             </p>
                         </div>
@@ -161,22 +169,28 @@ export default function CheckoutPage() {
 
                 {/* Right: Checkout Summary */}
                 <div className="w-full lg:w-[380px] shrink-0">
-                    <div className="bg-[#111113] border border-white/10 rounded-2xl p-8 shadow-2xl sticky top-8 space-y-6">
+                    <div className="bg-[var(--color-background-elevated)] border border-[var(--color-border)] rounded-2xl p-8 shadow-2xl sticky top-8 space-y-6">
                         <div className="flex items-end justify-between">
                             <h2 className="text-xl font-bold">Order Summary</h2>
                             <div className="text-3xl font-bold tracking-tight">
-                                ${selectedPlan === 'pro' ? '249' : '89'}<span className="text-zinc-500 text-base">.00</span>
+                                ${(selectedPlan === 'pro' ? 249 : 89) * devices}<span className="text-[var(--color-text-tertiary)] text-base">.00</span>
                             </div>
                         </div>
 
                         <div className="space-y-3 text-sm">
-                            <div className="flex justify-between text-zinc-400">
-                                <span>{selectedPlan === 'pro' ? 'RestoreIt Pro' : 'RestoreIt'}</span>
-                                <span className="text-white">${selectedPlan === 'pro' ? '249' : '89'}.00</span>
+                            <div className="flex justify-between text-[var(--color-text-secondary)]">
+                                <span>{selectedPlan === 'pro' ? 'RestoreIt Pro' : 'RestoreIt'}{devices > 1 ? ` x ${devices} devices` : ''}</span>
+                                <span className="text-[var(--color-foreground)]">${(selectedPlan === 'pro' ? 249 : 89) * devices}.00</span>
                             </div>
-                            <div className="border-t border-white/5 pt-3 flex justify-between font-bold text-white">
+                            {devices > 1 && (
+                                <div className="flex justify-between text-[var(--color-text-dim)] text-xs">
+                                    <span>${selectedPlan === 'pro' ? 249 : 89} per device</span>
+                                    <span>{devices} devices</span>
+                                </div>
+                            )}
+                            <div className="border-t border-[var(--color-border-subtle)] pt-3 flex justify-between font-bold">
                                 <span>Total</span>
-                                <span>${selectedPlan === 'pro' ? '249' : '89'}.00</span>
+                                <span>${(selectedPlan === 'pro' ? 249 : 89) * devices}.00</span>
                             </div>
                         </div>
 
@@ -192,13 +206,13 @@ export default function CheckoutPage() {
                             disabled={isProcessing}
                             className={`w-full h-14 rounded-2xl text-sm font-black uppercase tracking-[0.15em] transition-all flex items-center justify-center gap-3 active:scale-[0.98] ${
                                 isProcessing
-                                    ? 'bg-zinc-900 text-zinc-700 cursor-not-allowed border border-white/5'
+                                    ? 'bg-[var(--color-disabled-bg)] text-[var(--color-disabled-text)] cursor-not-allowed border border-[var(--color-border-subtle)]'
                                     : 'bg-[var(--color-accent)] hover:opacity-90 text-white shadow-[0_20px_40px_rgba(138,43,226,0.25)]'
                             }`}
                         >
                             {isProcessing ? (
                                 <>
-                                    <div className="w-5 h-5 border-2 border-white/10 border-t-white rounded-full animate-spin" />
+                                    <div className="w-5 h-5 border-2 border-[var(--color-border)] border-t-[var(--color-foreground)] rounded-full animate-spin" />
                                     Redirecting...
                                 </>
                             ) : (
@@ -206,12 +220,24 @@ export default function CheckoutPage() {
                             )}
                         </button>
 
-                        <p className="text-[10px] text-zinc-600 text-center leading-relaxed">
+                        <p className="text-[10px] text-[var(--color-text-dim)] text-center leading-relaxed">
                             You&apos;ll be securely redirected to Whop to complete payment. No card details are stored on our servers.
                         </p>
                     </div>
                 </div>
             </main>
         </div>
+    );
+}
+
+export default function CheckoutPage() {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen bg-[var(--color-background)] flex items-center justify-center">
+                <div className="w-12 h-12 border-2 border-[var(--color-border)] border-t-[var(--color-accent)] rounded-full animate-spin" />
+            </div>
+        }>
+            <CheckoutContent />
+        </Suspense>
     );
 }
