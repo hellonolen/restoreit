@@ -2,7 +2,7 @@
 "use client";
 
 import { useRef, useState } from 'react';
-import { X, CreditCard, Lock, ShieldCheck, HardDrive, Cloud, Star, Info, Shield } from 'lucide-react';
+import { X, Lock, ShieldCheck, HardDrive, Cloud, Star, Shield } from 'lucide-react';
 import { useClickOutside } from '../hooks/useClickOutside';
 
 interface CheckoutModalProps {
@@ -23,53 +23,67 @@ export default function CheckoutModal({ onClose, onSuccess, totalFiles, dataSize
     const [selectedTier, setSelectedTier] = useState<'standard' | 'pro'>('standard');
     const modalRef = useRef<HTMLDivElement>(null);
     useClickOutside(modalRef, onClose);
-    const [showRefundPolicy, setShowRefundPolicy] = useState(false);
-    const [email, setEmail] = useState('');
-    const [cardNumber, setCardNumber] = useState('');
-    const [expiry, setExpiry] = useState('');
-    const [cvc, setCvc] = useState('');
+    const [isRedirecting, setIsRedirecting] = useState(false);
 
     const tiers = [
         {
             id: 'standard' as const,
-            name: 'restoreit',
+            name: 'Standard',
             price: 89,
-            scanLimit: 'Single restore',
+            scanLimit: 'Single restoration',
             storage: 'Your own drive required',
             retention: 'Immediate transfer only',
             requiresExternal: true,
             features: [
-                'Full cloud restore',
+                'Full cloud restoration',
                 'Restored file bundle download',
-                'Selective file restore',
+                'Selective file restoration',
                 '7-day support window',
             ],
-            excluded: ['restoreit storage', 'Direct secure download', 'Priority queue'],
         },
         {
             id: 'pro' as const,
-            name: 'restoreit Pro',
+            name: 'Pro',
             price: 249,
             scanLimit: 'Unlimited re-downloads',
-            storage: '500 GB restoreit included',
-            retention: '7-day secure vault retention',
+            storage: '500 GB cloud storage included',
+            retention: '7-day RestoreIt Cloud retention',
             requiresExternal: false,
             features: [
-                'Everything in restoreit',
-                '500 GB private restoreit',
+                'Everything in Standard',
+                '500 GB private cloud storage',
                 'Direct secure download — no external drive needed',
-                '7-day encrypted vault retention',
+                '7-day encrypted cloud retention',
                 'Priority restore queue',
                 'Extended file history',
-                '2FA restoreit access',
             ],
-            excluded: [],
         },
     ];
 
     const selected = tiers.find(t => t.id === selectedTier)!;
 
-    const inputClass = `w-full bg-black/50 border border-white/10 rounded-lg p-3.5 text-white placeholder-zinc-600 focus:outline-none focus:border-[#8A2BE2]/50 focus:ring-1 focus:ring-[#8A2BE2]/50 transition-all font-mono text-sm`;
+    const handlePaySecurely = async () => {
+        setIsRedirecting(true);
+        try {
+            const res = await fetch('/api/checkout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ tier: selectedTier }),
+            });
+            const data = (await res.json()) as { url?: string };
+            if (data.url) {
+                window.location.href = data.url;
+            } else {
+                // Fallback: trigger onSuccess for demo mode
+                onSuccess();
+            }
+        } catch {
+            // Fallback: trigger onSuccess for demo mode
+            onSuccess();
+        } finally {
+            setIsRedirecting(false);
+        }
+    };
 
     return (
         <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-lg flex items-center justify-center p-4 overflow-y-auto" role="dialog" aria-modal="true" aria-label="Secure Checkout">
@@ -83,7 +97,7 @@ export default function CheckoutModal({ onClose, onSuccess, totalFiles, dataSize
                     <div className="flex items-center gap-3">
                         <ShieldCheck className="text-[#8A2BE2]" size={20} />
                         <h2 className="text-white font-semibold">Secure Checkout</h2>
-                        <span className="px-2 py-0.5 bg-green-500/10 text-green-400 border border-green-500/20 rounded-full text-[10px] font-bold uppercase tracking-wider">TLS Encrypted</span>
+                        <span className="px-2 py-0.5 bg-green-500/10 text-green-400 border border-green-500/20 rounded-full text-[10px] font-bold uppercase tracking-wider">Encrypted</span>
                     </div>
                     <button onClick={onClose} className="text-zinc-500 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-white/5" aria-label="Close checkout">
                         <X size={18} />
@@ -94,7 +108,7 @@ export default function CheckoutModal({ onClose, onSuccess, totalFiles, dataSize
 
                     {/* Tier Selector */}
                     <div>
-                        <h3 className="text-xs uppercase tracking-widest font-bold text-zinc-500 mb-4">Select Your Restore Tier</h3>
+                        <h3 className="text-xs uppercase tracking-widest font-bold text-zinc-500 mb-4">Choose Your Plan</h3>
                         <div className="grid grid-cols-2 gap-4">
                             {tiers.map(tier => (
                                 <button key={tier.id} onClick={() => setSelectedTier(tier.id)}
@@ -113,7 +127,7 @@ export default function CheckoutModal({ onClose, onSuccess, totalFiles, dataSize
                                     <ul className="space-y-1.5 text-xs text-zinc-500">
                                         {tier.features.slice(0, 3).map(f => (
                                             <li key={f} className="flex items-start gap-2">
-                                                <span className="text-[#8A2BE2] mt-0.5">✓</span>{f}
+                                                <span className="text-[#8A2BE2] mt-0.5">&#10003;</span>{f}
                                             </li>
                                         ))}
                                         {tier.features.length > 3 && <li className="text-[#8A2BE2] font-medium">+{tier.features.length - 3} more</li>}
@@ -130,11 +144,11 @@ export default function CheckoutModal({ onClose, onSuccess, totalFiles, dataSize
                         {/* Tier detail: storage/retention/limits */}
                         <div className="mt-3 p-4 rounded-xl bg-black/30 border border-white/5 grid grid-cols-3 gap-4 text-xs">
                             <div>
-                                <div className="text-zinc-500 mb-1">Scan Limit</div>
+                                <div className="text-zinc-500 mb-1">Restoration Limit</div>
                                 <div className="text-zinc-300 font-medium">{selected.scanLimit}</div>
                             </div>
                             <div>
-                                <div className="text-zinc-500 mb-1">Vault Storage</div>
+                                <div className="text-zinc-500 mb-1">Cloud Storage</div>
                                 <div className="text-zinc-300 font-medium">{selected.storage}</div>
                             </div>
                             <div>
@@ -149,8 +163,8 @@ export default function CheckoutModal({ onClose, onSuccess, totalFiles, dataSize
                         <div className="flex items-center gap-3">
                             <Shield size={16} className="text-[#8A2BE2]" />
                             <div>
-                                <div className="text-white text-sm font-medium">restoreit Protection</div>
-                                <div className="text-zinc-500 text-xs">Real-time monitoring for your critical disk arrays.</div>
+                                <div className="text-white text-sm font-medium">Restoration Summary</div>
+                                <div className="text-zinc-500 text-xs">{totalFiles.toLocaleString()} files &middot; {formatBytes(dataSize)} restorable</div>
                             </div>
                         </div>
                         <div className="text-right">
@@ -159,47 +173,22 @@ export default function CheckoutModal({ onClose, onSuccess, totalFiles, dataSize
                         </div>
                     </div>
 
-                    {/* Payment Form */}
-                    <div className="space-y-4">
-                        <div>
-                            <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-2" htmlFor="checkout-email">Email Address</label>
-                            <input id="checkout-email" type="email" placeholder="you@example.com" value={email} onChange={e => setEmail(e.target.value)} className={inputClass} autoComplete="email" />
-                        </div>
-
-                        <div>
-                            <label className="block text-xs uppercase tracking-wider text-zinc-500 font-semibold mb-2" htmlFor="checkout-card">Card Number</label>
-                            <div className="relative">
-                                <CreditCard size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-600" />
-                                <input id="checkout-card" type="text" inputMode="numeric" placeholder="0000 0000 0000 0000" value={cardNumber} onChange={e => setCardNumber(e.target.value)} className={`${inputClass} pl-10`} autoComplete="cc-number" />
-                            </div>
-                            <div className="flex mt-2 gap-2">
-                                <input type="text" placeholder="MM / YY" value={expiry} onChange={e => setExpiry(e.target.value)} className={`${inputClass} w-1/2`} autoComplete="cc-exp" aria-label="Expiry date" />
-                                <input type="text" placeholder="CVC" value={cvc} onChange={e => setCvc(e.target.value)} className={`${inputClass} w-1/2`} autoComplete="cc-csc" aria-label="CVC" />
-                            </div>
-                        </div>
+                    {/* Payment policy */}
+                    <div className="text-xs text-zinc-600 leading-relaxed">
+                        All completed purchases are final. You are viewing this checkout because restorable files were detected during your scan.
                     </div>
 
-                    {/* Refund policy */}
-                    <div>
-                        <button onClick={() => setShowRefundPolicy(p => !p)} className="flex items-center gap-2 text-xs text-zinc-500 hover:text-zinc-300 transition-colors">
-                            <Info size={13} />What is your refund policy?
-                        </button>
-                        {showRefundPolicy && (
-                            <div className="mt-3 p-4 rounded-xl border border-white/8 bg-black/30 text-xs text-zinc-400 leading-relaxed animate-in fade-in duration-200">
-                                <strong className="text-zinc-300 block mb-1">Our Guarantee</strong>
-                                If the scan detects restorable files and restoreit fails to deliver them to your restoreit, you receive a full refund — no questions asked. If no files are detected, you are not charged. Restore success depends on the extent of overwriting since deletion; we cannot restore files that have been physically overwritten.
-                            </div>
-                        )}
-                    </div>
-
-                    <button onClick={onSuccess}
-                        className="w-full bg-white hover:bg-zinc-200 text-black px-5 py-4 rounded-xl text-sm font-bold tracking-wide transition-all shadow-lg active:scale-[0.98] flex items-center justify-center gap-2">
+                    <button
+                        onClick={handlePaySecurely}
+                        disabled={isRedirecting}
+                        className="w-full bg-white hover:bg-zinc-200 text-black px-5 py-4 rounded-xl text-sm font-bold tracking-wide transition-all shadow-lg active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
                         <Lock size={15} />
-                        Pay ${selected.price}.00 — {selected.name}
+                        {isRedirecting ? 'Redirecting...' : `Pay Securely — $${selected.price}.00`}
                     </button>
 
                     <p className="text-center text-[10px] text-zinc-600 leading-relaxed">
-                        All payments are processed via encrypted Secure Checkout. Your card data is never stored on restoreit servers. By proceeding you agree to our <a href="/terms" className="underline hover:text-zinc-400" target="_blank">Terms of Service</a> and <a href="/privacy" className="underline hover:text-zinc-400" target="_blank">Privacy Policy</a>.
+                        You&apos;ll be redirected to our secure payment partner to complete your purchase. By proceeding you agree to our <a href="/terms" className="underline hover:text-zinc-400" target="_blank">Terms of Service</a> and <a href="/privacy" className="underline hover:text-zinc-400" target="_blank">Privacy Policy</a>.
                     </p>
                 </div>
             </div>

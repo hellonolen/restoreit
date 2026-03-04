@@ -11,8 +11,8 @@ interface OnboardingOverlayProps {
 
 const slides = [
     {
-        title: "Zero-Install Restore",
-        desc: "Existing tools overwrite your data by installing software. restoreit separates computation from disk access, ensuring 100% disk safety.",
+        title: "Safe Restoration",
+        desc: "Other tools risk overwriting your data by installing software. RestoreIt keeps your disk completely safe by scanning in the cloud.",
         icon: <Activity className="text-[#8A2BE2]" size={32} />,
         visual: (
             <div className="relative w-full h-48 bg-black/40 rounded-2xl border border-white/5 overflow-hidden flex items-center justify-center gap-8">
@@ -22,11 +22,11 @@ const slides = [
                 </div>
                 <div className="flex flex-col items-center gap-1">
                     <ChevronRight size={24} className="text-[#8A2BE2] animate-pulse" />
-                    <div className="text-[10px] text-[#8A2BE2] font-bold uppercase tracking-widest">Relay Pipe</div>
+                    <div className="text-[10px] text-[#8A2BE2] font-bold uppercase tracking-widest">Secure Stream</div>
                 </div>
                 <div className="flex flex-col items-center gap-2">
                     <Cloud size={32} className="text-green-400" />
-                    <div className="text-[10px] text-zinc-500 font-mono">restoreit Cloud</div>
+                    <div className="text-[10px] text-zinc-500 font-mono">RestoreIt Cloud</div>
                 </div>
                 <div className="absolute inset-x-0 bottom-4 flex justify-center">
                     <div className="text-[9px] text-zinc-600 font-mono flex items-center gap-2">
@@ -37,15 +37,15 @@ const slides = [
         )
     },
     {
-        title: "The Secure Relay Pipe",
-        desc: "A tiny, memory-only command streams raw sectors directly to our Cloud Forensics Agents. It writes nothing to your disk and leaves no footprint.",
+        title: "Secure Streaming",
+        desc: "A lightweight command streams your drive data directly to our cloud. It writes nothing to your disk and leaves no footprint.",
         icon: <Terminal className="text-[#8A2BE2]" size={32} />,
         visual: (
             <div className="space-y-4 w-full">
                 <div className="p-4 rounded-xl bg-black/60 border border-[#8A2BE2]/30 font-mono text-xs text-[#8A2BE2] leading-relaxed shadow-[0_0_20px_rgba(138,43,226,0.15)]">
                     <span className="text-zinc-500"># Memory-only streaming activated</span><br />
                     curl -s restoreit.app/relay | bash<br />
-                    <span className="text-green-400">✓ Connecting to Cloud Forensics...</span><br />
+                    <span className="text-green-400">&#10003; Connecting to RestoreIt Cloud...</span><br />
                     <span className="text-green-400">✓ Transport: TLS 1.3 AES-256</span>
                 </div>
                 <div className="flex justify-between text-[10px] text-zinc-500 uppercase tracking-widest font-bold px-2">
@@ -56,8 +56,8 @@ const slides = [
         )
     },
     {
-        title: "restoreit restore",
-        desc: "Our Cloud Agents rebuild your fragmented JPEGs, PDFs, and MP4s sector-by-sector, proving restore with direct 'Proof of Life' previews.",
+        title: "Cloud Restoration",
+        desc: "Our cloud engine rebuilds your fragmented photos, documents, and videos, showing you live previews of restored files.",
         icon: <div className="w-8 h-8 rounded-lg bg-[#8A2BE2]/10 border border-[#8A2BE2]/30 flex items-center justify-center"><div className="w-2 h-2 bg-[#8A2BE2] rounded-sm" /></div>,
         visual: (
             <div className="grid grid-cols-3 gap-3 w-full h-48">

@@ -17,7 +17,7 @@ import HorizontalStepper from '@/components/HorizontalStepper';
 import {
   StepType, DriveInfo, ScanStats, ScanSession, Notification, ScanMode, FileCategory, NetworkStatus
 } from '@/types';
-import { AlertCircle, History, Keyboard, Moon, Sun, HelpCircle } from 'lucide-react';
+import { AlertCircle, History, Moon, Sun, HelpCircle } from 'lucide-react';
 import Link from 'next/link';
 
 // Static timestamps — defined outside component to avoid impure render calls
@@ -128,7 +128,7 @@ export default function Home() {
   const handleDiagnosticComplete = (data: { scenario: string; priorities: FileCategory[] }) => {
     setDiagnosticData(data);
     setCurrentStep(2);
-    addNotification('success', 'Diagnostic briefing ingested. Forensic filters calibrated.');
+    addNotification('success', 'Got it. We\'ll prioritize those file types during the scan.');
   };
 
   const startScan = () => {
@@ -136,7 +136,7 @@ export default function Home() {
     setScanProgress(0);
     setScanPaused(false);
     setScanStats({ ...defaultScanStats, networkStatus: NetworkStatus.CONNECTING });
-    addNotification('info', 'Relay connected. Cloud sweep initiated.');
+    addNotification('info', 'Connected. Cloud scan started.');
 
     let progress = 0;
     let elapsed = 0;
@@ -237,9 +237,6 @@ export default function Home() {
         </div>
         <div className="flex items-center gap-2">
           <Link href="/login" className="text-[10px] font-black uppercase tracking-widest text-zinc-500 hover:text-white transition-colors mr-4 px-4 py-2">Log In</Link>
-          <button onClick={() => setShowHistory(true)} className={`p-2.5 rounded-lg border transition-all ${darkMode ? 'border-white/10 text-zinc-400 hover:text-white' : 'border-black/10 text-zinc-500 hover:text-zinc-900'}`}><History size={16} /></button>
-          <Link href="/support" className={`p-2.5 rounded-lg border transition-all ${darkMode ? 'border-white/10 text-zinc-400 hover:text-white' : 'border-black/10 text-zinc-500 hover:text-zinc-900'}`}><HelpCircle size={16} /></Link>
-          <button onClick={() => setShowKeyboardShortcuts(true)} className={`p-2.5 rounded-lg border transition-all ${darkMode ? 'border-white/10 text-zinc-400 hover:text-white' : 'border-black/10 text-zinc-500 hover:text-zinc-900'}`}><Keyboard size={16} /></button>
           <button onClick={() => setDarkMode(prev => !prev)} className={`p-2.5 rounded-lg border transition-all ${darkMode ? 'border-white/10 text-zinc-400 hover:text-white' : 'border-black/10 text-zinc-500 hover:text-zinc-900'}`}>{darkMode ? <Sun size={16} /> : <Moon size={16} />}</button>
         </div>
       </header>

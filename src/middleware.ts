@@ -2,22 +2,25 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 export function middleware(request: NextRequest) {
-    // Simple session check (since we don't have a real backend, we'll check for a mock cookie)
     const isAuthenticated = request.cookies.has('restoreit_session');
+    const { pathname } = request.nextUrl;
 
-    // Protect /account routes
-    if (request.nextUrl.pathname.startsWith('/account') && !isAuthenticated) {
+    // Protect authenticated routes
+    const protectedPaths = ['/account', '/checkout', '/restore'];
+    const isProtected = protectedPaths.some(p => pathname.startsWith(p));
+
+    if (isProtected && !isAuthenticated) {
         return NextResponse.redirect(new URL('/login', request.url));
     }
 
-    // Redirect to /account if already logged in and visiting login
-    if (request.nextUrl.pathname === '/login' && isAuthenticated) {
-        return NextResponse.redirect(new URL('/account', request.url));
+    // Redirect logged-in users away from login/signup
+    if ((pathname === '/login' || pathname === '/signup') && isAuthenticated) {
+        return NextResponse.redirect(new URL('/restore', request.url));
     }
 
     return NextResponse.next();
 }
 
 export const config = {
-    matcher: ['/account/:path*', '/login'],
+    matcher: ['/account/:path*', '/checkout/:path*', '/restore/:path*', '/login', '/signup'],
 };

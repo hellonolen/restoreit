@@ -1,4 +1,4 @@
-// AGENT 6 — ProUpsell: Post-restore $12/mo protection, restore readiness score, vault countdown
+// ProUpsell: Post-restoration $12/mo protection, restore readiness score, cloud retention countdown
 "use client";
 
 import { ShieldCheck, Activity, HardDrive, Bell, Star, CheckCircle2, Clock, Cpu, Cloud } from 'lucide-react';
@@ -41,10 +41,10 @@ export default function ProUpsell({ sessionStats, darkMode, onRestart, onBack, o
     const benefits = [
         { icon: <HardDrive size={16} />, title: 'Disk Health Monitoring', desc: 'Continuous SMART status tracking for all connected drives.' },
         { icon: <Bell size={16} />, title: 'Corruption Detection Alerts', desc: 'Real-time warnings before catastrophic data loss occurs.' },
-        { icon: <Activity size={16} />, title: 'File System Integrity Scanning', desc: 'Scheduled scans keep your storage healthy and restorable.' },
+        { icon: <Activity size={16} />, title: 'File System Integrity Scanning', desc: 'Scheduled scans keep your storage healthy and ready for restoration.' },
         { icon: <Cpu size={16} />, title: 'Priority Restore Queue', desc: 'Skip the line — Pro subscribers process first in emergencies.' },
-        { icon: <Cloud size={16} />, title: 'Extended Vault Retention', desc: 'Extended restoreit access for 30 days vs 7-day standard.' },
-        { icon: <Clock size={16} />, title: 'Restore History Archive', desc: 'Full log of all past restore sessions and extracted files.' },
+        { icon: <Cloud size={16} />, title: 'Extended Cloud Retention', desc: 'Extended RestoreIt Cloud access for 30 days vs 7-day standard.' },
+        { icon: <Clock size={16} />, title: 'Restoration History Archive', desc: 'Full log of all past restore sessions and extracted files.' },
     ];
 
     return (
@@ -69,7 +69,7 @@ export default function ProUpsell({ sessionStats, darkMode, onRestart, onBack, o
                         )}
                     </div>
                     <p className={`text-sm ${darkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>
-                        {sessionStats ? `${sessionStats.filesFound.toLocaleString()} files extracted · ${sessionStats.restoreRate}% restore rate · ${sessionStats.mode === 'deep' ? 'Deep' : 'Quick'} scan` : 'Your files have been extracted to your restoreit.'}
+                        {sessionStats ? `${sessionStats.filesFound.toLocaleString()} files restored · ${sessionStats.restoreRate}% restoration rate · ${sessionStats.mode === 'deep' ? 'Deep' : 'Quick'} scan` : 'Your files have been restored successfully.'}
                     </p>
                 </div>
                 {sessionStats && (
@@ -80,11 +80,11 @@ export default function ProUpsell({ sessionStats, darkMode, onRestart, onBack, o
                 )}
             </div>
 
-            {/* Vault Countdown */}
+            {/* Cloud Retention Countdown */}
             <div className={`flex items-center gap-4 p-5 rounded-xl border ${darkMode ? 'border-orange-500/30 bg-orange-500/5' : 'border-orange-200 bg-orange-50'}`}>
                 <Clock size={20} className="text-orange-400 shrink-0" />
                 <div className="flex-1">
-                    <div className={`text-sm font-semibold ${darkMode ? 'text-white' : 'text-zinc-900'}`}>restoreit expires in {vaultDaysRemaining} days</div>
+                    <div className={`text-sm font-semibold ${darkMode ? 'text-white' : 'text-zinc-900'}`}>RestoreIt Cloud expires in {vaultDaysRemaining} days</div>
                     <div className={`text-xs ${darkMode ? 'text-zinc-500' : 'text-zinc-500'}`}>Your restored files will be permanently deleted from our servers after this window unless you upgrade to Pro.</div>
                 </div>
                 <div className="text-3xl font-light text-orange-400 font-mono shrink-0">{vaultDaysRemaining}d</div>
@@ -103,7 +103,7 @@ export default function ProUpsell({ sessionStats, darkMode, onRestart, onBack, o
 
                     <div className="p-6 space-y-5">
                         <p className={`text-sm leading-relaxed ${darkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>
-                            You just experienced what data loss feels like. restoreit Pro monitors your devices 24/7, detects early warning signs, and keeps your restore vault always ready.
+                            You just experienced what data loss feels like. RestoreIt Protection monitors your devices 24/7, detects early warning signs, and keeps RestoreIt Cloud always ready.
                         </p>
 
                         {/* Benefits */}
@@ -122,7 +122,7 @@ export default function ProUpsell({ sessionStats, darkMode, onRestart, onBack, o
                         {/* Price */}
                         <div className={`flex items-center justify-between p-4 rounded-xl border ${darkMode ? 'bg-white/5 border-white/10' : 'bg-zinc-100 border-zinc-200'}`}>
                             <div>
-                                <div className={`font-semibold ${darkMode ? 'text-white' : 'text-zinc-900'}`}>restoreit Pro Protection</div>
+                                <div className={`font-semibold ${darkMode ? 'text-white' : 'text-zinc-900'}`}>RestoreIt Pro Protection</div>
                                 <div className="text-[11px] font-mono text-zinc-500 uppercase tracking-wider mt-0.5">Monthly · Cancel Anytime</div>
                             </div>
                             <div className={`text-3xl font-light ${darkMode ? 'text-white' : 'text-zinc-900'}`}>$12<span className="text-zinc-500 text-sm">/mo</span></div>
@@ -160,7 +160,7 @@ export default function ProUpsell({ sessionStats, darkMode, onRestart, onBack, o
                                 { label: 'Disk SMART Health', value: '94%', status: 'good' },
                                 { label: 'File System Integrity', value: '71%', status: 'warning' },
                                 { label: 'Storage Redundancy', value: 'None', status: 'critical' },
-                                { label: 'Restore Vault', value: 'Not active', status: 'critical' },
+                                { label: 'RestoreIt Cloud', value: 'Not active', status: 'critical' },
                             ].map(({ label, value, status }) => (
                                 <div key={label} className="flex items-center justify-between text-xs">
                                     <span className={darkMode ? 'text-zinc-500' : 'text-zinc-500'}>{label}</span>
@@ -178,9 +178,9 @@ export default function ProUpsell({ sessionStats, darkMode, onRestart, onBack, o
                         <ul className="space-y-2 text-xs">
                             {[
                                 '⚡ Warned you 14 days before disk failure',
-                                '🔒 Kept a vault ready so you could skip the scan',
+                                '🔒 Kept RestoreIt Cloud ready so you could skip the scan',
                                 '🚀 Placed you first in the restore queue',
-                                '📁 Already had your files backed in your Vault',
+                                '📁 Already had your files backed in RestoreIt Cloud',
                             ].map(item => (
                                 <li key={item} className={`${darkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>{item}</li>
                             ))}

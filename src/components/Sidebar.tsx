@@ -10,11 +10,11 @@ interface SidebarProps {
 }
 
 const steps = [
-    { id: 1 as StepType, label: 'Briefing', desc: 'Case diagnostic intake' },
-    { id: 2 as StepType, label: 'Selection', desc: 'Volume & mode target' },
-    { id: 3 as StepType, label: 'Scanning', desc: 'Sector relay in progress' },
-    { id: 4 as StepType, label: 'Analysis', desc: 'Forensic restore' },
-    { id: 5 as StepType, label: 'Extraction', desc: 'Result & Vault unlock' },
+    { id: 1 as StepType, label: 'Describe', desc: 'Tell us what happened' },
+    { id: 2 as StepType, label: 'Select Drive', desc: 'Choose your drive' },
+    { id: 3 as StepType, label: 'Scanning', desc: 'Cloud scan in progress' },
+    { id: 4 as StepType, label: 'Results', desc: 'Your restored files' },
+    { id: 5 as StepType, label: 'Download', desc: 'Get your files back' },
 ];
 
 export default function Sidebar({ currentStep, darkMode, onRestart }: SidebarProps) {
@@ -30,7 +30,7 @@ export default function Sidebar({ currentStep, darkMode, onRestart }: SidebarPro
                             }`}
                     >
                         <RotateCcw size={14} className="group-hover:rotate-180 transition-transform duration-500" />
-                        <span className="text-[10px] font-black uppercase tracking-widest">Restart Extraction</span>
+                        <span className="text-[10px] font-black uppercase tracking-widest">Start Over</span>
                     </button>
                 </div>
 
@@ -63,7 +63,7 @@ export default function Sidebar({ currentStep, darkMode, onRestart }: SidebarPro
                 <Link href="/support" className="block hover:text-[#8A2BE2] transition-colors">Help & Support</Link>
                 <Link href="/terms" className="block hover:text-[#8A2BE2] transition-colors">Terms of Service</Link>
                 <Link href="/privacy" className="block hover:text-[#8A2BE2] transition-colors">Privacy Policy</Link>
-                <div className="pt-2 text-zinc-800 text-[9px] font-black tracking-normal uppercase">TLS 1.3 · ZERO DISK WRITES</div>
+                <div className="pt-2 text-zinc-800 text-[9px] font-black tracking-normal uppercase">Encrypted · Zero disk writes</div>
             </div>
         </aside>
     );

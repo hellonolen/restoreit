@@ -1,4 +1,4 @@
-// AGENT 4 — ExtractionBrowser: File Filter, Search, Selective Restore, Grid/List/Timeline, Proof of Life
+// ExtractionBrowser: File Filter, Search, Selective Restore, Grid/List/Timeline, Proof of Life
 "use client";
 
 import { useState, useMemo } from 'react';
@@ -120,8 +120,8 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
                         <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" /> Back to Browser
                     </button>
                     <div className="text-right">
-                        <div className="text-[10px] font-bold text-[#8A2BE2] uppercase tracking-widest mb-1">Final Manifest</div>
-                        <div className="text-xl font-semibold text-white">Review & Confirm Extraction</div>
+                        <div className="text-[10px] font-bold text-[#8A2BE2] uppercase tracking-widest mb-1">Review</div>
+                        <div className="text-xl font-semibold text-white">Restoration Summary</div>
                     </div>
                 </div>
 
@@ -158,9 +158,9 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
                                 <Shield size={20} />
                             </div>
                             <div className="flex-1">
-                                <h4 className={`text-sm font-bold mb-1 uppercase tracking-tight ${darkMode ? 'text-white' : 'text-zinc-900'}`}>Zero-Install Extraction Protocol</h4>
+                                <h4 className={`text-sm font-bold mb-1 uppercase tracking-tight ${darkMode ? 'text-white' : 'text-zinc-900'}`}>Safe Restoration</h4>
                                 <p className={`text-xs leading-relaxed ${darkMode ? 'text-zinc-400' : 'text-zinc-600'}`}>
-                                    These files will be extracted from the cloud stream directly. Your local disk remains in read-only mode, guaranteeing no data overwrites during the final restore phase.
+                                    These files will be restored from the cloud directly. Your local disk stays in read-only mode, so nothing gets overwritten.
                                 </p>
                             </div>
                         </div>
@@ -180,7 +180,7 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
                                 <div className="flex justify-between text-sm">
                                     <span className="text-zinc-500">restore</span>
                                     <span className="text-[#8A2BE2] font-bold uppercase tracking-widest text-[10px] flex items-center gap-1">
-                                        <Cpu size={10} /> Forensic Tier
+                                        <Cpu size={10} /> Restoration Tier
                                     </span>
                                 </div>
                             </div>
@@ -191,7 +191,7 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
                                     <span className={`text-3xl font-bold ${darkMode ? 'text-white' : 'text-zinc-900'}`}>$89.00</span>
                                 </div>
                                 <button onClick={onCheckout} className="w-full bg-[#8A2BE2] hover:bg-[#7e22ce] text-white py-4 rounded-xl text-sm font-bold transition-all shadow-lg shadow-[#8A2BE2]/25 flex items-center justify-center gap-2 group">
-                                    Complete Extraction <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                                    Restore Files <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
                                 </button>
                             </div>
                         </div>
@@ -215,7 +215,7 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
                     <div className={`max-w-4xl w-full border shadow-2xl rounded-[32px] overflow-hidden ${darkMode ? 'bg-[#0D0D0F] border-white/10' : 'bg-white border-black/10'}`}>
                         <div className={`p-8 border-b flex items-center justify-between ${darkMode ? 'border-white/5' : 'border-black/5'}`}>
                             <div>
-                                <div className="text-[10px] font-bold text-[#8A2BE2] uppercase tracking-widest mb-1">Advanced Forensic Repair</div>
+                                <div className="text-[10px] font-bold text-[#8A2BE2] uppercase tracking-widest mb-1">File Repair</div>
                                 <h3 className={`text-2xl font-semibold ${darkMode ? 'text-white' : 'text-zinc-900'}`}>
                                     Restoring: <span className="font-mono text-[#8A2BE2]">{MOCK_FILES.find(f => f.id === repairingFileId)?.name}</span>
                                 </h3>
@@ -238,14 +238,14 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
                                     <div className="absolute inset-0 bg-gradient-to-t from-red-500/10 to-transparent" />
                                 </div>
                                 <div>
-                                    <h4 className="text-sm font-bold text-zinc-500 uppercase mb-2">Entropy Discontinuity</h4>
-                                    <p className="text-xs text-zinc-600 leading-relaxed">Detected 42 missing sectors in the file header. Bitwise pattern matching suggests significant fragmentation.</p>
+                                    <h4 className="text-sm font-bold text-zinc-500 uppercase mb-2">Damaged File</h4>
+                                    <p className="text-xs text-zinc-600 leading-relaxed">Detected 42 missing sections in the file. Parts of this file are fragmented and need repair.</p>
                                 </div>
                             </div>
 
                             <div className="space-y-4">
                                 <div className={`aspect-square rounded-3xl flex items-center justify-center border relative overflow-hidden ${darkMode ? 'bg-[#8A2BE2]/5 border-[#8A2BE2]/30' : 'bg-[#8A2BE2]/5 border-[#8A2BE2]/20'}`}>
-                                    <span className="absolute top-4 left-4 px-2 py-1 rounded bg-green-500/10 border border-green-500/20 text-[10px] font-bold text-green-400 uppercase tracking-widest z-10">restoreit restore</span>
+                                    <span className="absolute top-4 left-4 px-2 py-1 rounded bg-green-500/10 border border-green-500/20 text-[10px] font-bold text-green-400 uppercase tracking-widest z-10">Repaired</span>
                                     <div className="absolute inset-0 bg-gradient-to-br from-[#8A2BE2]/20 to-transparent animate-pulse" />
                                     <NextImage
                                         src="https://images.unsplash.com/photo-1506744626753-140081d4cb43?q=80&w=600&auto=format&fit=crop"
@@ -267,8 +267,8 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
                                     </div>
                                 </div>
                                 <div>
-                                    <h4 className="text-sm font-bold text-zinc-500 uppercase mb-2">Forensic Intelligence</h4>
-                                    <p className="text-xs text-zinc-600 leading-relaxed">Agent has successfully interpolated missing header data. File is ready for high-fidelity extraction.</p>
+                                    <h4 className="text-sm font-bold text-zinc-500 uppercase mb-2">Repair Complete</h4>
+                                    <p className="text-xs text-zinc-600 leading-relaxed">Missing data has been reconstructed. This file is ready for download.</p>
                                 </div>
                             </div>
                         </div>
@@ -299,7 +299,7 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
             <div className="flex items-start justify-between flex-wrap gap-4">
                 <div className="animate-in slide-in-from-left-4 duration-500">
                     <div className="text-[#8A2BE2] text-[10px] font-bold tracking-[0.2em] uppercase mb-2 flex items-center gap-2">
-                        <span className="w-8 h-[1px] bg-[#8A2BE2]"></span> Step 5/5 — Forensic Browser
+                        <span className="w-8 h-[1px] bg-[#8A2BE2]"></span> Step 4/5 — Restored Files
                     </div>
                     <div className="flex items-center gap-4 mb-1">
                         <div className="w-10 h-10 rounded-2xl bg-green-500/10 text-green-400 flex items-center justify-center border border-green-500/20 shadow-[0_0_20px_rgba(34,197,94,0.1)]">
@@ -317,7 +317,7 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
                         )}
                     </div>
                     <p className={`text-sm ml-14 ${darkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
-                        Detected <strong className={darkMode ? 'text-zinc-200' : 'text-zinc-900'}>{totalFiles.toLocaleString()} files</strong> matching restore patterns · {restoreRate}% restored
+                        Detected <strong className={darkMode ? 'text-zinc-200' : 'text-zinc-900'}>{totalFiles.toLocaleString()} files</strong> matching restore patterns · {restoreRate}% intact
                     </p>
                 </div>
                 <div className="flex items-center gap-3">
@@ -337,7 +337,7 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
                 <div>
                     <h4 className={`text-sm font-bold mb-1 ${darkMode ? 'text-orange-100' : 'text-orange-900'}`}>Read-Only Barrier Active</h4>
                     <p className={`text-xs leading-relaxed max-w-2xl ${darkMode ? 'text-orange-100/60' : 'text-orange-800/70'}`}>
-                        restoreit has locked disk writes to &quot;Macintosh HD&quot; to prevent sector overwriting. To restore these files, you must proceed to the forensic extraction gate.
+                        RestoreIt has locked disk writes to &quot;Macintosh HD&quot; to prevent overwriting. To restore these files, proceed to the next step.
                     </p>
                 </div>
             </div>
@@ -383,7 +383,7 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
                         <label className="group flex items-center gap-3 text-xs font-bold text-zinc-500 uppercase tracking-widest cursor-pointer hover:text-[#8A2BE2] transition-colors">
                             <input type="checkbox" checked={selectAll} onChange={toggleSelectAll}
                                 className="w-5 h-5 rounded-lg border-white/10 accent-[#8A2BE2] cursor-pointer" />
-                            Manifest Snapshot ({filtered.length})
+                            Select All ({filtered.length})
                         </label>
                         {selectedIds.size > 0 && (
                             <div className="flex items-center gap-2">
@@ -431,7 +431,7 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
                                                     onClick={(e) => { e.stopPropagation(); setRepairingFileId(file.id); }}
                                                     className="text-[9px] px-2 py-0.5 rounded-full bg-[#8A2BE2]/10 border border-[#8A2BE2]/20 text-[#8A2BE2] font-black uppercase tracking-widest hover:bg-[#8A2BE2]/20 transition-all flex items-center gap-1.5 group/btn shadow-lg shadow-[#8A2BE2]/5 agent-pulse"
                                                 >
-                                                    <Cpu size={9} className="animate-pulse" /> restoreit Repair Mode
+                                                    <Cpu size={9} className="animate-pulse" /> File Repair
                                                 </button>
                                             )}
                                         </div>
@@ -506,12 +506,12 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
                                 className="w-full bg-[#8A2BE2] hover:bg-[#7e22ce] text-white py-4 rounded-2xl text-sm font-black uppercase tracking-[0.1em] transition-all shadow-xl shadow-[#8A2BE2]/30 flex items-center justify-center gap-3 active:scale-95 group"
                             >
                                 <Lock size={16} className="group-hover:rotate-12 transition-transform" />
-                                {selectedIds.size > 0 ? 'Review Selected' : 'Extract All'}
+                                {selectedIds.size > 0 ? 'Review Selected' : 'Restore All'}
                             </button>
 
                             <div className="space-y-3">
                                 <button onClick={onRestart} className={`w-full text-[10px] font-bold uppercase tracking-widest transition-colors flex items-center justify-center gap-2 ${darkMode ? 'text-zinc-700 hover:text-red-400' : 'text-zinc-400 hover:text-red-500'}`}>
-                                    <RotateCcw size={12} /> Purge Scan & Restart
+                                    <RotateCcw size={12} /> Start Over
                                 </button>
                             </div>
                         </div>
@@ -522,10 +522,10 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
                             <div className="w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center text-[#8A2BE2]">
                                 <Shield size={16} />
                             </div>
-                            <span className={`text-[10px] font-black uppercase tracking-widest ${darkMode ? 'text-zinc-400' : 'text-zinc-700'}`}>Client Integrity Lock</span>
+                            <span className={`text-[10px] font-black uppercase tracking-widest ${darkMode ? 'text-zinc-400' : 'text-zinc-700'}`}>Scan-First Model</span>
                         </div>
                         <p className="text-[11px] leading-relaxed italic">
-                            &quot;We guarantee the absolute structural integrity of the detected file headers. If your files cannot be restored in our forensic cloud, a full credit will be issued.&quot;
+                            &quot;You see results before you pay. If no files are detected, you&apos;re not charged. All completed purchases are final.&quot;
                         </p>
                     </div>
                 </div>

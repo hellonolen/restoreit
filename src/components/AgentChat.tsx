@@ -42,7 +42,7 @@ const AGENT_RESPONSES: Record<string, MessageChunk[]> = {
         { type: 'thinking', content: 'Parsing intent: file types → JPEG, DNG, RAW. Date range detected: June 2025. Prioritizing by resolution.' },
         { type: 'tool_use', content: '', toolUse: { name: 'scan_drive', input: '{ file_types: ["jpg","jpeg","dng","raw","heic"], date_range: "2025-06-01..2025-06-30", sort: "resolution_desc" }', status: 'running' } },
         { type: 'tool_use', content: '', toolUse: { name: 'scan_drive', input: '{ file_types: ["jpg","jpeg","dng","raw","heic"], date_range: "2025-06-01..2025-06-30", sort: "resolution_desc" }', output: '214 files found · 4.2 GB restorable · 98% intact', status: 'done' } },
-        { type: 'result', content: 'I found **214 photos from June 2025**, totalling 4.2 GB. Most are intact — 98% restore confidence.\n\nTop results include:\n• 47 high-resolution JPEG files (6000×4000+)\n• 38 DNG RAW files from what appears to be a mirrorless camera\n• 129 HEIC files from an iPhone\n\nI\'ve pre-selected the strongest candidates in the file browser above. Ready to extract?' },
+        { type: 'result', content: 'I found **214 photos from June 2025**, totalling 4.2 GB. Most are intact — 98% restoration confidence.\n\nTop results include:\n• 47 high-resolution JPEG files (6000×4000+)\n• 38 DNG RAW files from what appears to be a mirrorless camera\n• 129 HEIC files from an iPhone\n\nI\'ve pre-selected the strongest candidates in the file browser above. Ready to extract?' },
     ],
     relay_fail: [
         { type: 'thinking', content: 'Relay connection error detected. Running automated diagnostics.' },
@@ -56,11 +56,11 @@ const AGENT_RESPONSES: Record<string, MessageChunk[]> = {
     ],
     restore_photos: [
         { type: 'thinking', content: 'Identifying photo fragments across disk sectors...' },
-        { type: 'result', content: 'I have identified 4,284 JPEG and RAW fragments that appear to be from a wedding shoot. I can prioritize these for bit-perfect restore.\n\nWould you like to start the restore of these fragments?' }
+        { type: 'result', content: 'I have identified 4,284 JPEG and RAW fragments that appear to be from a wedding shoot. I can prioritize these for bit-perfect restoration.\n\nWould you like to start the restoration of these fragments?' }
     ],
     default: [
         { type: 'thinking', content: 'Searching knowledge base and app context...' },
-        { type: 'result', content: 'I\'m here to help. You can ask me to:\n\n• **Restore specific files** — e.g. "Find my tax documents from 2024"\n• **Troubleshoot relay issues** — if the curl command fails\n• **Explain the process** — how sectors, APFS, or data restore works\n• **Guide you through restore** — step by step\n\nWhat would you like to do?' }
+        { type: 'result', content: 'I\'m here to help. You can ask me to:\n\n• **Restore specific files** — e.g. "Find my tax documents from 2024"\n• **Troubleshoot relay issues** — if the curl command fails\n• **Explain the process** — how sectors, APFS, or data restoration works\n• **Guide you through restoration** — step by step\n\nWhat would you like to do?' }
         ,
     ],
 };
@@ -92,14 +92,42 @@ function ToolBlock({ tool, darkMode }: { tool: ToolUse; darkMode: boolean }) {
     );
 }
 
+function renderMarkdownSafe(text: string, darkMode: boolean): React.ReactNode {
+    const lines = text.split('\n');
+    return lines.map((line, lineIdx) => {
+        const parts: React.ReactNode[] = [];
+        let remaining = line;
+        let keyIdx = 0;
+
+        while (remaining.length > 0) {
+            const boldMatch = remaining.match(/\*\*(.+?)\*\*/);
+            if (boldMatch && boldMatch.index !== undefined) {
+                if (boldMatch.index > 0) {
+                    parts.push(<span key={`${lineIdx}-${keyIdx++}`}>{remaining.slice(0, boldMatch.index)}</span>);
+                }
+                parts.push(
+                    <strong key={`${lineIdx}-${keyIdx++}`} className={`font-semibold ${darkMode ? 'text-white' : 'text-zinc-900'}`}>
+                        {boldMatch[1]}
+                    </strong>
+                );
+                remaining = remaining.slice(boldMatch.index + boldMatch[0].length);
+            } else {
+                parts.push(<span key={`${lineIdx}-${keyIdx++}`}>{remaining}</span>);
+                remaining = '';
+            }
+        }
+
+        return (
+            <span key={`line-${lineIdx}`}>
+                {lineIdx > 0 && <br />}
+                {parts}
+            </span>
+        );
+    });
+}
+
 function MessageBubble({ msg, darkMode }: { msg: Message; darkMode: boolean }) {
     const isAgent = msg.role === 'agent';
-    const renderMarkdown = (text: string) => {
-        return text
-            .replace(/\*\*(.+?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>')
-            .replace(/\n/g, '<br/>')
-            .replace(/• /g, '&bull; ');
-    };
 
     return (
         <div className={`flex gap-3 ${isAgent ? 'justify-start' : 'justify-end'}`}>
@@ -123,8 +151,9 @@ function MessageBubble({ msg, darkMode }: { msg: Message; darkMode: boolean }) {
                             <ToolBlock tool={chunk.toolUse} darkMode={darkMode} />
                         )}
                         {chunk.type === 'result' && (
-                            <div className={`px-4 py-3 rounded-2xl rounded-tl-sm text-sm leading-relaxed ${darkMode ? 'bg-[#1A1A1D] border border-white/10 text-zinc-300' : 'bg-white border border-black/10 text-zinc-700'}`}
-                                dangerouslySetInnerHTML={{ __html: renderMarkdown(chunk.content) }} />
+                            <div className={`px-4 py-3 rounded-2xl rounded-tl-sm text-sm leading-relaxed ${darkMode ? 'bg-[#1A1A1D] border border-white/10 text-zinc-300' : 'bg-white border border-black/10 text-zinc-700'}`}>
+                                {renderMarkdownSafe(chunk.content, darkMode)}
+                            </div>
                         )}
                     </div>
                 ))}
@@ -155,7 +184,7 @@ export function AgentChat({ onClose, darkMode }: AgentChatProps) {
             role: 'agent',
             content: '',
             timestamp: Date.now(),
-            chunks: [{ type: 'result', content: "I'm your restoreit restore assistant. I can help you restore specific files using natural language, troubleshoot connection issues, and walk you through the restore process.\n\nWhat would you like to restore?" }],
+            chunks: [{ type: 'result', content: "I'm your Restoration Assistant. I can help you find specific files, troubleshoot connection issues, and walk you through the restoration process.\n\nWhat would you like to restore?" }],
         },
     ]);
     const [input, setInput] = useState('');
@@ -227,7 +256,7 @@ export function AgentChat({ onClose, darkMode }: AgentChatProps) {
 
     return (
         <div className={`fixed bottom-24 right-6 z-50 w-96 max-h-[600px] flex flex-col rounded-2xl border shadow-2xl overflow-hidden animate-in slide-in-from-bottom-4 duration-300 ${darkMode ? 'bg-[#111113] border-white/10' : 'bg-white border-black/10'}`}
-            role="dialog" aria-label="restoreit restore assistant" aria-modal="false">
+            role="dialog" aria-label="Restoration Assistant" aria-modal="false">
 
             {/* Header */}
             <div className={`flex items-center justify-between px-4 py-3.5 border-b ${darkMode ? 'border-white/5 bg-black/40' : 'border-black/5 bg-zinc-50'}`}>
@@ -238,7 +267,7 @@ export function AgentChat({ onClose, darkMode }: AgentChatProps) {
                         </div>
                     </div>
                     <div>
-                        <div className={`text-sm font-semibold ${darkMode ? 'text-white' : 'text-zinc-900'}`}>restore Assistant</div>
+                        <div className={`text-sm font-semibold ${darkMode ? 'text-white' : 'text-zinc-900'}`}>Restoration Assistant</div>
                         <div className="flex items-center gap-1.5 text-[10px] text-green-400">
                             <span className="w-1.5 h-1.5 rounded-full bg-green-400"></span>
                             Ready · {streaming ? 'Analyzing...' : 'Online'}
@@ -283,9 +312,9 @@ export function AgentChat({ onClose, darkMode }: AgentChatProps) {
                         value={input}
                         onChange={e => setInput(e.target.value)}
                         disabled={streaming}
-                        placeholder={streaming ? 'Agent is responding...' : 'Ask about your restore...'}
+                        placeholder={streaming ? 'Agent is responding...' : 'Ask about your restoration...'}
                         className="flex-1 bg-transparent text-sm outline-none placeholder-zinc-600"
-                        aria-label="Message the restore assistant"
+                        aria-label="Message the restoration assistant"
                     />
                     <button type="submit" disabled={!input.trim() || streaming} aria-label="Send message"
                         className="w-7 h-7 rounded-lg bg-[#8A2BE2] disabled:opacity-30 hover:bg-[#7e22ce] text-white flex items-center justify-center transition-all shrink-0">
@@ -293,7 +322,7 @@ export function AgentChat({ onClose, darkMode }: AgentChatProps) {
                     </button>
                 </form>
                 <p className={`text-[10px] text-center mt-2 ${darkMode ? 'text-zinc-700' : 'text-zinc-400'}`}>
-                    restoreit Cloud · Context-aware · Never shares your data
+                    RestoreIt Cloud · Never shares your data
                 </p>
             </div>
         </div>

@@ -1,0 +1,26 @@
+{
+  "name": "restoreit",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2025-03-03",
+  "compatibility_flags": ["nodejs_compat"],
+
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "restoreit-db",
+      "database_id": "LOCAL_DEV",
+      "migrations_dir": "drizzle"
+    }
+  ],
+
+  "r2_buckets": [
+    {
+      "binding": "VAULT",
+      "bucket_name": "restoreit-vaults"
+    }
+  ],
+
+  "vars": {
+    "NEXT_PUBLIC_APP_URL": "https://restoreit.app"
+  }
+}

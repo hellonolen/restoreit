@@ -36,12 +36,12 @@ export default function DiagnosticBriefing({ onComplete, darkMode }: DiagnosticB
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 w-full max-w-4xl mx-auto space-y-12 pb-20">
             {/* Header */}
             <div>
-                <div className="text-[#8A2BE2] text-xs font-black tracking-widest uppercase mb-3">Diagnostic Intake</div>
+                <div className="text-[#8A2BE2] text-xs font-black tracking-widest uppercase mb-3">Tell Us What Happened</div>
                 <h1 className={`text-4xl font-black mb-4 tracking-tighter ${darkMode ? 'text-white' : 'text-zinc-900'}`}>
-                    Tell us what <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8A2BE2] to-[#B066FF]">happened.</span>
+                    What happened to your <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8A2BE2] to-[#B066FF]">files?</span>
                 </h1>
                 <p className={`text-lg leading-relaxed max-w-2xl ${darkMode ? 'text-zinc-500' : 'text-zinc-500'}`}>
-                    The restoreit engine uses your briefing to calibrate forensic scanning and prioritize the sectors most likely to contain your specific data.
+                    Describing your situation helps us scan smarter and find your files faster.
                 </p>
             </div>
 
@@ -49,7 +49,7 @@ export default function DiagnosticBriefing({ onComplete, darkMode }: DiagnosticB
                 {/* Main Intake */}
                 <div className="lg:col-span-3 space-y-8">
                     <div className="space-y-4">
-                        <label className={`text-xs font-black uppercase tracking-widest ${darkMode ? 'text-zinc-600' : 'text-zinc-400'}`}>Data Loss Scenario</label>
+                        <label className={`text-xs font-black uppercase tracking-widest ${darkMode ? 'text-zinc-600' : 'text-zinc-400'}`}>What Happened</label>
                         <div className={`relative group transition-all duration-300 ${darkMode ? 'focus-within:ring-1 focus-within:ring-[#8A2BE2]/50' : 'focus-within:ring-1 focus-within:ring-[#8A2BE2]/30'} rounded-3xl`}>
                             <textarea
                                 value={scenario}
@@ -72,15 +72,15 @@ export default function DiagnosticBriefing({ onComplete, darkMode }: DiagnosticB
                             <Shield size={24} />
                         </div>
                         <div className="space-y-1">
-                            <div className={`text-sm font-bold ${darkMode ? 'text-white' : 'text-zinc-900'}`}>Forensic Integrity Mode</div>
-                            <div className="text-xs text-zinc-500 leading-relaxed">Your description will be processed locally to filter sector signatures during the scan. No data is stored or shared.</div>
+                            <div className={`text-sm font-bold ${darkMode ? 'text-white' : 'text-zinc-900'}`}>Your Privacy Is Protected</div>
+                            <div className="text-xs text-zinc-500 leading-relaxed">Your description is only used to guide the scan. No data is stored or shared.</div>
                         </div>
                     </div>
                 </div>
 
                 {/* Priorities */}
                 <div className="lg:col-span-2 space-y-6">
-                    <label className={`text-xs font-black uppercase tracking-widest ${darkMode ? 'text-zinc-600' : 'text-zinc-400'}`}>Restore Priorities</label>
+                    <label className={`text-xs font-black uppercase tracking-widest ${darkMode ? 'text-zinc-600' : 'text-zinc-400'}`}>What Are You Looking For?</label>
                     <div className="space-y-3">
                         {PRIORITIES.map((p) => {
                             const isSelected = selectedPriorities.includes(p.id);
@@ -121,7 +121,7 @@ export default function DiagnosticBriefing({ onComplete, darkMode }: DiagnosticB
                         : 'bg-zinc-800 text-zinc-600 cursor-not-allowed grayscale'
                         }`}
                 >
-                    Submit Briefing & Proceed <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                    Continue <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                 </button>
             </div>
         </div>

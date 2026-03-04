@@ -90,7 +90,7 @@ export default function Scanner({ progress, files, stats, paused, onPause, onCan
             <div className="flex items-start justify-between flex-wrap gap-4">
                 <div>
                     <div className="text-[#8A2BE2] text-[10px] font-bold tracking-[0.2em] uppercase mb-2 flex items-center gap-2">
-                        <span className="w-8 h-[1px] bg-[#8A2BE2]"></span> Step 3/5 — Forensic Scan
+                        <span className="w-8 h-[1px] bg-[#8A2BE2]"></span> Step 3/5 — Cloud Scan
                     </div>
                     <div className="flex items-center gap-4 mb-1">
                         <h2 className={`text-3xl font-bold tracking-tight ${darkMode ? 'text-white' : 'text-zinc-900'}`}>
@@ -107,12 +107,12 @@ export default function Scanner({ progress, files, stats, paused, onPause, onCan
                         )}
                     </div>
                     <p className={`text-sm ${darkMode ? 'text-zinc-400' : 'text-zinc-500'}`}>
-                        {paused ? 'Resume soon — background processes may overwrite restorable data.' : pct < 100 ? 'Reading raw sectors and streaming securely to restoreit.' : 'All sectors analyzed. Files are ready for extraction.'}
+                        {paused ? 'Resume soon — background processes may overwrite restorable data.' : pct < 100 ? 'Securely scanning your drive in the cloud.' : 'Scan complete. Your files are ready for restoration.'}
                     </p>
                 </div>
                 <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-semibold ${net.color} border-current/30 bg-current/10`}>
                     <net.Icon size={12} />
-                    restoreit: {net.label}
+                    RestoreIt: {net.label}
                 </span>
             </div>
 
@@ -152,9 +152,9 @@ export default function Scanner({ progress, files, stats, paused, onPause, onCan
                         <div className="flex items-center justify-between mb-4">
                             <div className="flex items-center gap-3">
                                 <Activity size={12} className="text-[#8A2BE2]" />
-                                <span className={`text-[10px] font-black uppercase tracking-[0.2em] ${darkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>Forensic Bit-Stream</span>
+                                <span className={`text-[10px] font-black uppercase tracking-[0.2em] ${darkMode ? 'text-zinc-500' : 'text-zinc-400'}`}>Live Data Stream</span>
                             </div>
-                            <span className="text-[9px] font-mono text-[#8A2BE2] opacity-50">TLS 1.3 ENCRYPTED RELAY</span>
+                            <span className="text-[9px] font-mono text-[#8A2BE2] opacity-50">ENCRYPTED STREAM</span>
                         </div>
                         <div className={`font-mono text-[11px] leading-relaxed break-all h-16 overflow-hidden ${darkMode ? 'text-[#8A2BE2]/40' : 'text-[#8A2BE2]/60'}`}>
                             {bitStream}
@@ -177,7 +177,7 @@ export default function Scanner({ progress, files, stats, paused, onPause, onCan
                                     <span>{line}</span>
                                 </div>
                             ))}
-                            {logLines.length === 0 && <div className="text-zinc-800 italic">Initializing forensic relay...</div>}
+                            {logLines.length === 0 && <div className="text-zinc-800 italic">Initializing cloud scan...</div>}
                         </div>
                     </div>
 
