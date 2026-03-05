@@ -32,7 +32,7 @@ export const PARTNER_TIERS: PartnerTier[] = [
       'MCP Server access',
       'Webhook notifications',
       'Usage dashboard',
-      'AI support agent',
+      'Email support',
     ],
   },
   {
