@@ -51,7 +51,7 @@ export const PARTNER_TIERS: PartnerTier[] = [
       'Everything in Starter',
       'Priority scanning queue',
       'Bulk upload support',
-      'Advanced analytics dashboard',
+      'Webhook event logs',
     ],
   },
   {
@@ -67,9 +67,9 @@ export const PARTNER_TIERS: PartnerTier[] = [
     rateLimitNum: 500,
     features: [
       'Everything in Growth',
-      '99.9% uptime SLA',
+      'Unlimited scan history',
       'Deep scan priority',
-      'Extended data retention',
+      '99.9% uptime guarantee',
     ],
   },
 ]
