@@ -2,7 +2,7 @@
 // Account Layout Shell — shared by all /account/* pages
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { User, CreditCard, History, Shield, Cloud, ArrowLeft, Lock, LogOut, Key, BarChart3 } from 'lucide-react';
+import { User, CreditCard, History, Shield, Cloud, ArrowLeft, Lock, LogOut, Key, BarChart3, Send } from 'lucide-react';
 import { useUser } from '@/hooks/useUser';
 
 const navItems = [
@@ -84,11 +84,18 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
                             );
                         })}
                         {user?.isAdmin && (
-                            <Link href="/account/admin"
-                                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${pathname.startsWith('/account/admin') ? 'bg-[var(--color-accent)]/10 text-[var(--color-foreground)] border border-[var(--color-accent)]/20' : 'text-[var(--color-text-tertiary)] hover:text-[var(--color-foreground)] hover:bg-[var(--color-card-hover)]'}`}>
-                                <BarChart3 size={15} className={pathname.startsWith('/account/admin') ? 'text-[var(--color-accent)]' : ''} />
-                                Admin
-                            </Link>
+                            <>
+                                <Link href="/account/admin"
+                                    className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${pathname === '/account/admin' ? 'bg-[var(--color-accent)]/10 text-[var(--color-foreground)] border border-[var(--color-accent)]/20' : 'text-[var(--color-text-tertiary)] hover:text-[var(--color-foreground)] hover:bg-[var(--color-card-hover)]'}`}>
+                                    <BarChart3 size={15} className={pathname === '/account/admin' ? 'text-[var(--color-accent)]' : ''} />
+                                    Admin
+                                </Link>
+                                <Link href="/account/admin/outbound"
+                                    className={`flex items-center gap-3 px-3 py-2.5 pl-8 rounded-xl text-sm transition-all ${pathname === '/account/admin/outbound' ? 'bg-[var(--color-accent)]/10 text-[var(--color-foreground)] border border-[var(--color-accent)]/20' : 'text-[var(--color-text-tertiary)] hover:text-[var(--color-foreground)] hover:bg-[var(--color-card-hover)]'}`}>
+                                    <Send size={13} className={pathname === '/account/admin/outbound' ? 'text-[var(--color-accent)]' : ''} />
+                                    Outbound Engine
+                                </Link>
+                            </>
                         )}
                     </nav>
                 </aside>

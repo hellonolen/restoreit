@@ -1,0 +1,28 @@
+name = "restoreit-outbound-agent"
+main = "src/index.ts"
+compatibility_date = "2024-03-05"
+workers_dev = true
+
+# Add Cloudflare Native Email Sending binding
+send_email = [
+  { name = "SEND_EMAIL" }
+]
+
+# We use tail logging rather than heavy observability for this worker
+[observability]
+enabled = true
+
+[[d1_databases]]
+binding = "DB"
+database_name = "restoreit_outbound"
+database_id = "8d8a3710-6a2e-4b52-9c01-a4656d382a89"
+
+
+# The 4 asynchronous loops are mounted to Cloudflare CRON triggers
+[triggers]
+crons = [
+  "0 0 * * SUN",     # 1. Scout: Once a week, Sunday at midnight
+  "*/15 * * * *",    # 2. Enricher: Every 15 minutes
+  "*/5 * * * *",     # 3. Agentic Brain (Research & Copywriting): Every 5 minutes
+  "* 9-17 * * Mon-Fri" # 4. Postman: Every 1 minute, strict business hours (Mon-Fri, 9am-5pm)
+]
