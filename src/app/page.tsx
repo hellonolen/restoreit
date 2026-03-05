@@ -5,9 +5,41 @@ import { PLATFORM_STATS } from '@/lib/demo-data';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      name: 'restoreit',
+      url: 'https://restoreit.app',
+      logo: 'https://restoreit.app/favicon.ico',
+      description: 'Cloud-based forensic file restoration that never writes to your drive.',
+      contactPoint: { '@type': 'ContactPoint', email: 'team@restoreit.app', contactType: 'customer support' },
+    },
+    {
+      '@type': 'WebSite',
+      name: 'restoreit',
+      url: 'https://restoreit.app',
+    },
+    {
+      '@type': 'SoftwareApplication',
+      name: 'restoreit',
+      applicationCategory: 'UtilitiesApplication',
+      operatingSystem: 'Web',
+      url: 'https://restoreit.app',
+      description: 'Cloud-based file restoration. Scan your drive without writing a single byte. See what the scan finds before you pay.',
+      offers: [
+        { '@type': 'Offer', name: 'Scan', price: '89', priceCurrency: 'USD', description: 'Cloud restoration scan with immediate download' },
+        { '@type': 'Offer', name: 'Pro', price: '249', priceCurrency: 'USD', description: 'Deep scan, damaged file reconstruction, 7-day download window' },
+      ],
+    },
+  ],
+};
+
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-foreground)] selection:bg-[var(--color-accent)]/30 flex flex-col font-sans transition-colors duration-300">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <SiteHeader />
 
       {/* Hero Section */}

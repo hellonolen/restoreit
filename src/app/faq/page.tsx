@@ -65,9 +65,23 @@ const faqCategories = [
     },
 ];
 
+// Build JSON-LD from FAQ data
+const faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqCategories.flatMap(cat =>
+        cat.questions.map(q => ({
+            '@type': 'Question',
+            name: q.q,
+            acceptedAnswer: { '@type': 'Answer', text: q.a },
+        }))
+    ),
+};
+
 export default function FAQPage() {
     return (
         <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-foreground)] font-sans flex flex-col transition-colors duration-300">
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
             <SiteHeader />
 
             <main className="flex-1 pt-28 pb-20">
