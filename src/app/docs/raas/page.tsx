@@ -15,7 +15,7 @@ export default function RaasDocsPage() {
     { icon: <Code2 size={20} />, title: 'Webhook-Driven Results', desc: 'Receive real-time job completion notifications and file manifests via signed webhooks.' },
     { icon: <Shield size={20} />, title: 'HMAC-SHA256 Security', desc: 'Every webhook payload is cryptographically signed — verify authenticity before processing.' },
     { icon: <BarChart3 size={20} />, title: 'Usage Tracking', desc: 'Monitor jobs created, data scanned, and files restored across your billing period.' },
-    { icon: <Lock size={20} />, title: 'Encrypted at Rest', desc: 'All uploaded images and recovered files are AES-256 encrypted in isolated R2 storage.' },
+    { icon: <Lock size={20} />, title: 'MCP Server', desc: 'Connect AI agents directly to restoreit via Model Context Protocol — no code required.' },
   ]
 
   const tiers = [
@@ -58,9 +58,12 @@ export default function RaasDocsPage() {
               </pre>
             </div>
 
-            <div className="flex items-center gap-3 text-xs text-[var(--color-text-dim)]">
+            <div className="flex items-center gap-3 text-xs text-[var(--color-text-dim)] flex-wrap">
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[var(--color-border)]">
                 7 REST Endpoints
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[var(--color-border)]">
+                MCP Server
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[var(--color-border)]">
                 Webhook Callbacks
@@ -75,7 +78,7 @@ export default function RaasDocsPage() {
         {/* Capabilities */}
         <section className="py-16 px-6 md:px-8 border-t border-[var(--color-border-subtle)]">
           <div className="max-w-4xl mx-auto space-y-10">
-            <h2 className="text-2xl font-black tracking-tight">What the API does</h2>
+            <h2 className="text-2xl font-black tracking-tight">What the API & MCP do</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {capabilities.map(({ icon, title, desc }) => (
                 <div key={title} className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] p-6 space-y-3">

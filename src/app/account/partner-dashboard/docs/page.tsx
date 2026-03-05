@@ -117,8 +117,8 @@ export default function PartnerDocsPage() {
                     <ArrowLeft size={18} />
                 </Link>
                 <div>
-                    <h1 className="text-2xl font-black tracking-tight">API Documentation</h1>
-                    <p className="text-xs text-[var(--color-text-dim)] mt-1">Restore-as-a-Service REST API Reference</p>
+                    <h1 className="text-2xl font-black tracking-tight">API & MCP Documentation</h1>
+                    <p className="text-xs text-[var(--color-text-dim)] mt-1">restoreit-as-a-Service — REST API & Model Context Protocol Reference</p>
                 </div>
             </div>
 
@@ -337,6 +337,91 @@ const isValid = verifyWebhook(req.body, sig, ts, WEBHOOK_SECRET);`}</CodeBlock>
   "files_found": 847,
   "data_recovered": 2147483648,
   "completed_at": 1709510700000
+}`}</CodeBlock>
+                </div>
+            </div>
+
+            {/* MCP Server */}
+            <div className="space-y-6">
+                <h2 className="text-xl font-black tracking-tight">MCP Server</h2>
+                <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+                    Connect AI agents directly to restoreit via the <strong>Model Context Protocol</strong>. Your AI assistant can create restore jobs,
+                    check status, list recovered files, and check usage — all through natural language. Uses the same Bearer token authentication as the REST API.
+                </p>
+
+                <div className="space-y-4">
+                    <h3 className="text-lg font-bold">Endpoint</h3>
+                    <CodeBlock label="MCP Server URL">{`https://restoreit.app/api/mcp`}</CodeBlock>
+                </div>
+
+                <div className="space-y-4">
+                    <h3 className="text-lg font-bold">Configuration</h3>
+                    <p className="text-sm text-[var(--color-text-secondary)]">
+                        Add this to your AI tool&apos;s MCP configuration:
+                    </p>
+                    <CodeBlock label="Claude Desktop / Cursor / etc.">{`{
+  "mcpServers": {
+    "restoreit": {
+      "url": "https://restoreit.app/api/mcp",
+      "headers": {
+        "Authorization": "Bearer rstr_live_your_api_key"
+      }
+    }
+  }
+}`}</CodeBlock>
+                </div>
+
+                <div className="space-y-4">
+                    <h3 className="text-lg font-bold">Available Tools</h3>
+                    <div className="rounded-2xl border border-[var(--color-border)] overflow-hidden">
+                        <div className="min-w-[400px]">
+                            <div className="grid grid-cols-2 border-b border-[var(--color-border)] bg-[var(--color-card)]">
+                                <div className="p-4 text-[10px] font-black uppercase tracking-[0.2em] text-[var(--color-text-dim)]">Tool</div>
+                                <div className="p-4 text-[10px] font-black uppercase tracking-[0.2em] text-[var(--color-text-dim)]">Description</div>
+                            </div>
+                            {[
+                                { tool: 'create_restore_job', desc: 'Create a new forensic restore job' },
+                                { tool: 'list_restore_jobs', desc: 'List all jobs with pagination' },
+                                { tool: 'get_restore_job', desc: 'Get status for a specific job' },
+                                { tool: 'list_restored_files', desc: 'List recovered files for a completed job' },
+                                { tool: 'get_usage', desc: 'Current billing period usage summary' },
+                            ].map((row, i) => (
+                                <div key={row.tool} className={`grid grid-cols-2 ${i > 0 ? 'border-t border-[var(--color-border-subtle)]' : ''}`}>
+                                    <div className="p-4">
+                                        <code className="text-xs text-[var(--color-accent)]" style={{ fontFamily: 'var(--font-mono), monospace' }}>{row.tool}</code>
+                                    </div>
+                                    <div className="p-4 text-sm text-[var(--color-text-secondary)]">{row.desc}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+                <div className="space-y-4">
+                    <h3 className="text-lg font-bold">Example: Create a Job via MCP</h3>
+                    <CodeBlock label="JSON-RPC Request">{`{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "method": "tools/call",
+  "params": {
+    "name": "create_restore_job",
+    "arguments": {
+      "image_url": "https://your-bucket.s3.amazonaws.com/disk.img",
+      "scan_mode": "deep",
+      "callback_url": "https://yourapp.com/webhooks/restoreit",
+      "external_ref": "ticket-1234"
+    }
+  }
+}`}</CodeBlock>
+                    <CodeBlock label="JSON-RPC Response">{`{
+  "jsonrpc": "2.0",
+  "id": 1,
+  "result": {
+    "content": [{
+      "type": "text",
+      "text": "{ \\"job_id\\": \\"rj_abc123\\", \\"status\\": \\"queued\\", \\"estimated_wait\\": \\"2-10 minutes\\" }"
+    }]
+  }
 }`}</CodeBlock>
                 </div>
             </div>
