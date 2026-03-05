@@ -1,67 +1,29 @@
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Shield, Zap, Server, Lock, Code2, BarChart3 } from 'lucide-react'
 import SiteHeader from '@/components/SiteHeader'
 import SiteFooter from '@/components/SiteFooter'
 
 export const metadata = {
-  title: 'API Documentation — restoreit Restore-as-a-Service',
-  description: 'REST API reference for restoreit RaaS. Create restore jobs, upload disk images, list recovered files, and download via presigned URLs.',
-}
-
-function MethodBadge({ method }: { method: string }) {
-  const colors: Record<string, string> = {
-    GET: 'bg-green-500/10 text-green-400 border-green-500/20',
-    POST: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
-    PUT: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20',
-    DELETE: 'bg-red-500/10 text-red-400 border-red-500/20',
-  }
-  return (
-    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-md text-[11px] font-black uppercase tracking-wider border ${colors[method] ?? 'bg-[var(--color-card-hover)] text-[var(--color-text-secondary)]'}`}>
-      {method}
-    </span>
-  )
-}
-
-function CodeBlock({ label, children }: { label?: string; children: string }) {
-  return (
-    <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-background)] overflow-hidden">
-      {label && (
-        <div className="px-5 py-2.5 border-b border-[var(--color-border)] text-[10px] font-black uppercase tracking-[0.2em] text-[var(--color-text-dim)]">
-          {label}
-        </div>
-      )}
-      <pre className="p-5 text-xs leading-relaxed overflow-x-auto" style={{ fontFamily: 'var(--font-mono), monospace' }}>
-        <code className="text-[var(--color-accent)]">{children}</code>
-      </pre>
-    </div>
-  )
-}
-
-function EndpointCard({ method, path, description, curl, response }: {
-  method: string
-  path: string
-  description: string
-  curl: string
-  response: string
-}) {
-  return (
-    <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] overflow-hidden">
-      <div className="p-6 md:p-8 space-y-4">
-        <div className="flex items-center gap-3 flex-wrap">
-          <MethodBadge method={method} />
-          <code className="text-sm font-bold" style={{ fontFamily: 'var(--font-mono), monospace' }}>{path}</code>
-        </div>
-        <p className="text-sm text-[var(--color-text-secondary)]">{description}</p>
-      </div>
-      <div className="border-t border-[var(--color-border)] p-6 md:p-8 space-y-4">
-        <CodeBlock label="Request">{curl}</CodeBlock>
-        <CodeBlock label="Response">{response}</CodeBlock>
-      </div>
-    </div>
-  )
+  title: 'Restore-as-a-Service API — restoreit',
+  description: 'Add forensic-grade data recovery to your product. REST API for IT service providers, MSPs, and repair shops.',
 }
 
 export default function RaasDocsPage() {
+  const capabilities = [
+    { icon: <Server size={20} />, title: 'Job Lifecycle Management', desc: 'Create, monitor, and manage restore jobs end-to-end via REST endpoints.' },
+    { icon: <Zap size={20} />, title: 'Chunked Disk Upload', desc: 'Stream disk images in optimized chunks with automatic reassembly and integrity checks.' },
+    { icon: <Code2 size={20} />, title: 'Webhook-Driven Results', desc: 'Receive real-time job completion notifications and file manifests via signed webhooks.' },
+    { icon: <Shield size={20} />, title: 'HMAC-SHA256 Security', desc: 'Every webhook payload is cryptographically signed — verify authenticity before processing.' },
+    { icon: <BarChart3 size={20} />, title: 'Usage Tracking', desc: 'Monitor jobs created, data scanned, and files restored across your billing period.' },
+    { icon: <Lock size={20} />, title: 'Encrypted at Rest', desc: 'All uploaded images and recovered files are AES-256 encrypted in isolated R2 storage.' },
+  ]
+
+  const tiers = [
+    { name: 'Starter', price: '$299', period: '/mo', rate: '100 req/min', quota: '100 GB', highlight: false },
+    { name: 'Growth', price: '$799', period: '/mo', rate: '500 req/min', quota: '1 TB', highlight: true },
+    { name: 'Enterprise', price: 'Custom', period: '', rate: 'Unlimited', quota: 'Unlimited', highlight: false },
+  ]
+
   return (
     <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-foreground)] font-sans flex flex-col selection:bg-[var(--color-accent)]/30 transition-colors duration-300">
       <SiteHeader />
@@ -69,307 +31,110 @@ export default function RaasDocsPage() {
       <main className="flex-1 pt-28">
         {/* Hero */}
         <section className="py-24 md:py-32 px-6 md:px-8">
-          <div className="max-w-4xl mx-auto space-y-6">
+          <div className="max-w-4xl mx-auto space-y-8">
             <div className="text-[var(--color-accent)] text-[10px] font-black uppercase tracking-[0.3em]">
-              API Reference
+              Restore-as-a-Service
             </div>
             <h1 className="text-5xl md:text-6xl font-black tracking-tighter leading-[0.95]">
-              Restore-as-a-Service API
+              Add forensic data recovery<br />to your product.
             </h1>
             <p className="text-lg text-[var(--color-text-tertiary)] max-w-xl leading-relaxed">
-              Create restore jobs, upload disk images, and download recovered files programmatically.
+              A REST API that lets IT service providers, MSPs, and repair shops offer professional-grade
+              file recovery without building recovery infrastructure.
             </p>
-            <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-background)] px-5 py-3 inline-flex items-center gap-2">
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--color-text-dim)]">Base URL</span>
-              <code className="text-sm text-[var(--color-accent)]" style={{ fontFamily: 'var(--font-mono), monospace' }}>https://restoreit.app</code>
-            </div>
-          </div>
-        </section>
 
-        {/* Authentication */}
-        <section className="py-16 px-6 md:px-8 border-t border-[var(--color-border-subtle)]">
-          <div className="max-w-4xl mx-auto space-y-8">
-            <h2 className="text-2xl font-black tracking-tight">Authentication</h2>
-            <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
-              All API requests require a Bearer token in the <code className="text-[var(--color-accent)]" style={{ fontFamily: 'var(--font-mono), monospace' }}>Authorization</code> header. Generate your API key from the Partner Dashboard.
-            </p>
-            <CodeBlock label="Header format">{`Authorization: Bearer ri_your_api_key_here`}</CodeBlock>
-          </div>
-        </section>
-
-        {/* Endpoints */}
-        <section className="py-16 px-6 md:px-8 border-t border-[var(--color-border-subtle)]">
-          <div className="max-w-4xl mx-auto space-y-12">
-            <h2 className="text-2xl font-black tracking-tight">Endpoints</h2>
-
-            <EndpointCard
-              method="POST"
-              path="/api/v1/restore/jobs"
-              description="Create a new restore job. Returns a job ID and presigned upload URL for the disk image."
-              curl={`curl -X POST https://restoreit.app/api/v1/restore/jobs \\
-  -H "Authorization: Bearer ri_your_api_key" \\
+            {/* Redacted sample */}
+            <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-background)] overflow-hidden max-w-lg">
+              <div className="px-5 py-2.5 border-b border-[var(--color-border)] text-[10px] font-black uppercase tracking-[0.2em] text-[var(--color-text-dim)]">
+                Quick Start
+              </div>
+              <pre className="p-5 text-xs leading-relaxed overflow-x-auto" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                <code className="text-[var(--color-accent)]">{`curl -X POST https://restoreit.app/api/v1/restore/jobs \\
+  -H "Authorization: Bearer ri_••••••••••••" \\
   -H "Content-Type: application/json" \\
-  -d '{
-    "drive_name": "Customer MacBook SSD",
-    "mode": "deep",
-    "callback_url": "https://yourapp.com/webhooks/restoreit",
-    "external_ref": "ticket-1234"
-  }'`}
-              response={`{
-  "success": true,
-  "data": {
-    "job_id": "job_abc123",
-    "scan_id": "scan_def456",
-    "upload_url": "https://restoreit.app/api/v1/restore/upload?scanId=scan_def456",
-    "status": "awaiting_upload",
-    "chunk_size": 16777216
-  }
-}`}
-            />
+  -d '{ "drive_name": "...", "mode": "deep" }'
 
-            <EndpointCard
-              method="PUT"
-              path="/api/v1/restore/upload?scanId={scanId}&chunkIndex={n}"
-              description="Upload a chunk of the disk image. Send the raw binary as the request body. Chunk size must match the value returned when creating the job."
-              curl={`curl -X PUT "https://restoreit.app/api/v1/restore/upload?scanId=scan_def456&chunkIndex=0" \\
-  -H "Authorization: Bearer ri_your_api_key" \\
-  -H "Content-Type: application/octet-stream" \\
-  --data-binary @chunk-0.bin`}
-              response={`{
-  "success": true,
-  "data": {
-    "chunk_index": 0,
-    "bytes_received": 16777216,
-    "total_chunks": 1,
-    "status": "scanning"
-  }
-}`}
-            />
-
-            <EndpointCard
-              method="GET"
-              path="/api/v1/restore/jobs"
-              description="List all restore jobs for your partner account. Supports pagination."
-              curl={`curl https://restoreit.app/api/v1/restore/jobs \\
-  -H "Authorization: Bearer ri_your_api_key"`}
-              response={`{
-  "success": true,
-  "data": {
-    "jobs": [
-      {
-        "id": "job_abc123",
-        "status": "completed",
-        "drive_name": "Customer MacBook SSD",
-        "files_found": 847,
-        "data_recovered": 2147483648,
-        "created_at": 1709510400000,
-        "completed_at": 1709510700000
-      }
-    ],
-    "total": 1,
-    "page": 1,
-    "per_page": 20
-  }
-}`}
-            />
-
-            <EndpointCard
-              method="GET"
-              path="/api/v1/restore/jobs/:jobId"
-              description="Get detailed status for a specific restore job."
-              curl={`curl https://restoreit.app/api/v1/restore/jobs/job_abc123 \\
-  -H "Authorization: Bearer ri_your_api_key"`}
-              response={`{
-  "success": true,
-  "data": {
-    "id": "job_abc123",
-    "status": "completed",
-    "drive_name": "Customer MacBook SSD",
-    "mode": "deep",
-    "files_found": 847,
-    "data_recovered": 2147483648,
-    "external_ref": "ticket-1234",
-    "created_at": 1709510400000,
-    "completed_at": 1709510700000
-  }
-}`}
-            />
-
-            <EndpointCard
-              method="GET"
-              path="/api/v1/restore/jobs/:jobId/files"
-              description="List all recovered files for a completed job. Includes file type, size, integrity score, and confidence."
-              curl={`curl https://restoreit.app/api/v1/restore/jobs/job_abc123/files \\
-  -H "Authorization: Bearer ri_your_api_key"`}
-              response={`{
-  "success": true,
-  "data": {
-    "files": [
-      {
-        "id": "file_xyz789",
-        "file_name": "recovered-a1b2c3d4.jpg",
-        "file_type": "jpg",
-        "size_bytes": 3145728,
-        "confidence": 98,
-        "integrity": "intact",
-        "created_at": 1709510650000
-      }
-    ],
-    "total": 847
-  }
-}`}
-            />
-
-            <EndpointCard
-              method="GET"
-              path="/api/v1/restore/jobs/:jobId/files/:fileId/download"
-              description="Download a recovered file. Streams the file directly with appropriate content headers."
-              curl={`curl -OJ https://restoreit.app/api/v1/restore/jobs/job_abc123/files/file_xyz789/download \\
-  -H "Authorization: Bearer ri_your_api_key"`}
-              response={`# Binary file stream with headers:
-# Content-Type: image/jpeg
-# Content-Disposition: attachment; filename="recovered-a1b2c3d4.jpg"
-# Content-Length: 3145728`}
-            />
-
-            <EndpointCard
-              method="GET"
-              path="/api/v1/usage"
-              description="Get your current billing period usage breakdown."
-              curl={`curl https://restoreit.app/api/v1/usage \\
-  -H "Authorization: Bearer ri_your_api_key"`}
-              response={`{
-  "success": true,
-  "data": {
-    "period": "2026-03",
-    "jobs_created": 42,
-    "gb_scanned": 128.5,
-    "files_restored": 12847,
-    "tier": "growth",
-    "plan": "growth",
-    "monthly_price": 399
-  }
-}`}
-            />
-          </div>
-        </section>
-
-        {/* Webhooks */}
-        <section className="py-16 px-6 md:px-8 border-t border-[var(--color-border-subtle)]">
-          <div className="max-w-4xl mx-auto space-y-8">
-            <h2 className="text-2xl font-black tracking-tight">Webhooks</h2>
-            <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
-              When you provide a <code className="text-[var(--color-accent)]" style={{ fontFamily: 'var(--font-mono), monospace' }}>callback_url</code> during job creation, we send webhook notifications for job status changes.
-              All webhooks are signed with HMAC-SHA256 so you can verify authenticity.
-            </p>
-
-            <div className="space-y-4">
-              <h3 className="text-lg font-bold">Signature Verification</h3>
-              <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
-                Compute <code className="text-[var(--color-accent)]" style={{ fontFamily: 'var(--font-mono), monospace' }}>HMAC-SHA256(&quot;{'${timestamp}.${body}'}&quot;, webhook_secret)</code> and
-                compare against the <code className="text-[var(--color-accent)]" style={{ fontFamily: 'var(--font-mono), monospace' }}>X-restoreit-Signature</code> header.
-              </p>
-              <CodeBlock label="Webhook headers">{`X-restoreit-Signature: sha256=a1b2c3d4e5f6...
-X-restoreit-Timestamp: 1709510700
-Content-Type: application/json`}</CodeBlock>
+# → { "job_id": "job_•••", "upload_url": "..." }`}</code>
+              </pre>
             </div>
 
-            <div className="space-y-4">
-              <h3 className="text-lg font-bold">Node.js Verification Example</h3>
-              <CodeBlock label="verify-webhook.js">{`import crypto from 'crypto';
-
-function verifyWebhook(body, signature, timestamp, secret) {
-  const payload = \`\${timestamp}.\${body}\`;
-  const expected = crypto
-    .createHmac('sha256', secret)
-    .update(payload)
-    .digest('hex');
-  return \`sha256=\${expected}\` === signature;
-}
-
-// In your webhook handler:
-const sig = req.headers['x-restoreit-signature'];
-const ts = req.headers['x-restoreit-timestamp'];
-const isValid = verifyWebhook(req.body, sig, ts, WEBHOOK_SECRET);`}</CodeBlock>
-            </div>
-
-            <div className="space-y-4">
-              <h3 className="text-lg font-bold">Example Payload</h3>
-              <CodeBlock label="Webhook body">{`{
-  "event": "job.completed",
-  "job_id": "job_abc123",
-  "external_ref": "ticket-1234",
-  "status": "completed",
-  "files_found": 847,
-  "data_recovered": 2147483648,
-  "completed_at": 1709510700000
-}`}</CodeBlock>
+            <div className="flex items-center gap-3 text-xs text-[var(--color-text-dim)]">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[var(--color-border)]">
+                7 REST Endpoints
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[var(--color-border)]">
+                Webhook Callbacks
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[var(--color-border)]">
+                Bearer Auth
+              </span>
             </div>
           </div>
         </section>
 
-        {/* Error Codes */}
+        {/* Capabilities */}
         <section className="py-16 px-6 md:px-8 border-t border-[var(--color-border-subtle)]">
-          <div className="max-w-4xl mx-auto space-y-8">
-            <h2 className="text-2xl font-black tracking-tight">Error Codes</h2>
-            <div className="rounded-2xl border border-[var(--color-border)] overflow-hidden">
-              <div className="min-w-[400px]">
-                <div className="grid grid-cols-3 border-b border-[var(--color-border)] bg-[var(--color-card)]">
-                  <div className="p-4 text-[10px] font-black uppercase tracking-[0.2em] text-[var(--color-text-dim)]">Code</div>
-                  <div className="p-4 text-[10px] font-black uppercase tracking-[0.2em] text-[var(--color-text-dim)]">HTTP Status</div>
-                  <div className="p-4 text-[10px] font-black uppercase tracking-[0.2em] text-[var(--color-text-dim)]">Description</div>
+          <div className="max-w-4xl mx-auto space-y-10">
+            <h2 className="text-2xl font-black tracking-tight">What the API does</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {capabilities.map(({ icon, title, desc }) => (
+                <div key={title} className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] p-6 space-y-3">
+                  <div className="text-[var(--color-accent)]">{icon}</div>
+                  <h3 className="text-sm font-bold">{title}</h3>
+                  <p className="text-xs text-[var(--color-text-tertiary)] leading-relaxed">{desc}</p>
                 </div>
-                {[
-                  { code: 'unauthorized', status: '401', desc: 'Missing or invalid API key' },
-                  { code: 'forbidden', status: '403', desc: 'API key does not have access to this resource' },
-                  { code: 'not_found', status: '404', desc: 'Resource not found' },
-                  { code: 'validation_error', status: '400', desc: 'Request body failed validation' },
-                  { code: 'rate_limited', status: '429', desc: 'Too many requests — check Retry-After header' },
-                  { code: 'server_error', status: '500', desc: 'Internal server error' },
-                ].map((err, i) => (
-                  <div key={err.code} className={`grid grid-cols-3 ${i > 0 ? 'border-t border-[var(--color-border-subtle)]' : ''}`}>
-                    <div className="p-4">
-                      <code className="text-xs text-[var(--color-accent)]" style={{ fontFamily: 'var(--font-mono), monospace' }}>{err.code}</code>
-                    </div>
-                    <div className="p-4 text-sm text-[var(--color-text-secondary)]">{err.status}</div>
-                    <div className="p-4 text-sm text-[var(--color-text-secondary)]">{err.desc}</div>
-                  </div>
-                ))}
-              </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* Rate Limits */}
+        {/* Pricing */}
         <section className="py-16 px-6 md:px-8 border-t border-[var(--color-border-subtle)]">
-          <div className="max-w-4xl mx-auto space-y-8">
-            <h2 className="text-2xl font-black tracking-tight">Rate Limits</h2>
-            <div className="rounded-2xl border border-[var(--color-border)] overflow-hidden">
-              <div className="min-w-[400px]">
-                <div className="grid grid-cols-3 border-b border-[var(--color-border)] bg-[var(--color-card)]">
-                  <div className="p-4 text-[10px] font-black uppercase tracking-[0.2em] text-[var(--color-text-dim)]">Tier</div>
-                  <div className="p-4 text-[10px] font-black uppercase tracking-[0.2em] text-[var(--color-text-dim)]">Rate Limit</div>
-                  <div className="p-4 text-[10px] font-black uppercase tracking-[0.2em] text-[var(--color-text-dim)]">Monthly Quota</div>
-                </div>
-                {[
-                  { tier: 'Starter', rate: '100 req/min', quota: '100 GB' },
-                  { tier: 'Growth', rate: '500 req/min', quota: '1 TB' },
-                  { tier: 'Enterprise', rate: 'Unlimited', quota: 'Unlimited' },
-                ].map((row, i) => (
-                  <div key={row.tier} className={`grid grid-cols-3 ${i > 0 ? 'border-t border-[var(--color-border-subtle)]' : ''}`}>
-                    <div className="p-4 text-sm font-bold">{row.tier}</div>
-                    <div className="p-4 text-sm text-[var(--color-text-secondary)]">{row.rate}</div>
-                    <div className="p-4 text-sm text-[var(--color-text-secondary)]">{row.quota}</div>
-                  </div>
-                ))}
-              </div>
+          <div className="max-w-4xl mx-auto space-y-10">
+            <div className="text-center space-y-3">
+              <h2 className="text-2xl font-black tracking-tight">Partner Plans</h2>
+              <p className="text-sm text-[var(--color-text-tertiary)]">Full API documentation is available after registration.</p>
             </div>
-            <div className="space-y-2">
-              <h3 className="text-lg font-bold">Response Headers</h3>
-              <CodeBlock>{`X-RateLimit-Limit: 500
-X-RateLimit-Remaining: 487
-X-RateLimit-Reset: 1709510760
-Retry-After: 12`}</CodeBlock>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {tiers.map((tier) => (
+                <div key={tier.name} className={`rounded-2xl border p-6 space-y-5 ${tier.highlight ? 'border-[var(--color-accent)]/40 bg-[var(--color-accent)]/[0.03] ring-1 ring-[var(--color-accent)]/20' : 'border-[var(--color-border)] bg-[var(--color-card)]'}`}>
+                  <div>
+                    <div className="text-sm font-bold">{tier.name}</div>
+                    <div className="text-3xl font-black mt-2">{tier.price}<span className="text-sm font-normal text-[var(--color-text-tertiary)]">{tier.period}</span></div>
+                  </div>
+                  <div className="space-y-2 text-xs text-[var(--color-text-secondary)]">
+                    <div className="flex justify-between"><span>Rate Limit</span><span className="font-bold text-[var(--color-foreground)]">{tier.rate}</span></div>
+                    <div className="flex justify-between"><span>Monthly Volume</span><span className="font-bold text-[var(--color-foreground)]">{tier.quota}</span></div>
+                  </div>
+                  <Link
+                    href="/checkout/partner"
+                    className={`block text-center h-11 flex items-center justify-center rounded-xl text-xs font-black uppercase tracking-[0.15em] transition-all ${tier.highlight ? 'bg-[var(--color-accent)] text-white hover:opacity-90 shadow-[0_10px_30px_rgba(138,43,226,0.2)]' : 'border border-[var(--color-border)] text-[var(--color-foreground)] hover:bg-[var(--color-card-hover)]'}`}
+                  >
+                    Get Started
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* How it works */}
+        <section className="py-16 px-6 md:px-8 border-t border-[var(--color-border-subtle)]">
+          <div className="max-w-4xl mx-auto space-y-10">
+            <h2 className="text-2xl font-black tracking-tight">How it works</h2>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
+              {[
+                { step: '01', title: 'Create Job', desc: 'Submit a restore request with drive metadata.' },
+                { step: '02', title: 'Upload Image', desc: 'Stream the disk image in optimized chunks.' },
+                { step: '03', title: 'Receive Webhook', desc: 'Get notified when recovery is complete.' },
+                { step: '04', title: 'Download Files', desc: 'Retrieve recovered files via presigned URLs.' },
+              ].map(({ step, title, desc }) => (
+                <div key={step} className="space-y-3">
+                  <div className="text-[var(--color-accent)] text-[10px] font-black tracking-[0.3em]">{step}</div>
+                  <h3 className="text-sm font-bold">{title}</h3>
+                  <p className="text-xs text-[var(--color-text-tertiary)] leading-relaxed">{desc}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -379,7 +144,7 @@ Retry-After: 12`}</CodeBlock>
           <div className="max-w-2xl mx-auto text-center space-y-8">
             <h2 className="text-4xl md:text-5xl font-black tracking-tighter">Start building today.</h2>
             <p className="text-[var(--color-text-tertiary)] text-lg">
-              Create an account and generate your API key from the Partner Dashboard.
+              Register as a partner and access full API documentation, code samples, and your dedicated API key.
             </p>
             <Link
               href="/signup"

@@ -271,7 +271,7 @@ export default function PartnerDashboardPage() {
           </button>
 
           <a
-            href="/docs/raas"
+            href="/account/partner-dashboard/docs"
             className="flex items-center gap-2 text-xs text-[var(--color-accent)] hover:underline"
           >
             Read the API docs <ExternalLink size={12} />
@@ -399,7 +399,7 @@ export default function PartnerDashboardPage() {
         <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] p-8 text-center space-y-3">
           <div className="text-[var(--color-text-dim)] text-sm">No jobs yet.</div>
           <a
-            href="/docs/raas"
+            href="/account/partner-dashboard/docs"
             className="inline-flex items-center gap-2 text-xs text-[var(--color-accent)] hover:underline"
           >
             Read the docs to get started <ExternalLink size={12} />
