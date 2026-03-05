@@ -50,8 +50,8 @@ export default function LandingPage() {
 
         <div className="w-full max-w-5xl space-y-14 text-center relative z-10">
           <div className="space-y-6">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-[10px] font-bold uppercase tracking-[0.2em]">
-              <Shield size={10} strokeWidth={3} /> Stop. Do not write anything to your drive.
+            <div className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-[11px] sm:text-xs font-bold uppercase tracking-[0.15em]">
+              <Shield size={12} strokeWidth={3} /> Stop. Do not write anything to your drive.
             </div>
             <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.9]">
               What most people do <br />
