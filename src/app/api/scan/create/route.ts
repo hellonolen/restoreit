@@ -3,6 +3,7 @@
 import { cookies } from 'next/headers'
 import { getSessionUser } from '@/lib/auth'
 import { getDb, schema } from '@/db'
+import { trackFunnelEvent } from '@/lib/funnel'
 
 export const runtime = 'edge'
 
@@ -57,6 +58,13 @@ export async function POST(request: Request) {
     bytesReceived: 0,
     relayTokenHash,
     startedAt: now,
+  })
+
+  await trackFunnelEvent({
+    userId: user.id,
+    event: 'scan_created',
+    scanId,
+    metadata: { driveName, mode },
   })
 
   return Response.json({

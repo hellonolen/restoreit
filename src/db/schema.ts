@@ -6,6 +6,7 @@ export const users = sqliteTable('users', {
   firstName: text('first_name').notNull(),
   passwordHash: text('password_hash').notNull(),
   isDemo: integer('is_demo', { mode: 'boolean' }).notNull().default(true),
+  isAdmin: integer('is_admin', { mode: 'boolean' }).notNull().default(false),
   whopCustomerId: text('whop_customer_id'),
   createdAt: integer('created_at', { mode: 'timestamp' }).notNull(),
 })
@@ -42,7 +43,8 @@ export const payments = sqliteTable('payments', {
   id: text('id').primaryKey(),
   userId: text('user_id').notNull().references(() => users.id),
   whopPaymentId: text('whop_payment_id'),
-  tier: text('tier', { enum: ['standard', 'pro', 'protection'] }).notNull(),
+  tier: text('tier', { enum: ['standard', 'pro', 'protection', 'starter', 'growth', 'enterprise'] }).notNull(),
+  scanId: text('scan_id').references(() => scans.id),
   amount: integer('amount').notNull(),
   status: text('status', { enum: ['pending', 'completed', 'failed', 'refunded'] }).notNull(),
   createdAt: integer('created_at', { mode: 'timestamp' }).notNull(),
@@ -134,4 +136,29 @@ export const apiUsage = sqliteTable('api_usage', {
   event: text('event', { enum: ['job_created', 'gb_scanned', 'files_restored'] }).notNull(),
   quantity: real('quantity').notNull(),
   recordedAt: integer('recorded_at', { mode: 'timestamp' }).notNull(),
+})
+
+// Conversion funnel tracking
+
+export const funnelEvents = sqliteTable('funnel_events', {
+  id: text('id').primaryKey(),
+  userId: text('user_id').notNull().references(() => users.id),
+  scanId: text('scan_id').references(() => scans.id),
+  event: text('event', {
+    enum: [
+      'signup',
+      'scan_created',
+      'scan_completed',
+      'checkout_opened',
+      'checkout_redirected',
+      'payment_completed',
+      'partner_checkout_opened',
+      'partner_checkout_redirected',
+      'partner_payment_completed',
+    ],
+  }).notNull(),
+  tier: text('tier'),
+  channel: text('channel', { enum: ['consumer', 'partner'] }).notNull().default('consumer'),
+  metadata: text('metadata'),
+  createdAt: integer('created_at', { mode: 'timestamp' }).notNull(),
 })

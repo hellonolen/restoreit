@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { ArrowRight, Terminal, Shield, Cloud, Download, Monitor } from 'lucide-react';
 
 export const metadata: Metadata = {
-    title: 'How It Works — RestoreIt',
-    description: 'Learn how RestoreIt cloud-based restoration works.',
+    title: 'How It Works — restoreit',
+    description: 'Learn how restoreit cloud-based restoration works.',
 };
 
 const steps = [
@@ -22,14 +22,14 @@ const steps = [
         title: 'Run the Relay Command',
         desc: 'Copy and paste a single command into your terminal. The relay launches in your computer\'s RAM — nothing is installed to disk.',
         icon: <Shield size={24} />,
-        detail: 'The relay is a lightweight script that reads raw sectors from your drive. It never writes a single byte. This is what makes RestoreIt fundamentally different from traditional restoration tools.',
+        detail: 'The relay is a lightweight script that reads raw sectors from your drive. It never writes a single byte. This is what makes restoreit fundamentally different from traditional restoration tools.',
     },
     {
         number: '03',
         title: 'We Scan Your Drive',
         desc: 'The relay streams your drive\'s sectors to our cloud engine over an encrypted connection. Our algorithms analyze the raw data for restorable files.',
         icon: <Cloud size={24} />,
-        detail: 'RestoreIt Scan uses quick pattern matching. RestoreIt Pro uses deep sector-level reconstruction that can piece together damaged and fragmented files.',
+        detail: 'restoreit Scan uses quick pattern matching. restoreit Pro uses deep sector-level reconstruction that can piece together damaged and fragmented files.',
     },
     {
         number: '04',
@@ -43,7 +43,7 @@ const steps = [
         title: 'Download Your Files',
         desc: 'Choose your plan, complete payment, and download your restored files securely.',
         icon: <Download size={24} />,
-        detail: 'RestoreIt Scan delivers immediate downloads. RestoreIt Pro includes a 7-day download window. Add RestoreIt Cloud for long-term 500GB encrypted storage.',
+        detail: 'restoreit Scan delivers immediate downloads. restoreit Pro includes a 7-day download window. Add restoreit Cloud for long-term 500GB encrypted storage.',
     },
 ];
 
@@ -60,7 +60,7 @@ export default function HowItWorksPage() {
                             Five steps. Zero disk writes.
                         </h1>
                         <p className="text-lg text-[var(--color-text-secondary)] leading-relaxed max-w-2xl">
-                            RestoreIt never installs anything on your drive. A memory-only relay streams your sectors to our cloud engine for analysis. Here&apos;s the full process.
+                            restoreit never installs anything on your drive. A memory-only relay streams your sectors to our cloud engine for analysis. Here&apos;s the full process.
                         </p>
                     </div>
 
@@ -88,7 +88,7 @@ export default function HowItWorksPage() {
                     <div className="p-8 rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] space-y-6">
                         <h2 className="text-2xl font-black tracking-tight">The Secure Relay</h2>
                         <p className="text-[var(--color-text-secondary)] leading-relaxed">
-                            The RestoreIt relay is a lightweight script that runs entirely in your computer&apos;s RAM. It reads raw sector data from your drive and streams it over an encrypted TLS connection to our cloud engine. The relay never writes to your disk — it only reads.
+                            The restoreit relay is a lightweight script that runs entirely in your computer&apos;s RAM. It reads raw sector data from your drive and streams it over an encrypted TLS connection to our cloud engine. The relay never writes to your disk — it only reads.
                         </p>
                         <div className="font-mono text-xs bg-[var(--color-background)] border border-[var(--color-border)] rounded-xl p-4 text-[var(--color-accent)] flex items-center gap-3">
                             <Terminal size={14} />

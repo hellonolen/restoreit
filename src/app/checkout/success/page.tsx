@@ -104,7 +104,7 @@ function CheckoutSuccessContent() {
                 <div className="space-y-3">
                     <h1 className="text-4xl font-black tracking-tight">Payment Confirmed</h1>
                     <p className="text-[var(--color-text-tertiary)] text-lg leading-relaxed">
-                        Your restoration is ready. Your files are waiting for you in RestoreIt Cloud.
+                        Your restoration is ready. Your files are waiting for you in restoreit Cloud.
                     </p>
                 </div>
 
@@ -113,7 +113,7 @@ function CheckoutSuccessContent() {
                         href="/account/cloud"
                         className="w-full h-14 rounded-2xl bg-[var(--color-accent)] hover:opacity-90 text-white text-sm font-black uppercase tracking-[0.15em] transition-all flex items-center justify-center gap-3 active:scale-[0.98] shadow-[0_20px_40px_rgba(138,43,226,0.25)]"
                     >
-                        <Cloud size={16} /> Go to RestoreIt Cloud <ArrowRight size={16} />
+                        <Cloud size={16} /> Go to restoreit Cloud <ArrowRight size={16} />
                     </Link>
 
                     <Link

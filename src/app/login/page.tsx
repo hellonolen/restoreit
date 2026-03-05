@@ -1,18 +1,23 @@
 "use client";
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import Link from 'next/link';
 import { Mail, Eye, EyeOff, ArrowRight, Shield } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import SiteHeader from '@/components/SiteHeader';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function LoginPage() {
+    return <Suspense><LoginContent /></Suspense>;
+}
+
+function LoginContent() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const redirectTo = searchParams.get('redirect') || '/restore';
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -34,7 +39,7 @@ export default function LoginPage() {
                 return;
             }
 
-            router.push('/restore');
+            router.push(redirectTo);
         } catch {
             setError('Connection error. Please try again.');
             setLoading(false);
@@ -43,8 +48,7 @@ export default function LoginPage() {
 
     return (
         <div className="min-h-screen bg-[var(--color-background)] relative selection:bg-[var(--color-accent)]/30 transition-colors duration-300">
-            <SiteHeader />
-            <div className="flex flex-col lg:flex-row min-h-screen pt-[73px]">
+            <div className="flex flex-col lg:flex-row min-h-screen">
             {/* Left Panel: Brand Messaging */}
             <div className="hidden lg:flex w-[45%] relative flex-col p-20 justify-between overflow-hidden border-r border-[var(--color-border)]">
                 <div className="absolute inset-0 pointer-events-none">
@@ -87,7 +91,7 @@ export default function LoginPage() {
                 </div>
 
                 <div className="relative z-10 flex flex-col gap-2">
-                    <div className="text-[9px] font-black text-[var(--color-text-dim)] uppercase tracking-[0.25em]">&copy; 2026 RestoreIt</div>
+                    <div className="text-[9px] font-black text-[var(--color-text-dim)] uppercase tracking-[0.25em]">&copy; 2026 restoreit</div>
                 </div>
             </div>
 
@@ -101,7 +105,7 @@ export default function LoginPage() {
                     <div className="space-y-3">
                         <h2 className="text-5xl font-black tracking-tighter">Sign In</h2>
                         <p className="text-[var(--color-text-tertiary)] text-lg font-medium leading-relaxed max-w-sm">
-                            Access your dashboard and RestoreIt Cloud.
+                            Access your dashboard and restoreit Cloud.
                         </p>
                     </div>
 
@@ -152,7 +156,7 @@ export default function LoginPage() {
 
                     <div className="pt-8 border-t border-[var(--color-border-subtle)] flex items-center justify-between">
                         <span className="text-sm text-[var(--color-text-dim)]">Don&apos;t have an account?</span>
-                        <Link href="/signup" className="text-sm font-bold text-[var(--color-accent)] flex items-center gap-2 group">
+                        <Link href={redirectTo !== '/restore' ? `/signup?redirect=${encodeURIComponent(redirectTo)}` : '/signup'} className="text-sm font-bold text-[var(--color-accent)] flex items-center gap-2 group">
                             Create account <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                         </Link>
                     </div>

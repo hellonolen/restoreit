@@ -1,8 +1,10 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import Link from 'next/link'
 import { useUser } from '@/hooks/useUser'
-import { Copy, Check, RefreshCw, ExternalLink } from 'lucide-react'
+import { Copy, Check, RefreshCw, ExternalLink, ArrowUpRight } from 'lucide-react'
+import { PARTNER_TIERS } from '@/lib/partner-constants'
 
 interface KPIs {
   totalJobs: number
@@ -12,7 +14,7 @@ interface KPIs {
   avgCompletionMs: number
   gbScanned: number
   filesRestored: number
-  estimatedRevenue: number
+  monthlyPrice: number
 }
 
 interface RecentJob {
@@ -313,6 +315,26 @@ export default function PartnerDashboardPage() {
         </div>
       )}
 
+      {/* Upgrade Tier */}
+      {partner && partner.tier !== 'enterprise' && (
+        <div className="rounded-2xl border border-[var(--color-accent)]/20 bg-[var(--color-accent)]/[0.03] p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div>
+            <div className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--color-accent)] mb-1">Upgrade Your Plan</div>
+            <p className="text-sm text-[var(--color-text-secondary)]">
+              {partner.tier === 'starter'
+                ? 'Unlock priority scanning, bulk uploads, and 1 TB scan volume with Growth.'
+                : 'Get unlimited volume, custom SLA, and a dedicated account manager with Enterprise.'}
+            </p>
+          </div>
+          <Link
+            href={`/checkout/partner?tier=${partner.tier === 'starter' ? 'growth' : 'enterprise'}`}
+            className="shrink-0 h-10 px-6 rounded-xl bg-[var(--color-accent)] text-white font-bold text-xs uppercase tracking-[0.15em] hover:opacity-90 transition-all flex items-center gap-2"
+          >
+            Upgrade <ArrowUpRight size={14} />
+          </Link>
+        </div>
+      )}
+
       {/* KPI Grid */}
       {kpis && (
         <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
@@ -322,7 +344,7 @@ export default function PartnerDashboardPage() {
             { label: 'In Progress', value: kpis.inProgress.toLocaleString() },
             { label: 'Avg Completion', value: formatMs(kpis.avgCompletionMs) },
             { label: 'GB Scanned', value: `${kpis.gbScanned.toFixed(2)} GB` },
-            { label: 'Est. Revenue', value: `$${kpis.estimatedRevenue.toFixed(2)}` },
+            { label: 'Plan', value: `$${kpis.monthlyPrice}/mo` },
           ].map((kpi) => (
             <div key={kpi.label} className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] p-5 space-y-1">
               <div className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--color-text-dim)]">{kpi.label}</div>

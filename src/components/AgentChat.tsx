@@ -1,4 +1,4 @@
-// Find and RestoreIt Engine — Chat Interface
+// Find and restoreit Engine — Chat Interface
 "use client";
 
 import { useState, useRef, useEffect } from 'react';
@@ -24,7 +24,7 @@ const QUICK_PROMPTS = [
     { label: 'Find my deleted photos', icon: <ImageIcon size={13} aria-hidden="true" />, query: 'I need to find deleted photos on my drive' },
     { label: 'Relay connection failed', icon: <AlertTriangle size={13} aria-hidden="true" />, query: 'My relay connection failed, I need help troubleshooting' },
     { label: 'Find tax documents', icon: <FileText size={13} aria-hidden="true" />, query: 'I need to find my tax documents that were deleted' },
-    { label: 'How does this work?', icon: <HelpCircle size={13} aria-hidden="true" />, query: 'How does RestoreIt work? Is my data safe?' },
+    { label: 'How does this work?', icon: <HelpCircle size={13} aria-hidden="true" />, query: 'How does restoreit work? Is my data safe?' },
 ];
 
 function ToolBlock({ tool }: { tool: ToolDisplay }) {
@@ -107,7 +107,7 @@ function MessageBubble({ msg }: { msg: EngineMessage }) {
     // Build display from chunks
     const toolDisplays: ToolDisplay[] = [];
     let thinkingText = '';
-    let resultText = msg.content;
+    const resultText = msg.content;
     let hasError = false;
 
     for (const chunk of msg.chunks) {
@@ -151,11 +151,10 @@ function MessageBubble({ msg }: { msg: EngineMessage }) {
                             <ToolBlock key={`${tool.name}-${i}`} tool={tool} />
                         ))}
                         {(resultText || msg.isStreaming) && (
-                            <div className={`px-4 py-3 rounded-2xl rounded-tl-sm text-sm leading-relaxed ${
-                                hasError
+                            <div className={`px-4 py-3 rounded-2xl rounded-tl-sm text-sm leading-relaxed ${hasError
                                     ? 'bg-red-500/10 border border-red-500/20 text-red-400'
                                     : 'bg-[var(--color-background-elevated)] border border-[var(--color-border)] text-[var(--color-text-secondary)]'
-                            }`}>
+                                }`}>
                                 {resultText
                                     ? renderMarkdownSafe(resultText)
                                     : <span className="flex items-center gap-2 text-[var(--color-text-tertiary)]"><Loader2 size={13} className="animate-spin" />Thinking...</span>
@@ -201,9 +200,10 @@ export function AgentChat({ onClose, messages, isStreaming, onSend }: AgentChatP
         {
             id: 'welcome',
             role: 'assistant',
-            content: "I'm the RestoreIt Engine. I can scan your drive, analyze detected files, troubleshoot connection issues, and walk you through the process.\n\nWhat would you like to do?",
+            content: "I'm the restoreit Engine. I can scan your drive, analyze detected files, troubleshoot connection issues, and walk you through the process.\n\nWhat would you like to do?",
+            // eslint-disable-next-line react-hooks/purity
             timestamp: Date.now(),
-            chunks: [{ type: 'text', content: "I'm the RestoreIt Engine. I can scan your drive, analyze detected files, troubleshoot connection issues, and walk you through the process.\n\nWhat would you like to do?" }],
+            chunks: [{ type: 'text', content: "I'm the restoreit Engine. I can scan your drive, analyze detected files, troubleshoot connection issues, and walk you through the process.\n\nWhat would you like to do?" }],
             isStreaming: false,
         },
         ...messages,
@@ -211,7 +211,7 @@ export function AgentChat({ onClose, messages, isStreaming, onSend }: AgentChatP
 
     return (
         <div className="fixed bottom-24 right-6 z-50 w-96 max-h-[600px] flex flex-col rounded-2xl border shadow-2xl overflow-hidden animate-in slide-in-from-bottom-4 duration-300 bg-[var(--color-background-elevated)] border-[var(--color-border)]"
-            role="dialog" aria-label="RestoreIt Engine" aria-modal="false">
+            role="dialog" aria-label="restoreit Engine" aria-modal="false">
 
             {/* Header */}
             <div className="flex items-center justify-between px-4 py-3.5 border-b border-[var(--color-border)] bg-[var(--color-card)]">
@@ -222,7 +222,7 @@ export function AgentChat({ onClose, messages, isStreaming, onSend }: AgentChatP
                         </div>
                     </div>
                     <div>
-                        <div className="text-sm font-semibold text-[var(--color-foreground)]">RestoreIt Engine</div>
+                        <div className="text-sm font-semibold text-[var(--color-foreground)]">restoreit Engine</div>
                         <div className="flex items-center gap-1.5 text-[10px] text-green-400">
                             <span className="w-1.5 h-1.5 rounded-full bg-green-400"></span>
                             {isStreaming ? 'Processing...' : 'Ready'}
@@ -269,7 +269,7 @@ export function AgentChat({ onClose, messages, isStreaming, onSend }: AgentChatP
                         disabled={isStreaming}
                         placeholder={isStreaming ? 'Engine is processing...' : 'Describe what you need...'}
                         className="flex-1 bg-transparent text-sm outline-none placeholder-[var(--color-placeholder)]"
-                        aria-label="Message the RestoreIt Engine"
+                        aria-label="Message the restoreit Engine"
                     />
                     <button type="submit" disabled={!input.trim() || isStreaming} aria-label="Send message"
                         className="w-7 h-7 rounded-lg bg-[var(--color-accent)] disabled:opacity-30 hover:opacity-80 text-white flex items-center justify-center transition-all shrink-0">
@@ -277,7 +277,7 @@ export function AgentChat({ onClose, messages, isStreaming, onSend }: AgentChatP
                     </button>
                 </form>
                 <p className="text-[10px] text-center mt-2 text-[var(--color-text-dim)]">
-                    RestoreIt Cloud · Your data is encrypted
+                    restoreit Cloud · Your data is encrypted
                 </p>
             </div>
         </div>

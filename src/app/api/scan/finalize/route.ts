@@ -2,6 +2,7 @@
 
 import { getDb, schema } from '@/db'
 import { eq, and } from 'drizzle-orm'
+import { trackFunnelEvent } from '@/lib/funnel'
 
 export const runtime = 'edge'
 
@@ -88,6 +89,13 @@ export async function POST(request: Request) {
       totalChunks: manifest.totalChunks,
     })
     .where(eq(schema.scans.id, scanId))
+
+  await trackFunnelEvent({
+    userId: scan.userId,
+    event: 'scan_completed',
+    scanId,
+    metadata: { totalChunks: manifest.totalChunks, totalBytes: manifest.totalBytes },
+  })
 
   // Create carve job
   const jobId = crypto.randomUUID()

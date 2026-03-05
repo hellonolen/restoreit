@@ -98,8 +98,8 @@ export const DEMO_CLOUD_FILES = [
 ]
 
 export const DEMO_INVOICES = [
-  { id: 'INV-001', date: 'Mar 3, 2026', description: 'RestoreIt Pro — Restoration', amount: '$249.00', status: 'paid' },
-  { id: 'INV-002', date: 'Feb 3, 2026', description: 'RestoreIt — Restoration', amount: '$89.00', status: 'paid' },
+  { id: 'INV-001', date: 'Mar 3, 2026', description: 'restoreit Pro — Restoration', amount: '$249.00', status: 'paid' },
+  { id: 'INV-002', date: 'Feb 3, 2026', description: 'restoreit — Restoration', amount: '$89.00', status: 'paid' },
 ]
 
 // Landing page stats — always shown, not per-user

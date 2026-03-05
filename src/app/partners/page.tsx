@@ -1,15 +1,25 @@
+'use client'
+
+import { useState } from 'react'
 import Link from 'next/link'
 import { ArrowRight, Upload, Search, Download, Code, Bell, BarChart3, Link2, Gauge, Layers, Check, ChevronRight } from 'lucide-react'
 import SiteHeader from '@/components/SiteHeader'
 import SiteFooter from '@/components/SiteFooter'
-import { PARTNER_TIERS, PARTNER_FAQS, CALENDLY_URL } from '@/lib/partner-constants'
+import { PARTNER_TIERS, PARTNER_FAQS } from '@/lib/partner-constants'
 
-export const metadata = {
-  title: 'Partners — RestoreIt Restore-as-a-Service',
-  description: 'Turn your repair shop into a restore service. Upload disk images, preview files, deliver restores via API.',
-}
+const LOCATION_OPTIONS = [1, 2, 3, 4, 5] as const
 
 export default function PartnersPage() {
+  const [locationCount, setLocationCount] = useState<Record<string, number>>({
+    starter: 1,
+    growth: 1,
+    enterprise: 1,
+  })
+
+  const updateLocations = (slug: string, count: number) => {
+    setLocationCount(prev => ({ ...prev, [slug]: count }))
+  }
+
   return (
     <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-foreground)] font-sans flex flex-col selection:bg-[var(--color-accent)]/30 transition-colors duration-300">
       <SiteHeader />
@@ -22,7 +32,7 @@ export default function PartnersPage() {
               Restore-as-a-Service
             </div>
             <h1 className="text-5xl md:text-6xl font-black tracking-tighter leading-[0.95]">
-              Turn your repair shop into a restore service.
+              Turn your repair shop into a restoreit service.
             </h1>
             <p className="text-lg md:text-xl text-[var(--color-text-tertiary)] max-w-xl mx-auto leading-relaxed">
               Upload disk images, preview files, deliver restores. No installs.
@@ -114,57 +124,83 @@ export default function PartnersPage() {
                 Pricing
               </div>
               <h2 className="text-3xl md:text-4xl font-black tracking-tight">
-                Pay per gigabyte scanned.
+                One price. No surprises.
               </h2>
               <p className="text-[var(--color-text-tertiary)] max-w-lg mx-auto">
-                No minimums on Starter. Scale to Growth when you&apos;re ready. Enterprise for custom needs.
+                Flat monthly subscription per location. No per-GB metering.
               </p>
             </div>
             <div className="grid md:grid-cols-3 gap-6">
-              {PARTNER_TIERS.map((tier) => (
-                <div
-                  key={tier.slug}
-                  className={`relative rounded-3xl border p-8 flex flex-col ${
-                    tier.recommended
-                      ? 'border-[var(--color-accent)]/40 bg-[var(--color-accent)]/[0.03] ring-1 ring-[var(--color-accent)]/20'
-                      : 'border-[var(--color-border)] bg-[var(--color-card)]'
-                  }`}
-                >
-                  {tier.recommended && (
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-[var(--color-accent)] text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-lg shadow-[var(--color-accent)]/30">
-                      Recommended
-                    </div>
-                  )}
-                  <div className="mb-6 space-y-4">
-                    <h3 className="text-2xl font-black">{tier.name}</h3>
-                    <div className="flex items-baseline gap-1">
-                      <span className="text-4xl font-black">{tier.pricePerGb}</span>
-                      {tier.slug !== 'enterprise' && <span className="text-[var(--color-text-tertiary)]">/GB</span>}
-                    </div>
-                    <div className="text-sm text-[var(--color-text-tertiary)]">
-                      {tier.rateLimit} &middot; {tier.monthlyQuota}/mo
-                    </div>
-                  </div>
-                  <ul className="space-y-3 mb-8 flex-1">
-                    {tier.features.map((f) => (
-                      <li key={f} className="flex items-start gap-3 text-sm text-[var(--color-text-secondary)]">
-                        <Check size={16} className="text-[var(--color-accent)] shrink-0 mt-0.5" />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                  <Link
-                    href={tier.slug === 'enterprise' ? CALENDLY_URL : '/signup'}
-                    className={`w-full h-14 rounded-2xl text-sm font-black uppercase tracking-[0.15em] transition-all flex items-center justify-center gap-2 active:scale-[0.98] ${
+              {PARTNER_TIERS.map((tier) => {
+                const count = locationCount[tier.slug] ?? 1
+                const total = tier.price * count
+
+                return (
+                  <div
+                    key={tier.slug}
+                    className={`relative rounded-3xl border p-8 flex flex-col ${
                       tier.recommended
-                        ? 'bg-[var(--color-accent)] hover:opacity-90 text-white shadow-[0_20px_40px_rgba(138,43,226,0.25)]'
-                        : 'border border-[var(--color-border)] hover:bg-[var(--color-card-hover)] text-[var(--color-foreground)]'
+                        ? 'border-[var(--color-accent)]/40 bg-[var(--color-accent)]/[0.03] ring-1 ring-[var(--color-accent)]/20'
+                        : 'border-[var(--color-border)] bg-[var(--color-card)]'
                     }`}
                   >
-                    {tier.slug === 'enterprise' ? 'Book a Call' : 'Get Started'} <ArrowRight size={16} />
-                  </Link>
-                </div>
-              ))}
+                    {tier.recommended && (
+                      <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-[var(--color-accent)] text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-lg shadow-[var(--color-accent)]/30">
+                        Recommended
+                      </div>
+                    )}
+                    <div className="mb-6 space-y-4">
+                      <h3 className="text-2xl font-black">{tier.name}</h3>
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-5xl font-black">${total}</span>
+                        <span className="text-[var(--color-text-tertiary)] text-lg">{tier.period}</span>
+                      </div>
+                      {count > 1 && (
+                        <div className="text-xs text-[var(--color-text-tertiary)]">
+                          ${tier.price} x {count} locations
+                        </div>
+                      )}
+                      <div className="text-sm text-[var(--color-text-tertiary)] space-y-1">
+                        <div>{tier.scanVolume} scan volume &middot; {tier.jobLimit}</div>
+                        <div>{tier.rateLimit}</div>
+                      </div>
+                      <div className="mt-2">
+                        <label className="text-[10px] font-bold uppercase tracking-[0.15em] text-[var(--color-text-dim)] block mb-1.5">Locations</label>
+                        <select
+                          value={count}
+                          onChange={(e) => updateLocations(tier.slug, Number(e.target.value))}
+                          className="w-full bg-[var(--color-card-hover)] border border-[var(--color-border)] rounded-xl px-4 py-2.5 text-sm text-[var(--color-foreground)] appearance-none cursor-pointer hover:border-[var(--color-border-focus)] transition-colors focus:outline-none focus:border-[var(--color-accent)]/50"
+                          style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center' }}
+                        >
+                          {LOCATION_OPTIONS.map(n => (
+                            <option key={n} value={n}>
+                              {n} location{n > 1 ? 's' : ''}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                    <ul className="space-y-3 mb-8 flex-1">
+                      {tier.features.map((f) => (
+                        <li key={f} className="flex items-start gap-3 text-sm text-[var(--color-text-secondary)]">
+                          <Check size={16} className="text-[var(--color-accent)] shrink-0 mt-0.5" />
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
+                    <Link
+                      href={`/checkout/partner?tier=${tier.slug}&locations=${count}`}
+                      className={`w-full h-14 rounded-2xl text-sm font-black uppercase tracking-[0.15em] transition-all flex items-center justify-center gap-2 active:scale-[0.98] ${
+                        tier.recommended
+                          ? 'bg-[var(--color-accent)] hover:opacity-90 text-white shadow-[0_20px_40px_rgba(138,43,226,0.25)]'
+                          : 'border border-[var(--color-border)] hover:bg-[var(--color-card-hover)] text-[var(--color-foreground)]'
+                      }`}
+                    >
+                      Get Started <ArrowRight size={16} />
+                    </Link>
+                  </div>
+                )
+              })}
             </div>
           </div>
         </section>
@@ -213,22 +249,12 @@ export default function PartnersPage() {
             <p className="text-[var(--color-text-tertiary)] text-lg">
               Create an account, register as a partner, and start sending jobs today.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link
-                href="/signup"
-                className="h-14 px-10 rounded-2xl bg-[var(--color-accent)] text-white font-black text-sm uppercase tracking-[0.15em] flex items-center gap-3 transition-all shadow-[0_20px_40px_rgba(138,43,226,0.25)] hover:opacity-90 active:scale-[0.98]"
-              >
-                Register as Partner <ArrowRight size={16} />
-              </Link>
-              <a
-                href={CALENDLY_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="h-14 px-10 rounded-2xl border border-[var(--color-border)] text-[var(--color-foreground)] font-black text-sm uppercase tracking-[0.15em] flex items-center gap-3 hover:bg-[var(--color-card-hover)] transition-all"
-              >
-                Book Onboarding
-              </a>
-            </div>
+            <Link
+              href="/checkout/partner?tier=growth"
+              className="inline-flex items-center gap-3 bg-[var(--color-accent)] hover:opacity-90 text-white px-10 py-5 rounded-2xl text-sm font-black uppercase tracking-[0.2em] transition-all shadow-[0_20px_40px_rgba(138,43,226,0.25)] active:scale-[0.98]"
+            >
+              Get Started <ArrowRight size={16} />
+            </Link>
           </div>
         </section>
       </main>

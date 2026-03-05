@@ -1,4 +1,4 @@
-// Find and RestoreIt Engine — Type Definitions
+// Find and restoreit Engine — Type Definitions
 
 export type AgentRole = 'recovery' | 'troubleshooting' | 'support'
 

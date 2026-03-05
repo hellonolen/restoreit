@@ -1,4 +1,4 @@
-// Find and RestoreIt Engine — SSE Streaming API Endpoint
+// Find and restoreit Engine — SSE Streaming API Endpoint
 
 import { cookies } from 'next/headers'
 import { getSessionUser } from '@/lib/auth'

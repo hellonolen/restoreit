@@ -79,7 +79,7 @@ export default function AccountPage() {
                         <ShieldCheck size={22} className="text-[var(--color-accent)] shrink-0 mt-0.5" />
                         <div>
                             <div className="font-semibold mb-1">Add Protection Plan</div>
-                            <div className="text-sm text-[var(--color-text-secondary)] leading-relaxed">Continuous disk health monitoring, early warning alerts, priority restore queue, and extended RestoreIt Cloud retention.</div>
+                            <div className="text-sm text-[var(--color-text-secondary)] leading-relaxed">Continuous disk health monitoring, early warning alerts, priority restore queue, and extended restoreit Cloud retention.</div>
                         </div>
                     </div>
                     <Link href="/account/billing" className="shrink-0 bg-[var(--color-accent)] hover:opacity-90 text-white px-5 py-3 rounded-xl text-sm font-semibold transition-all whitespace-nowrap">

@@ -1,4 +1,4 @@
-# RestoreIt — Master PRD (Revenue-Optimized)
+# restoreit — Master PRD (Revenue-Optimized)
 
 Status: V3 — Cloud Forensics Platform  
 Target: $50,000+ Monthly Revenue
@@ -7,17 +7,17 @@ Target: $50,000+ Monthly Revenue
 
 ## 1. Product Vision
 
-RestoreIt (restoreit.app) is an ultra-premium cloud recovery platform designed to rescue permanently deleted files for non-technical users experiencing data loss emergencies.
+restoreit (restoreit.app) is an ultra-premium cloud recovery platform designed to rescue permanently deleted files for non-technical users experiencing data loss emergencies.
 
 When people lose files they are in panic mode. Existing recovery tools are complicated, slow, and destructive because they require installation onto the same disk that lost the data.
 
-RestoreIt solves this by:
+restoreit solves this by:
 • Preventing destructive installs  
 • Streaming raw disk data safely to the cloud via a memory-only relay  
-• Reconstructing files autonomously using RestoreIt Agent pattern recognition  
+• Reconstructing files autonomously using restoreit Agent pattern recognition  
 • Providing a calm, guided recovery experience
 
-RestoreIt functions as a Diagnostic Concierge that guides the user step-by-step through recovery while the heavy RestoreIt computation occurs securely in the cloud.
+restoreit functions as a Diagnostic Concierge that guides the user step-by-step through recovery while the heavy restoreit computation occurs securely in the cloud.
 
 The platform is optimized for:
 • Simplicity  
@@ -31,7 +31,7 @@ The goal is maximum trust during a crisis.
 
 ## 2. Revenue Objective
 
-RestoreIt is designed to produce $50,000+ monthly recurring revenue with low operational overhead.
+restoreit is designed to produce $50,000+ monthly recurring revenue with low operational overhead.
 
 **Core revenue model:**
 • Standard Tier — $89  
@@ -54,7 +54,7 @@ Target monthly users: ~500 recoveries.
 
 ## 3. Target User
 
-RestoreIt is designed for non-technical users experiencing sudden data loss.
+restoreit is designed for non-technical users experiencing sudden data loss.
 
 **Common scenarios:**
 • Deleted family photos  
@@ -73,9 +73,9 @@ RestoreIt is designed for non-technical users experiencing sudden data loss.
 
 ## 4. Core Architectural Principles
 
-RestoreIt is built around three architectural principles:
+restoreit is built around three architectural principles:
 1. **Zero-install disk safety:** Never write to the corrupted drive.
-2. **Cloud-based reconstruction:** Offload heavy processing to Cloudflare & RestoreIt Agents.
+2. **Cloud-based reconstruction:** Offload heavy processing to Cloudflare & restoreit Agents.
 3. **Simple crisis-oriented user experience:** Hide the tech stack entirely from the front-end. No mention of AI, Cloudflare, or Agents on the UI.
 
 ------------------------------------------------------------
@@ -84,7 +84,7 @@ RestoreIt is built around three architectural principles:
 
 **Problem:** Traditional recovery software requires installing a program onto the affected disk, which overwrites the very files being recovered.
 
-**Solution:** RestoreIt separates computation from disk access. A tiny, memory-only relay streams disk sectors directly to the RestoreIt cloud. The relay performs no analysis and writes nothing to the disk.
+**Solution:** restoreit separates computation from disk access. A tiny, memory-only relay streams disk sectors directly to the restoreit cloud. The relay performs no analysis and writes nothing to the disk.
 
 **Relay characteristics:**
 • Execution: Terminal command or bootable USB  
@@ -94,9 +94,9 @@ RestoreIt is built around three architectural principles:
 
 ------------------------------------------------------------
 
-## 6. Cloud Reconstruction Engine & RestoreIt Agents
+## 6. Cloud Reconstruction Engine & restoreit Agents
 
-RestoreIt Cloud receives the raw byte stream and reconstructs recoverable files using an internal RestoreIt workflow. 
+restoreit Cloud receives the raw byte stream and reconstructs recoverable files using an internal restoreit workflow. 
 
 **Cloud responsibilities:**
 • File signature detection (Magic number detection)
@@ -120,16 +120,16 @@ Users must physically *see* that their files exist before paying. The Cloud Engi
 ## 8. Recovery Flow
 
 **Step 1 — Entry:** User arrives at restoreit.app. Landing page explains zero-install recovery.
-**Step 2 — Diagnostic:** RestoreIt gathers minimal context (OS, disk type, data loss scenario).
-**Step 3 — Relay Launch:** User launches the RestoreIt relay (e.g., `curl restoreit.app/relay | bash`). The relay begins streaming raw disk sectors.
-**Step 4 — Cloud Forensics:** RestoreIt Agents analyze incoming sectors. Dashboard displays detected file fragments and thumbnail previews ("Proof of Life").
+**Step 2 — Diagnostic:** restoreit gathers minimal context (OS, disk type, data loss scenario).
+**Step 3 — Relay Launch:** User launches the restoreit relay (e.g., `curl restoreit.app/relay | bash`). The relay begins streaming raw disk sectors.
+**Step 4 — Cloud Forensics:** restoreit Agents analyze incoming sectors. Dashboard displays detected file fragments and thumbnail previews ("Proof of Life").
 **Step 5 — Recovery Gate:** Once recoverable files are detected, the user selects a recovery tier to extract the data.
 
 ------------------------------------------------------------
 
 ## 9. Pricing Model
 
-RestoreIt uses value-based crisis pricing. Users pay only after files are detected.
+restoreit uses value-based crisis pricing. Users pay only after files are detected.
 
 **Standard Tier — $89**
 • Full cloud reconstruction  
@@ -150,7 +150,7 @@ RestoreIt uses value-based crisis pricing. Users pay only after files are detect
 • UI Rule: No mention of AI, Cloudflare, Agents, or Infrastructure. 
 
 **Backend**
-• Recovery Engine: RestoreIt Sovereign Agent Engine
+• Recovery Engine: restoreit Sovereign Agent Engine
 • Processing Runtime: Node / Cloudflare Edge Workers  
 • Storage: Cloudflare R2 (7-day retention for Pro Tier Vaults)
 
@@ -181,9 +181,9 @@ RestoreIt uses value-based crisis pricing. Users pay only after files are detect
 
 ------------------------------------------------------------
 
-## 13. RestoreIt Pro (Post-Recovery Protection)
+## 13. restoreit Pro (Post-Recovery Protection)
 
-RestoreIt Pro is a subscription designed exclusively for users who have already completed a successful recovery using RestoreIt.
+restoreit Pro is a subscription designed exclusively for users who have already completed a successful recovery using restoreit.
 
 The subscription is **not offered before recovery**. It is only presented after the user has successfully retrieved their files.
 
@@ -192,20 +192,20 @@ This ensures:
 • subscription positioning remains preventative  
 • pricing confusion is eliminated  
 
-RestoreIt resolves the immediate crisis.  
-RestoreIt Pro protects the user from future crises.
+restoreit resolves the immediate crisis.  
+restoreit Pro protects the user from future crises.
 
 **Pricing**
-• RestoreIt Pro — $12 per month (Single tier, no yearly option).
+• restoreit Pro — $12 per month (Single tier, no yearly option).
 
 **Eligibility & Conversion Moment**
-RestoreIt Pro is only offered to users who have completed a successful recovery session. The offer appears immediately after recovery completion inside the RestoreIt dashboard (panice → relief → recovery).
+restoreit Pro is only offered to users who have completed a successful recovery session. The offer appears immediately after recovery completion inside the restoreit dashboard (panice → relief → recovery).
 
 *Example moment:*
 "Your files have been restored successfully. Protect your devices so this never happens again."
 
 **Subscriber Benefits & Protection Dashboard**
-Subscribers gain access to the RestoreIt Protection Dashboard, providing ongoing protection and recovery readiness:
+Subscribers gain access to the restoreit Protection Dashboard, providing ongoing protection and recovery readiness:
 • disk health monitoring  
 • corruption detection alerts  
 • file system integrity scanning  
@@ -220,7 +220,7 @@ The subscription layer compounds on top of recovery revenue.
 Example model: 500 recoveries per month @ 20% conversion = 100 subscribers ($1,200 MRR building monthly).
 
 **Strategic Outcome**
-RestoreIt becomes both a crisis recovery platform (immediate revenue) and a proactive data protection platform (recurring revenue).
+restoreit becomes both a crisis recovery platform (immediate revenue) and a proactive data protection platform (recurring revenue).
 
 ------------------------------------------------------------
 
@@ -279,7 +279,7 @@ The following considerations have been identified for future development, organi
 • Two-factor authentication — For accessing Cloud Vault  
 • Audit logs — Track who accessed what data and when  
 • Compliance certifications — GDPR, HIPAA, SOC 2 considerations  
-• Zero-knowledge architecture — Define whether RestoreIt can access user data; make this clear  
+• Zero-knowledge architecture — Define whether restoreit can access user data; make this clear  
 • Local-only mode — Option to recover without cloud relay for sensitive data  
 • Secure deletion verification — Prove that deleted files are actually gone from cloud  
 
@@ -393,10 +393,10 @@ The following considerations have been identified for future development, organi
 
 ### Competitive & Growth Considerations
 
-• Competitor differentiation — Define what makes RestoreIt better than Disk Drill, EaseUS, Recuva  
+• Competitor differentiation — Define what makes restoreit better than Disk Drill, EaseUS, Recuva  
 • Marketing claims verification — Ensure all recovery rate claims are verifiable  
 • Beta testing program — Early access for feedback  
-• Competitor differentiation — Define what makes RestoreIt better than Disk Drill, EaseUS, Recuva  
+• Competitor differentiation — Define what makes restoreit better than Disk Drill, EaseUS, Recuva  
 • Marketing claims verification — Ensure all recovery rate claims are verifiable  
 • Beta testing program — Early access for feedback  
 • Referral program — Incentivize word-of-mouth growth  
@@ -405,7 +405,7 @@ The following considerations have been identified for future development, organi
 
 ## 15. Agentic Intelligence Architecture (Internal — Production)
 
-RestoreIt is powered by an internal agentic middleware layer. This is never surfaced to users but drives all intelligent behavior in the platform.
+restoreit is powered by an internal agentic middleware layer. This is never surfaced to users but drives all intelligent behavior in the platform.
 
 ------------------------------------------------------------
 
@@ -485,7 +485,7 @@ class SupportAgent:
 
 ```
 ┌──────────────────────────────────────┐
-│     RestoreIt App (Frontend)         │
+│     restoreit App (Frontend)         │
 └────────────┬─────────────────────────┘
              │
              ▼
@@ -499,7 +499,7 @@ class SupportAgent:
       ┌──────┴──────┐
       ▼             ▼
 ┌──────────┐  ┌──────────────┐
-│   LLM    │  │  RestoreIt   │
+│   LLM    │  │  restoreit   │
 │ (Claude/ │  │    Tools     │
 │  GPT-4)  │  │  - Scan API  │
 └──────────┘  │  - Recovery  │
@@ -513,7 +513,7 @@ class SupportAgent:
 
 **Tool Abstraction**
 
-All RestoreIt core functions are wrapped as agent-callable tools with structured parameters and descriptions.
+All restoreit core functions are wrapped as agent-callable tools with structured parameters and descriptions.
 
 ```python
 class ScanDriveTool(Tool):
@@ -598,11 +598,11 @@ class SafetyLayer:
 
 ## 16. User Accounts, Profiles & Subscription Management
 
-RestoreIt requires a persistent user account to support:
+restoreit requires a persistent user account to support:
 • Recovery session history
 • Cloud Vault access
 • Credit card management
-• RestoreIt Pro subscription ($12/month)
+• restoreit Pro subscription ($12/month)
 
 ------------------------------------------------------------
 
@@ -622,7 +622,7 @@ RestoreIt requires a persistent user account to support:
 
 **Subscription Status**
 • Recovery history log (all past sessions)
-• RestoreIt Pro subscription ($12/month): active, inactive, or trialing
+• restoreit Pro subscription ($12/month): active, inactive, or trialing
 • Pro subscription is offered only after a successful paid recovery event
 • One-click cancel or resume from account dashboard
 
@@ -632,7 +632,7 @@ RestoreIt requires a persistent user account to support:
 
 1. User completes a recovery and pays (Standard $89 or Pro $249)
 2. Recovery completes → Cloud Vault extraction confirmed
-3. System presents RestoreIt Pro protection upsell ($12/mo)
+3. System presents restoreit Pro protection upsell ($12/mo)
 4. If accepted, subscription begins immediately — stored card is charged monthly
 5. User dashboard reflects active Pro status and all associated benefits
 6. If declined, the upsell is shown again on next login, once, for 30 days

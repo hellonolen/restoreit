@@ -6,8 +6,8 @@ const BASE_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://restoreit.app'
 function buildRelayScript(scanId: string): string {
   return `#!/bin/bash
 # ═══════════════════════════════════════════════════════════════
-# RestoreIt Relay — reads raw bytes from a drive and uploads
-# them to the RestoreIt cloud for file recovery.
+# restoreit Relay — reads raw bytes from a drive and uploads
+# them to the restoreit cloud for file recovery.
 #
 # This script runs entirely in memory. It performs ZERO write
 # operations on your drive.
@@ -59,7 +59,7 @@ if [ "\$DRIVE_SIZE" -gt 0 ]; then
 fi
 
 echo "═══════════════════════════════════════════════════════════"
-echo "  RestoreIt Relay"
+echo "  restoreit Relay"
 echo "═══════════════════════════════════════════════════════════"
 echo ""
 echo "  Scan ID:    \$SCAN_ID"
@@ -71,7 +71,7 @@ fi
 echo "  Mode:       READ-ONLY (zero writes to your drive)"
 echo ""
 echo "  This will read raw bytes from your drive and upload"
-echo "  them to the RestoreIt cloud for file recovery."
+echo "  them to the restoreit cloud for file recovery."
 echo ""
 echo "═══════════════════════════════════════════════════════════"
 echo ""

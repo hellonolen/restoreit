@@ -1,4 +1,4 @@
-// Find and RestoreIt Engine — Safety Guardrails
+// Find and restoreit Engine — Safety Guardrails
 
 import type { ToolResult } from './types'
 

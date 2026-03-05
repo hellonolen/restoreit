@@ -14,7 +14,7 @@ export default function SecurityPage() {
 
     const [activeSessions] = useState([
         { id: '1', device: 'MacBook Pro 16"', browser: 'Safari 17.2', location: 'Austin, TX', current: true, lastActive: 'Now' },
-        { id: '2', device: 'iPhone 15 Pro', browser: 'RestoreIt App', location: 'Austin, TX', current: false, lastActive: '2 hours ago' },
+        { id: '2', device: 'iPhone 15 Pro', browser: 'restoreit App', location: 'Austin, TX', current: false, lastActive: '2 hours ago' },
     ]);
 
     const securityLog = [

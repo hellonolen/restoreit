@@ -1,4 +1,4 @@
-// Find and RestoreIt Engine — Context Manager
+// Find and restoreit Engine — Context Manager
 
 import type { EngineContext, ConversationMessage, ScanState } from './types'
 import { getDb } from '../../db'

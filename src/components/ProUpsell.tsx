@@ -42,7 +42,7 @@ export default function ProUpsell({ sessionStats, onRestart, onBack, onAccept }:
         { icon: <Bell size={16} />, title: 'Corruption Detection Alerts', desc: 'Real-time warnings before catastrophic data loss occurs.' },
         { icon: <Activity size={16} />, title: 'File System Integrity Scanning', desc: 'Scheduled scans keep your storage healthy and ready for restoration.' },
         { icon: <Cpu size={16} />, title: 'Priority Restore Queue', desc: 'Skip the line — Pro subscribers process first in emergencies.' },
-        { icon: <Cloud size={16} />, title: 'Extended Cloud Retention', desc: 'Extended RestoreIt Cloud access for 30 days vs 7-day standard.' },
+        { icon: <Cloud size={16} />, title: 'Extended Cloud Retention', desc: 'Extended restoreit Cloud access for 30 days vs 7-day standard.' },
         { icon: <Clock size={16} />, title: 'Restoration History Archive', desc: 'Full log of all past restore sessions and extracted files.' },
     ];
 
@@ -82,7 +82,7 @@ export default function ProUpsell({ sessionStats, onRestart, onBack, onAccept }:
             <div className="flex items-center gap-4 p-5 rounded-xl border border-orange-500/30 bg-orange-500/5">
                 <Clock size={20} className="text-orange-400 shrink-0" />
                 <div className="flex-1">
-                    <div className="text-sm font-semibold text-[var(--color-foreground)]">RestoreIt Cloud expires in {cloudDaysRemaining} days</div>
+                    <div className="text-sm font-semibold text-[var(--color-foreground)]">restoreit Cloud expires in {cloudDaysRemaining} days</div>
                     <div className="text-xs text-[var(--color-text-tertiary)]">Your restored files will be permanently deleted from our servers after this window unless you upgrade to Pro.</div>
                 </div>
                 <div className="text-3xl font-light text-orange-400 font-mono shrink-0">{cloudDaysRemaining}d</div>
@@ -101,7 +101,7 @@ export default function ProUpsell({ sessionStats, onRestart, onBack, onAccept }:
 
                     <div className="p-6 space-y-5">
                         <p className="text-sm leading-relaxed text-[var(--color-text-secondary)]">
-                            You just experienced what data loss feels like. RestoreIt Protection monitors your devices 24/7, detects early warning signs, and keeps RestoreIt Cloud always ready.
+                            You just experienced what data loss feels like. restoreit Protection monitors your devices 24/7, detects early warning signs, and keeps restoreit Cloud always ready.
                         </p>
 
                         {/* Benefits */}
@@ -120,7 +120,7 @@ export default function ProUpsell({ sessionStats, onRestart, onBack, onAccept }:
                         {/* Price */}
                         <div className="flex items-center justify-between p-4 rounded-xl border bg-[var(--color-card-hover)] border-[var(--color-border)]">
                             <div>
-                                <div className="font-semibold text-[var(--color-foreground)]">RestoreIt Pro Protection</div>
+                                <div className="font-semibold text-[var(--color-foreground)]">restoreit Pro Protection</div>
                                 <div className="text-[11px] font-mono text-[var(--color-text-tertiary)] uppercase tracking-wider mt-0.5">Monthly · Cancel Anytime</div>
                             </div>
                             <div className="text-sm font-medium text-[var(--color-text-secondary)]">Monthly subscription</div>
@@ -158,7 +158,7 @@ export default function ProUpsell({ sessionStats, onRestart, onBack, onAccept }:
                                 { label: 'Disk SMART Health', value: '94%', status: 'good' },
                                 { label: 'File System Integrity', value: '71%', status: 'warning' },
                                 { label: 'Storage Redundancy', value: 'None', status: 'critical' },
-                                { label: 'RestoreIt Cloud', value: 'Not active', status: 'critical' },
+                                { label: 'restoreit Cloud', value: 'Not active', status: 'critical' },
                             ].map(({ label, value, status }) => (
                                 <div key={label} className="flex items-center justify-between text-xs">
                                     <span className="text-[var(--color-text-tertiary)]">{label}</span>
@@ -176,9 +176,9 @@ export default function ProUpsell({ sessionStats, onRestart, onBack, onAccept }:
                         <ul className="space-y-2 text-xs">
                             {[
                                 '⚡ Warned you 14 days before disk failure',
-                                '🔒 Kept RestoreIt Cloud ready so you could skip the scan',
+                                '🔒 Kept restoreit Cloud ready so you could skip the scan',
                                 '🚀 Placed you first in the restore queue',
-                                '📁 Already had your files backed in RestoreIt Cloud',
+                                '📁 Already had your files backed in restoreit Cloud',
                             ].map(item => (
                                 <li key={item} className="text-[var(--color-text-secondary)]">{item}</li>
                             ))}

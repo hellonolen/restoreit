@@ -1,5 +1,5 @@
 "use client";
-// /account/cloud — RestoreIt Cloud file browser
+// /account/cloud — restoreit Cloud file browser
 import { useState, useEffect } from 'react';
 import { Cloud, Search, Filter, Download, Image, Film, FileText, Shield, Loader2 } from 'lucide-react';
 
@@ -78,7 +78,7 @@ export default function CloudPage() {
         <div className="space-y-8 max-w-5xl">
             <div className="flex items-end justify-between">
                 <div>
-                    <h1 className="text-xl font-semibold mb-1">RestoreIt Cloud</h1>
+                    <h1 className="text-xl font-semibold mb-1">restoreit Cloud</h1>
                     <p className="text-sm text-[var(--color-text-tertiary)]">Secure cloud storage for your restored files.</p>
                 </div>
                 <div className="flex items-center gap-3">
@@ -149,7 +149,7 @@ export default function CloudPage() {
                         {filtered.length === 0 ? (
                             <div className="p-12 rounded-2xl border border-[var(--color-border-subtle)] text-center">
                                 <Cloud size={32} className="text-[var(--color-disabled-text)] mx-auto mb-3" />
-                                <p className="text-[var(--color-text-tertiary)] text-sm">No files in RestoreIt Cloud yet.</p>
+                                <p className="text-[var(--color-text-tertiary)] text-sm">No files in restoreit Cloud yet.</p>
                                 <p className="text-[var(--color-text-dim)] text-xs mt-1">Complete a restoration to see your files here.</p>
                             </div>
                         ) : (
@@ -194,7 +194,7 @@ export default function CloudPage() {
                             <div className="w-16 h-16 rounded-full bg-[var(--color-card-hover)] flex items-center justify-center text-[var(--color-text-dim)] mb-4">
                                 <Cloud size={32} />
                             </div>
-                            <h3 className="font-medium mb-1">RestoreIt Cloud is active</h3>
+                            <h3 className="font-medium mb-1">restoreit Cloud is active</h3>
                             <p className="text-[var(--color-text-tertiary)] text-sm max-w-sm">Restored files are automatically encrypted and stored in your private cloud space.</p>
                         </div>
                     </div>

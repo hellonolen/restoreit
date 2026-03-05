@@ -46,9 +46,9 @@ export async function deliverWebhook(
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-RestoreIt-Signature': `v1=${signature}`,
-          'X-RestoreIt-Timestamp': String(timestamp),
-          'User-Agent': 'RestoreIt-Webhooks/1.0',
+          'X-restoreit-Signature': `v1=${signature}`,
+          'X-restoreit-Timestamp': String(timestamp),
+          'User-Agent': 'restoreit-Webhooks/1.0',
         },
         body,
       })

@@ -4,8 +4,8 @@ import SiteFooter from '@/components/SiteFooter';
 import { Shield, Cpu, Lock } from 'lucide-react';
 
 export const metadata: Metadata = {
-    title: 'About — RestoreIt',
-    description: 'Learn about RestoreIt, the cloud-based file restoration platform that never writes to your drive.',
+    title: 'About — restoreit',
+    description: 'Learn about restoreit, the cloud-based file restoration platform that never writes to your drive.',
 };
 
 export default function AboutPage() {
@@ -23,14 +23,14 @@ export default function AboutPage() {
                             Every restoration tool on the market requires you to download and install it — onto the same drive that holds your deleted files. That installation writes new data to disk, potentially overwriting the very sectors you need.
                         </p>
                         <p className="text-lg text-[var(--color-text-secondary)] leading-relaxed max-w-2xl">
-                            RestoreIt was built to eliminate that risk entirely.
+                            restoreit was built to eliminate that risk entirely.
                         </p>
                     </div>
 
                     <div className="space-y-6">
                         <h2 className="text-2xl font-black tracking-tight">How we&apos;re different</h2>
                         <p className="text-[var(--color-text-secondary)] leading-relaxed">
-                            RestoreIt is a cloud-based restoration platform. Instead of installing software on your drive, you run a lightweight relay command that executes entirely in your computer&apos;s memory (RAM). The relay reads your drive&apos;s raw sectors and streams them over an encrypted connection to our cloud engine for analysis. Nothing is ever written to your disk.
+                            restoreit is a cloud-based restoration platform. Instead of installing software on your drive, you run a lightweight relay command that executes entirely in your computer&apos;s memory (RAM). The relay reads your drive&apos;s raw sectors and streams them over an encrypted connection to our cloud engine for analysis. Nothing is ever written to your disk.
                         </p>
                     </div>
 
@@ -53,14 +53,14 @@ export default function AboutPage() {
                     <div className="space-y-6">
                         <h2 className="text-2xl font-black tracking-tight">Our products</h2>
                         <p className="text-[var(--color-text-secondary)] leading-relaxed">
-                            RestoreIt offers four products designed to cover every stage — from immediate crisis restoration to long-term data protection.
+                            restoreit offers four products designed to cover every stage — from immediate crisis restoration to long-term data protection.
                         </p>
                         <div className="grid grid-cols-2 gap-4">
                             {[
-                                { name: 'RestoreIt Scan', desc: 'Immediate device scan and restoration. Per device.' },
-                                { name: 'RestoreIt Pro', desc: 'Deep scan with damaged file reconstruction and priority restoration.' },
-                                { name: 'RestoreIt Cloud', desc: '500GB encrypted cloud storage for restored files.' },
-                                { name: 'RestoreIt Protection', desc: 'Disk monitoring, corruption alerts, and automated protection.' },
+                                { name: 'restoreit Scan', desc: 'Immediate device scan and restoration. Per device.' },
+                                { name: 'restoreit Pro', desc: 'Deep scan with damaged file reconstruction and priority restoration.' },
+                                { name: 'restoreit Cloud', desc: '500GB encrypted cloud storage for restored files.' },
+                                { name: 'restoreit Protection', desc: 'Disk monitoring, corruption alerts, and automated protection.' },
                             ].map((p) => (
                                 <div key={p.name} className="p-5 rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-card)] space-y-2">
                                     <div className="text-sm font-bold">{p.name}</div>

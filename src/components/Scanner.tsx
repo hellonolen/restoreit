@@ -110,7 +110,7 @@ export default function Scanner({ progress, files, stats, paused, onPause, onCan
                 </div>
                 <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border text-xs font-semibold ${net.color} border-current/30 bg-current/10`}>
                     <net.Icon size={12} />
-                    RestoreIt: {net.label}
+                    restoreit: {net.label}
                 </span>
             </div>
 

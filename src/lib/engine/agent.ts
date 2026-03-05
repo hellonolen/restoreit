@@ -1,4 +1,4 @@
-// Find and RestoreIt Engine — Core Agent
+// Find and restoreit Engine — Core Agent
 
 import { GoogleGenerativeAI, type GenerativeModel, type Content, type Part, SchemaType } from '@google/generative-ai'
 import type { AgentRole, EngineContext, EngineStreamChunk, Tool, ToolResult } from './types'
@@ -12,7 +12,7 @@ const INTENT_KEYWORDS: Record<AgentRole, string[]> = {
 }
 
 const SYSTEM_PROMPTS: Record<AgentRole, string> = {
-  recovery: `You are the Find and RestoreIt Engine, a cloud-based file restoration system. Your role is to help users scan their drives and detect files that may be recoverable.
+  recovery: `You are the Find and restoreit Engine, a cloud-based file restoration system. Your role is to help users scan their drives and detect files that may be recoverable.
 
 CRITICAL RULES:
 - NEVER guarantee that any files will be restored. Restoration success depends on the physical state of the storage device.
@@ -32,7 +32,7 @@ WORKFLOW:
 CONTEXT:
 {{context}}`,
 
-  troubleshooting: `You are the Find and RestoreIt Engine's troubleshooting system. Your role is to diagnose and resolve issues users encounter with the relay, their connection, permissions, or drives.
+  troubleshooting: `You are the Find and restoreit Engine's troubleshooting system. Your role is to diagnose and resolve issues users encounter with the relay, their connection, permissions, or drives.
 
 CRITICAL RULES:
 - Be specific and actionable. Give step-by-step instructions.
@@ -44,7 +44,7 @@ Use the diagnose_issue tool to get specific diagnostic steps for the user's prob
 CONTEXT:
 {{context}}`,
 
-  support: `You are the Find and RestoreIt Engine's support system. Your role is to answer questions about how RestoreIt works, pricing, security, and capabilities.
+  support: `You are the Find and restoreit Engine's support system. Your role is to answer questions about how restoreit works, pricing, security, and capabilities.
 
 CRITICAL RULES:
 - NEVER guarantee restoration outcomes. Always say "results vary depending on drive condition."
@@ -53,7 +53,7 @@ CRITICAL RULES:
 - Explain the relay concept simply: it reads your drive from memory, never writes to it, and streams data to our cloud securely.
 
 KEY FACTS:
-- RestoreIt uses a memory-only relay that performs zero write operations to the affected drive
+- restoreit uses a memory-only relay that performs zero write operations to the affected drive
 - Data is encrypted in transit (TLS) and at rest (AES-256)
 - Standard plan: single restoration, download immediately
 - Pro plan: 500GB cloud storage, 7-day retention, unlimited re-downloads

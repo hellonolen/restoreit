@@ -4,8 +4,8 @@ import SiteHeader from '@/components/SiteHeader'
 import SiteFooter from '@/components/SiteFooter'
 
 export const metadata = {
-  title: 'API Documentation — RestoreIt Restore-as-a-Service',
-  description: 'REST API reference for RestoreIt RaaS. Create restore jobs, upload disk images, list recovered files, and download via presigned URLs.',
+  title: 'API Documentation — restoreit Restore-as-a-Service',
+  description: 'REST API reference for restoreit RaaS. Create restore jobs, upload disk images, list recovered files, and download via presigned URLs.',
 }
 
 function MethodBadge({ method }: { method: string }) {
@@ -246,7 +246,8 @@ export default function RaasDocsPage() {
     "gb_scanned": 128.5,
     "files_restored": 12847,
     "tier": "growth",
-    "rate_per_gb": 0.30
+    "plan": "growth",
+    "monthly_price": 399
   }
 }`}
             />
@@ -266,10 +267,10 @@ export default function RaasDocsPage() {
               <h3 className="text-lg font-bold">Signature Verification</h3>
               <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
                 Compute <code className="text-[var(--color-accent)]" style={{ fontFamily: 'var(--font-mono), monospace' }}>HMAC-SHA256(&quot;{'${timestamp}.${body}'}&quot;, webhook_secret)</code> and
-                compare against the <code className="text-[var(--color-accent)]" style={{ fontFamily: 'var(--font-mono), monospace' }}>X-RestoreIt-Signature</code> header.
+                compare against the <code className="text-[var(--color-accent)]" style={{ fontFamily: 'var(--font-mono), monospace' }}>X-restoreit-Signature</code> header.
               </p>
-              <CodeBlock label="Webhook headers">{`X-RestoreIt-Signature: sha256=a1b2c3d4e5f6...
-X-RestoreIt-Timestamp: 1709510700
+              <CodeBlock label="Webhook headers">{`X-restoreit-Signature: sha256=a1b2c3d4e5f6...
+X-restoreit-Timestamp: 1709510700
 Content-Type: application/json`}</CodeBlock>
             </div>
 
@@ -351,8 +352,8 @@ const isValid = verifyWebhook(req.body, sig, ts, WEBHOOK_SECRET);`}</CodeBlock>
                   <div className="p-4 text-[10px] font-black uppercase tracking-[0.2em] text-[var(--color-text-dim)]">Monthly Quota</div>
                 </div>
                 {[
-                  { tier: 'Starter', rate: '100 req/min', quota: '50 GB' },
-                  { tier: 'Growth', rate: '500 req/min', quota: '500 GB' },
+                  { tier: 'Starter', rate: '100 req/min', quota: '100 GB' },
+                  { tier: 'Growth', rate: '500 req/min', quota: '1 TB' },
                   { tier: 'Enterprise', rate: 'Unlimited', quota: 'Unlimited' },
                 ].map((row, i) => (
                   <div key={row.tier} className={`grid grid-cols-3 ${i > 0 ? 'border-t border-[var(--color-border-subtle)]' : ''}`}>

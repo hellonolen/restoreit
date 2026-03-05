@@ -48,7 +48,7 @@ export async function POST(request: NextRequest) {
 
     await sendEmail({
       to: SUPPORT_EMAIL,
-      subject: `[RestoreIt Contact] ${subject || 'General Inquiry'} — from ${name.trim()}`,
+      subject: `[restoreit Contact] ${subject || 'General Inquiry'} — from ${name.trim()}`,
       html: `
         <h2>New Contact Form Submission</h2>
         <p><strong>Name:</strong> ${escapeHtml(name.trim())}</p>

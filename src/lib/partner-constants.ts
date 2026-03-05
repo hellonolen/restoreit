@@ -1,13 +1,13 @@
 // Partner Program — constants shared across /partners, /docs/raas, and dashboard
 
-export const CALENDLY_URL = 'https://calendly.com/restoreit/partner-onboarding'
-
 export interface PartnerTier {
   name: string
   slug: 'starter' | 'growth' | 'enterprise'
-  pricePerGb: string
+  price: number
+  period: string
+  scanVolume: string
+  jobLimit: string
   rateLimit: string
-  monthlyQuota: string
   features: string[]
   recommended?: boolean
 }
@@ -16,9 +16,11 @@ export const PARTNER_TIERS: PartnerTier[] = [
   {
     name: 'Starter',
     slug: 'starter',
-    pricePerGb: '$0.50',
+    price: 149,
+    period: '/mo',
+    scanVolume: '100 GB',
+    jobLimit: '50 jobs',
     rateLimit: '100 req/min',
-    monthlyQuota: '50 GB',
     features: [
       'REST API access',
       'Webhook notifications',
@@ -29,23 +31,27 @@ export const PARTNER_TIERS: PartnerTier[] = [
   {
     name: 'Growth',
     slug: 'growth',
-    pricePerGb: '$0.30',
+    price: 399,
+    period: '/mo',
+    scanVolume: '1 TB',
+    jobLimit: '200 jobs',
     rateLimit: '500 req/min',
-    monthlyQuota: '500 GB',
     recommended: true,
     features: [
       'Everything in Starter',
       'Priority scanning queue',
       'Bulk upload support',
-      'Dedicated support channel',
+      'Priority support',
     ],
   },
   {
     name: 'Enterprise',
     slug: 'enterprise',
-    pricePerGb: 'Custom',
+    price: 999,
+    period: '/mo',
+    scanVolume: 'Unlimited',
+    jobLimit: 'Unlimited',
     rateLimit: 'Unlimited',
-    monthlyQuota: 'Unlimited',
     features: [
       'Everything in Growth',
       'Custom SLA',
@@ -55,10 +61,10 @@ export const PARTNER_TIERS: PartnerTier[] = [
   },
 ]
 
-export const TIER_RATES: Record<string, number> = {
-  starter: 0.50,
-  growth: 0.30,
-  enterprise: 0.50,
+export const TIER_MONTHLY_PRICE: Record<string, number> = {
+  starter: 149,
+  growth: 399,
+  enterprise: 999,
 }
 
 export interface PartnerFAQ {
@@ -76,7 +82,7 @@ export const PARTNER_FAQS: PartnerFAQ[] = [
     answer: 'Restored files are available for 30 days after scan completion. Partners can request extended retention on the Growth and Enterprise tiers.',
   },
   {
-    question: 'Is RestoreIt compliant with data protection regulations?',
+    question: 'Is restoreit compliant with data protection regulations?',
     answer: 'We follow SOC 2 Type II practices and are GDPR-compliant. Enterprise partners can request a DPA (Data Processing Agreement) and compliance documentation.',
   },
   {
@@ -85,6 +91,6 @@ export const PARTNER_FAQS: PartnerFAQ[] = [
   },
   {
     question: 'How does billing work?',
-    answer: 'You are billed per gigabyte scanned at your tier rate. Usage is tracked in real time on your dashboard. Invoices are generated monthly. No minimum commitment on Starter.',
+    answer: 'Flat monthly subscription. Pick your tier, pay one price, use your included volume. No per-GB metering, no surprise charges. Usage is tracked in real time on your dashboard.',
   },
 ]

@@ -1,4 +1,4 @@
-// Find and RestoreIt Engine — Real Tool Definitions
+// Find and restoreit Engine — Real Tool Definitions
 
 import type { Tool, ToolResult, EngineContext } from './types'
 import { getDb } from '../../db'

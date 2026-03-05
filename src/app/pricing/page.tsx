@@ -33,7 +33,7 @@ const plans: Plan[] = [
     {
         id: 'scan',
         name: 'Scan',
-        fullName: 'RestoreIt Scan',
+        fullName: 'restoreit Scan',
         price: 89,
         period: 'per device',
         description: 'Immediate device scan and file detection. Download what the scan finds.',
@@ -50,13 +50,13 @@ const plans: Plan[] = [
             { text: '7-day support window', included: true },
             { text: 'Deep scan & file reconstruction', included: false },
             { text: 'Priority restore queue', included: false },
-            { text: 'RestoreIt Cloud storage', included: false },
+            { text: 'restoreit Cloud storage', included: false },
         ],
     },
     {
         id: 'pro',
         name: 'Pro',
-        fullName: 'RestoreIt Pro',
+        fullName: 'restoreit Pro',
         price: 249,
         period: 'per device',
         description: 'Deep scan with damaged file reconstruction, priority restoration, and a 7-day download window.',
@@ -74,13 +74,13 @@ const plans: Plan[] = [
             { text: 'Priority restore queue', included: true, highlight: true },
             { text: '7-day download window', included: true, highlight: true },
             { text: 'Unlimited re-downloads (7 days)', included: true, highlight: true },
-            { text: 'Eligible for RestoreIt Cloud', included: true, highlight: true },
+            { text: 'Eligible for restoreit Cloud', included: true, highlight: true },
         ],
     },
     {
         id: 'cloud',
-        name: 'RestoreIt Cloud',
-        fullName: 'RestoreIt Cloud',
+        name: 'restoreit Cloud',
+        fullName: 'restoreit Cloud',
         price: 79,
         period: '/year per device',
         description: '500GB encrypted cloud storage for your restored files. Long-term retention and secure access.',
@@ -103,10 +103,10 @@ const plans: Plan[] = [
     {
         id: 'protection',
         name: 'Protection',
-        fullName: 'RestoreIt Protection',
+        fullName: 'restoreit Protection',
         price: 29,
         period: '/month per device',
-        description: 'Post-restoration protection. Continuous monitoring, corruption alerts, RestoreIt Cloud storage, and priority recovery.',
+        description: 'Post-restoration protection. Continuous monitoring, corruption alerts, restoreit Cloud storage, and priority recovery.',
         icon: <Shield size={24} />,
         cta: 'Add Protection',
         ctaHref: '/account/billing',
@@ -128,15 +128,15 @@ const plans: Plan[] = [
 const faqs = [
     {
         q: 'Are these prices per device?',
-        a: 'Yes. RestoreIt Scan and RestoreIt Pro are priced per device — one physical drive per purchase. You can add additional devices at any time.',
+        a: 'Yes. restoreit Scan and restoreit Pro are priced per device — one physical drive per purchase. You can add additional devices at any time.',
     },
     {
         q: 'What\'s the difference between Scan and Pro?',
         a: 'Scan provides a standard cloud restoration scan with immediate download. Pro adds deep sector-level scanning, damaged file reconstruction, a priority restore queue, and a 7-day download window instead of immediate-only.',
     },
     {
-        q: 'Who can purchase RestoreIt Cloud?',
-        a: 'RestoreIt Cloud is available exclusively to Pro customers. It provides 500GB of encrypted storage to keep your restored files accessible long-term.',
+        q: 'Who can purchase restoreit Cloud?',
+        a: 'restoreit Cloud is available exclusively to Pro customers. It provides 500GB of encrypted storage to keep your restored files accessible long-term.',
     },
     {
         q: 'Can I add products later?',
@@ -266,10 +266,7 @@ export default function PricingPage() {
                                 </ul>
 
                                 <Link
-                                    href={plan.perDevice && (deviceCount[plan.id] ?? 1) > 1
-                                        ? `${plan.ctaHref}?devices=${deviceCount[plan.id]}`
-                                        : plan.ctaHref
-                                    }
+                                    href={plan.ctaHref}
                                     className={`w-full h-14 rounded-2xl text-sm font-black uppercase tracking-[0.15em] transition-all flex items-center justify-center gap-2 active:scale-[0.98] ${plan.ctaStyle}`}
                                 >
                                     {plan.cta} <ArrowRight size={16} />
@@ -349,7 +346,7 @@ export default function PricingPage() {
                             {[
                                 { icon: <HardDrive size={20} />, step: '01', title: 'Run the Scan', desc: 'The relay scans your drive safely — nothing installed, nothing overwritten.' },
                                 { icon: <Monitor size={20} />, step: '02', title: 'Review Results', desc: 'See what the scan detected. Check file types, sizes, and integrity.' },
-                                { icon: <Download size={20} />, step: '03', title: 'Choose & Pay', desc: 'Pick your plan — Scan or Pro. Download or store in RestoreIt Cloud.' },
+                                { icon: <Download size={20} />, step: '03', title: 'Choose & Pay', desc: 'Pick your plan — Scan or Pro. Download or store in restoreit Cloud.' },
                                 { icon: <Activity size={20} />, step: '04', title: 'Stay Protected', desc: 'Add Protection for ongoing disk monitoring and corruption alerts.' },
                             ].map((s) => (
                                 <div key={s.step} className="space-y-3">

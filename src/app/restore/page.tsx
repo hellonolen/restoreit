@@ -96,6 +96,7 @@ export default function Home() {
   useEffect(() => {
     const stored = localStorage.getItem('restoreit-theme');
     if (stored === 'light') {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setDarkMode(false);
       document.documentElement.classList.add('light-mode');
     }
@@ -116,8 +117,11 @@ export default function Home() {
 
   // Handle mounting for hydration-safe rendering
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
+
+
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {

@@ -11,7 +11,7 @@ interface OnboardingOverlayProps {
 const slides = [
     {
         title: "Safe Restoration",
-        desc: "Other tools risk overwriting your data by installing software. RestoreIt keeps your disk completely safe by scanning in the cloud.",
+        desc: "Other tools risk overwriting your data by installing software. restoreit keeps your disk completely safe by scanning in the cloud.",
         icon: <Activity className="text-[var(--color-accent)]" size={32} />,
         visual: (
             <div className="relative w-full h-48 bg-[var(--color-card)] rounded-2xl border border-[var(--color-border)] overflow-hidden flex items-center justify-center gap-8">
@@ -25,7 +25,7 @@ const slides = [
                 </div>
                 <div className="flex flex-col items-center gap-2">
                     <Cloud size={32} className="text-green-400" />
-                    <div className="text-[10px] text-[var(--color-text-tertiary)] font-mono">RestoreIt Cloud</div>
+                    <div className="text-[10px] text-[var(--color-text-tertiary)] font-mono">restoreit Cloud</div>
                 </div>
                 <div className="absolute inset-x-0 bottom-4 flex justify-center">
                     <div className="text-[9px] text-[var(--color-text-dim)] font-mono flex items-center gap-2">
@@ -44,7 +44,7 @@ const slides = [
                 <div className="p-4 rounded-xl bg-[var(--color-card)] border border-[var(--color-accent)]/30 font-mono text-xs text-[var(--color-accent)] leading-relaxed shadow-[0_0_20px_rgba(138,43,226,0.15)]">
                     <span className="text-[var(--color-text-tertiary)]"># Memory-only streaming activated</span><br />
                     curl -s restoreit.app/relay | bash<br />
-                    <span className="text-green-400">&#10003; Connecting to RestoreIt Cloud...</span><br />
+                    <span className="text-green-400">&#10003; Connecting to restoreit Cloud...</span><br />
                     <span className="text-green-400">✓ Transport: TLS 1.3 AES-256</span>
                 </div>
                 <div className="flex justify-between text-[10px] text-[var(--color-text-tertiary)] uppercase tracking-widest font-bold px-2">

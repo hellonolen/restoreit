@@ -7,6 +7,7 @@ interface User {
   email: string
   firstName: string
   isDemo: boolean
+  isAdmin: boolean
   createdAt: string
 }
 

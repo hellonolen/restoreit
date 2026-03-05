@@ -1,18 +1,23 @@
 "use client";
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import Link from 'next/link';
 import { ArrowRight, Shield, User } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import SiteHeader from '@/components/SiteHeader';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function SignupPage() {
+    return <Suspense><SignupContent /></Suspense>;
+}
+
+function SignupContent() {
     const [firstName, setFirstName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const redirectTo = searchParams.get('redirect') || '/restore';
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -35,7 +40,7 @@ export default function SignupPage() {
                 return;
             }
 
-            router.push('/restore');
+            router.push(redirectTo);
         } catch {
             setError('Connection error. Please try again.');
             setLoading(false);
@@ -44,8 +49,7 @@ export default function SignupPage() {
 
     return (
         <div className="min-h-screen bg-[var(--color-background)] relative selection:bg-[var(--color-accent)]/30 transition-colors duration-300">
-            <SiteHeader />
-            <div className="flex flex-col lg:flex-row min-h-screen pt-[73px]">
+            <div className="flex flex-col lg:flex-row min-h-screen">
             {/* Left Panel */}
             <div className="hidden lg:flex w-[45%] relative flex-col p-20 justify-between overflow-hidden border-r border-[var(--color-border)]">
                 <div className="absolute inset-0 pointer-events-none">
@@ -75,7 +79,7 @@ export default function SignupPage() {
                 </div>
 
                 <div className="relative z-10">
-                    <div className="text-[9px] font-black text-[var(--color-text-dim)] uppercase tracking-[0.25em]">&copy; 2026 RestoreIt</div>
+                    <div className="text-[9px] font-black text-[var(--color-text-dim)] uppercase tracking-[0.25em]">&copy; 2026 restoreit</div>
                 </div>
             </div>
 
@@ -135,7 +139,7 @@ export default function SignupPage() {
 
                     <div className="pt-8 border-t border-[var(--color-border-subtle)] flex items-center justify-between">
                         <span className="text-sm text-[var(--color-text-dim)]">Already have an account?</span>
-                        <Link href="/login" className="text-sm font-bold text-[var(--color-accent)] flex items-center gap-2 group">
+                        <Link href={redirectTo !== '/restore' ? `/login?redirect=${encodeURIComponent(redirectTo)}` : '/login'} className="text-sm font-bold text-[var(--color-accent)] flex items-center gap-2 group">
                             Sign in <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                         </Link>
                     </div>

@@ -8,6 +8,7 @@ import {
   buildSessionCookie,
   generateId,
 } from '@/lib/auth'
+import { trackFunnelEvent } from '@/lib/funnel'
 import { sendWelcomeEmail } from '@/lib/email'
 import { checkRateLimit, RATE_LIMITS, getClientIp } from '@/lib/rate-limit'
 
@@ -89,6 +90,9 @@ export async function POST(request: NextRequest) {
       isDemo: true,
       createdAt: now,
     })
+
+    // --- Track signup funnel event ---
+    await trackFunnelEvent({ userId, event: 'signup' })
 
     // --- Create session ---
     const token = await createSession(userId)

@@ -49,7 +49,7 @@ export default function CheckoutModal({ onClose, onSuccess, totalFiles, dataSize
             price: 249,
             scanLimit: 'Unlimited re-downloads',
             storage: '500 GB cloud storage included',
-            retention: '7-day RestoreIt Cloud retention',
+            retention: '7-day restoreit Cloud retention',
             requiresExternal: false,
             features: [
                 'Everything in Standard',
@@ -176,7 +176,7 @@ export default function CheckoutModal({ onClose, onSuccess, totalFiles, dataSize
 
                     {/* Payment policy */}
                     <div className="text-xs text-[var(--color-text-dim)] leading-relaxed">
-                        All completed purchases are final. You are viewing this checkout because files were detected during your scan. RestoreIt does not guarantee restoration of any specific files.
+                        All completed purchases are final. You are viewing this checkout because files were detected during your scan. restoreit does not guarantee restoration of any specific files.
                     </div>
 
                     <button

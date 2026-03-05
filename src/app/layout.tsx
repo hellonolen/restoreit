@@ -7,7 +7,7 @@ const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-serif'
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });
 
 export const metadata: Metadata = {
-  title: 'RestoreIt — Cloud File Restoration',
+  title: 'restoreit — Cloud File Restoration',
   description: 'Cloud-based file restoration. See what the scan finds before you pay.',
 };
 

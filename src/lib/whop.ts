@@ -14,9 +14,11 @@ function getHeaders() {
 interface CreateCheckoutParams {
   planId: string
   userId: string
-  tier: 'standard' | 'pro' | 'protection'
+  tier: 'standard' | 'pro' | 'protection' | 'starter' | 'growth' | 'enterprise'
   quantity?: number
   redirectUrl: string
+  checkoutType?: 'consumer' | 'partner'
+  scanId?: string
 }
 
 export async function createCheckoutSession({
@@ -25,6 +27,8 @@ export async function createCheckoutSession({
   tier,
   quantity = 1,
   redirectUrl,
+  checkoutType = 'consumer',
+  scanId,
 }: CreateCheckoutParams): Promise<string> {
   const response = await fetch(`${WHOP_API_URL}/checkout_sessions`, {
     method: 'POST',
@@ -35,7 +39,11 @@ export async function createCheckoutSession({
       metadata: {
         user_id: userId,
         tier,
-        devices: String(quantity),
+        checkout_type: checkoutType,
+        ...(scanId ? { scan_id: scanId } : {}),
+        ...(checkoutType === 'partner'
+          ? { locations: String(quantity) }
+          : { devices: String(quantity) }),
       },
       redirect_url: redirectUrl,
     }),
@@ -77,8 +85,16 @@ export async function verifyWebhookSignature(
 }
 
 // Whop plan IDs — set these in environment variables
-export const WHOP_PLANS = {
+export const WHOP_PLANS: Record<string, string> = {
+  // Consumer tiers
   standard: process.env.WHOP_PLAN_STANDARD ?? '',
   pro: process.env.WHOP_PLAN_PRO ?? '',
   protection: process.env.WHOP_PLAN_PROTECTION ?? '',
-} as const
+  // Partner tiers
+  starter: process.env.WHOP_PLAN_PARTNER_STARTER ?? '',
+  growth: process.env.WHOP_PLAN_PARTNER_GROWTH ?? '',
+  enterprise: process.env.WHOP_PLAN_PARTNER_ENTERPRISE ?? '',
+}
+
+export const PARTNER_TIERS = ['starter', 'growth', 'enterprise'] as const
+export const CONSUMER_TIERS = ['standard', 'pro', 'protection'] as const

@@ -18,7 +18,9 @@ export function middleware(request: NextRequest) {
     const isProtected = protectedPaths.some(p => pathname.startsWith(p));
 
     if (isProtected && !isAuthenticated) {
-        return NextResponse.redirect(new URL('/login', request.url));
+        const redirectUrl = new URL('/signup', request.url);
+        redirectUrl.searchParams.set('redirect', pathname);
+        return NextResponse.redirect(redirectUrl);
     }
 
     // Redirect logged-in users away from login/signup

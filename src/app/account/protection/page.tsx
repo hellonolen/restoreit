@@ -42,7 +42,7 @@ export default function ProtectionPage() {
                     <div>
                         <h2 className="text-2xl font-bold mb-2">Enable Protection Plan</h2>
                         <p className="text-[var(--color-text-secondary)] leading-relaxed max-w-md mx-auto">
-                            Get 24/7 disk health monitoring, early warning alerts, priority restore queue, and extended RestoreIt Cloud retention.
+                            Get 24/7 disk health monitoring, early warning alerts, priority restore queue, and extended restoreit Cloud retention.
                         </p>
                         <p className="font-semibold mt-3">$29/month &middot; Cancel anytime</p>
                     </div>
@@ -80,7 +80,7 @@ export default function ProtectionPage() {
                         <span className="text-lg font-semibold">All Systems Go</span>
                     </div>
                     <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed">
-                        Your Protection Plan is active. RestoreIt Cloud synchronization is enabled.
+                        Your Protection Plan is active. restoreit Cloud synchronization is enabled.
                     </p>
                 </div>
 

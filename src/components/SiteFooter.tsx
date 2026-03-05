@@ -9,7 +9,7 @@ export default function SiteFooter() {
                         <div className="w-8 h-8 rounded-lg bg-[var(--color-accent)] flex items-center justify-center">
                             <div className="w-2 h-2 bg-white rounded-sm rotate-45" />
                         </div>
-                        <span className="text-base font-black tracking-[0.3em] text-[var(--color-foreground)] uppercase">RestoreIt</span>
+                        <span className="text-base font-black tracking-[0.3em] text-[var(--color-foreground)] uppercase">restoreit</span>
                     </Link>
                     <p className="text-[var(--color-text-dim)] max-w-sm text-sm leading-relaxed font-medium">
                         Cloud-based file restoration that never writes to your drive. Scan, restore, and protect your data.
@@ -41,7 +41,7 @@ export default function SiteFooter() {
 
             <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 pt-10 border-t border-[var(--color-border-subtle)]">
                 <div className="text-[9px] font-black text-[var(--color-text-dim)] uppercase tracking-[0.2em]">
-                    &copy; 2026 RestoreIt. All rights reserved.
+                    &copy; 2026 restoreit. All rights reserved.
                 </div>
 
                 <div className="flex items-center gap-4">

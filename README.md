@@ -1,5 +1,11 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Recent Updates
+
+- **Branding Purge**: Standardized to lowercase `restoreit` globally.
+- **Authentic Media Requirement**: Replaced Unsplash placeholders with actual application assets.
+- **Linter Standardization**: Fixed global ESLint errors (`react-hooks/set-state-in-effect` and `purity`) and configured NextJs correctly by ignoring node_modules.
+
 ## Getting Started
 
 First, run the development server:

@@ -4,8 +4,8 @@
 import { cookies } from 'next/headers'
 import { getSessionUser } from '@/lib/auth'
 import { getDb } from '@/db'
-import { partners } from '@/db/schema'
-import { eq } from 'drizzle-orm'
+import { partners, payments } from '@/db/schema'
+import { eq, and, inArray } from 'drizzle-orm'
 import { generateApiKey, generateWebhookSecret, hashApiKey } from '@/lib/api-auth'
 
 export async function POST(request: Request) {
@@ -42,6 +42,24 @@ export async function POST(request: Request) {
     return json({ error: 'You already have a partner account. Use /api/partner/keys to manage keys.' }, 409)
   }
 
+  // Check if user already has a completed partner-tier payment
+  const partnerTiers = ['starter', 'growth', 'enterprise'] as const
+  const rateLimits: Record<string, number> = { starter: 100, growth: 500, enterprise: 10000 }
+  const gbLimits: Record<string, number | null> = { starter: 100, growth: 1000, enterprise: null }
+
+  const paidPartner = await db
+    .select({ tier: payments.tier })
+    .from(payments)
+    .where(and(
+      eq(payments.userId, user.id),
+      eq(payments.status, 'completed'),
+      inArray(payments.tier, partnerTiers),
+    ))
+    .orderBy(payments.createdAt)
+    .limit(1)
+
+  const tier = (paidPartner.length > 0 ? paidPartner[0].tier : 'starter') as 'starter' | 'growth' | 'enterprise'
+
   const apiKey = generateApiKey()
   const webhookSecret = generateWebhookSecret()
   const keyHash = await hashApiKey(apiKey)
@@ -54,9 +72,9 @@ export async function POST(request: Request) {
     email,
     apiKeyHash: keyHash,
     webhookSecret,
-    tier: 'starter',
-    rateLimit: 100,
-    monthlyGbLimit: 50,
+    tier,
+    rateLimit: rateLimits[tier] ?? 100,
+    monthlyGbLimit: gbLimits[tier] ?? 100,
     createdAt: new Date(),
   })
 
@@ -64,11 +82,11 @@ export async function POST(request: Request) {
   return json({
     partner_id: partnerId,
     name,
-    tier: 'starter',
+    tier,
     api_key: apiKey,
     webhook_secret: webhookSecret,
-    rate_limit: 100,
-    monthly_gb_limit: 50,
+    rate_limit: rateLimits[tier] ?? 100,
+    monthly_gb_limit: gbLimits[tier] ?? 100,
     warning: 'Save your API key now. It will not be shown again.',
   }, 201)
 }

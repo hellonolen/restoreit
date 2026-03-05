@@ -5,7 +5,7 @@ import { getSessionUser } from '@/lib/auth'
 import { getDb } from '@/db'
 import { partners, apiJobs, apiUsage } from '@/db/schema'
 import { eq, and, sql, desc, gte } from 'drizzle-orm'
-import { TIER_RATES } from '@/lib/partner-constants'
+import { TIER_MONTHLY_PRICE } from '@/lib/partner-constants'
 
 export async function GET() {
   const cookieStore = await cookies()
@@ -81,8 +81,7 @@ export async function GET() {
 
   const gbScanned = usageMap['gb_scanned'] ?? 0
   const filesRestored = usageMap['files_restored'] ?? 0
-  const rate = TIER_RATES[partner.tier] ?? 0.50
-  const estimatedRevenue = gbScanned * rate
+  const monthlyPrice = TIER_MONTHLY_PRICE[partner.tier] ?? 149
 
   // Recent 10 jobs
   const recentJobs = await db
@@ -115,7 +114,7 @@ export async function GET() {
       avgCompletionMs: Math.round(avgCompletionMs),
       gbScanned: Math.round(gbScanned * 100) / 100,
       filesRestored: Math.round(filesRestored),
-      estimatedRevenue: Math.round(estimatedRevenue * 100) / 100,
+      monthlyPrice,
     },
     recentJobs: recentJobs.map(j => ({
       ...j,

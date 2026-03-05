@@ -46,10 +46,10 @@ export default function LandingPage() {
       <section className="py-24 md:py-32 px-6 md:px-8 border-t border-[var(--color-border-subtle)]">
         <div className="max-w-6xl mx-auto space-y-16">
           <div className="rounded-2xl border border-[var(--color-border)] overflow-hidden">
-            <Image src="/images/scan_intake.png" alt="RestoreIt scan intake" width={2880} height={1800} className="w-full h-auto" />
+            <Image src="/images/scan_intake.png" alt="restoreit scan intake" width={2880} height={1800} className="w-full h-auto" />
           </div>
           <div className="rounded-2xl border border-[var(--color-border)] overflow-hidden">
-            <Image src="/images/cloud_vault.png" alt="RestoreIt Cloud file storage" width={2880} height={1800} className="w-full h-auto" />
+            <Image src="/images/cloud_vault.png" alt="restoreit Cloud file storage" width={2880} height={1800} className="w-full h-auto" />
           </div>
         </div>
       </section>
@@ -102,7 +102,7 @@ export default function LandingPage() {
             to your affected drive.
           </h2>
           <p className="text-[var(--color-text-secondary)] text-lg md:text-xl max-w-2xl mx-auto font-medium">
-            RestoreIt scans your drive without writing a single byte. See what the scan finds before you pay.
+            restoreit scans your drive without writing a single byte. See what the scan finds before you pay.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
             <Link href="/pricing" className="w-full sm:w-auto h-16 px-12 rounded-2xl bg-[var(--color-accent)] hover:opacity-90 text-white text-sm font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3 shadow-[0_20px_40px_rgba(138,43,226,0.3)] hover:scale-105 active:scale-95">

@@ -7,10 +7,12 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 function CheckoutContent() {
     const [isProcessing, setIsProcessing] = useState(false);
-    const [selectedPlan, setSelectedPlan] = useState<'standard' | 'pro'>('pro');
-    const [error, setError] = useState('');
     const router = useRouter();
     const searchParams = useSearchParams();
+    const tierParam = searchParams.get('tier');
+    const initialTier = tierParam === 'standard' ? 'standard' : 'pro';
+    const [selectedPlan, setSelectedPlan] = useState<'standard' | 'pro'>(initialTier);
+    const [error, setError] = useState('');
     const rawDevices = Number(searchParams.get('devices') ?? '1');
     const devices = Math.max(1, Math.min(5, Math.floor(rawDevices) || 1));
 
@@ -48,24 +50,24 @@ function CheckoutContent() {
     const plans = [
         {
             id: 'standard' as const,
-            name: 'RestoreIt',
+            name: 'restoreit',
             price: 89,
             features: [
                 { text: 'Deep drive scanner', included: true },
                 { text: 'Reconstructs damaged files', included: true },
                 { text: 'Download to your own drive', included: true },
-                { text: 'RestoreIt Cloud storage', included: false },
+                { text: 'restoreit Cloud storage', included: false },
             ],
             icon: <HardDrive size={20} />,
         },
         {
             id: 'pro' as const,
-            name: 'RestoreIt Pro',
+            name: 'restoreit Pro',
             price: 249,
             features: [
                 { text: 'Deep drive scanner', included: true },
                 { text: 'Reconstructs damaged files', included: true },
-                { text: 'RestoreIt Cloud storage included', included: true },
+                { text: 'restoreit Cloud storage included', included: true },
                 { text: 'No external hardware required', included: true },
             ],
             icon: <Cloud size={20} />,
@@ -161,7 +163,7 @@ function CheckoutContent() {
                         <div>
                             <h4 className="text-sm font-bold mb-1">Safe Restoration Guarantee</h4>
                             <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed">
-                                RestoreIt scans your drive without writing to disk. Pro tier stores files in RestoreIt Cloud. Standard tier downloads to your own drive.
+                                restoreit scans your drive without writing to disk. Pro tier stores files in restoreit Cloud. Standard tier downloads to your own drive.
                             </p>
                         </div>
                     </div>
@@ -179,7 +181,7 @@ function CheckoutContent() {
 
                         <div className="space-y-3 text-sm">
                             <div className="flex justify-between text-[var(--color-text-secondary)]">
-                                <span>{selectedPlan === 'pro' ? 'RestoreIt Pro' : 'RestoreIt'}{devices > 1 ? ` x ${devices} devices` : ''}</span>
+                                <span>{selectedPlan === 'pro' ? 'restoreit Pro' : 'restoreit'}{devices > 1 ? ` x ${devices} devices` : ''}</span>
                                 <span className="text-[var(--color-foreground)]">${(selectedPlan === 'pro' ? 249 : 89) * devices}.00</span>
                             </div>
                             {devices > 1 && (

@@ -2,14 +2,14 @@
 // Account Layout Shell — shared by all /account/* pages
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { User, CreditCard, History, Shield, Cloud, ArrowLeft, Lock, LogOut, Key } from 'lucide-react';
+import { User, CreditCard, History, Shield, Cloud, ArrowLeft, Lock, LogOut, Key, BarChart3 } from 'lucide-react';
 import { useUser } from '@/hooks/useUser';
 
 const navItems = [
     { href: '/account', label: 'Profile', icon: User, exact: true },
     { href: '/account/billing', label: 'Billing', icon: CreditCard },
     { href: '/account/history', label: 'Restore History', icon: History },
-    { href: '/account/cloud', label: 'RestoreIt Cloud', icon: Cloud },
+    { href: '/account/cloud', label: 'restoreit Cloud', icon: Cloud },
     { href: '/account/protection', label: 'Protection', icon: Shield },
     { href: '/account/security', label: 'Security', icon: Lock },
     { href: '/account/partner-dashboard', label: 'Partner API', icon: Key },
@@ -83,6 +83,13 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
                                 </Link>
                             );
                         })}
+                        {user?.isAdmin && (
+                            <Link href="/account/admin"
+                                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition-all ${pathname.startsWith('/account/admin') ? 'bg-[var(--color-accent)]/10 text-[var(--color-foreground)] border border-[var(--color-accent)]/20' : 'text-[var(--color-text-tertiary)] hover:text-[var(--color-foreground)] hover:bg-[var(--color-card-hover)]'}`}>
+                                <BarChart3 size={15} className={pathname.startsWith('/account/admin') ? 'text-[var(--color-accent)]' : ''} />
+                                Admin
+                            </Link>
+                        )}
                     </nav>
                 </aside>
 

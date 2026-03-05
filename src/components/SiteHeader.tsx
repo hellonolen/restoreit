@@ -11,7 +11,6 @@ const NAV_LINKS = [
     { href: '/how-it-works', label: 'How It Works' },
     { href: '/faq', label: 'FAQ' },
     { href: '/pricing', label: 'Pricing' },
-    { href: '/partners', label: 'Partners' },
     { href: '/login', label: 'Login' },
 ];
 
@@ -22,6 +21,7 @@ export default function SiteHeader() {
 
     useEffect(() => {
         const stored = localStorage.getItem('restoreit-theme');
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         if (stored === 'light') setDarkMode(false);
     }, []);
 
@@ -58,7 +58,7 @@ export default function SiteHeader() {
                         {darkMode ? <Sun size={16} /> : <Moon size={16} />}
                     </button>
                     <Link
-                        href="/pricing"
+                        href="/restore"
                         className="px-6 py-2.5 rounded-xl bg-[var(--color-accent)] text-white hover:opacity-90 transition-all shadow-lg shadow-[var(--color-accent)]/20"
                     >
                         Get Started
@@ -88,7 +88,7 @@ export default function SiteHeader() {
                             </Link>
                         ))}
                         <Link
-                            href="/pricing"
+                            href="/restore"
                             onClick={() => setMobileMenuOpen(false)}
                             className="mt-4 h-14 rounded-2xl bg-[var(--color-accent)] text-white font-black text-sm uppercase tracking-widest flex items-center justify-center"
                         >

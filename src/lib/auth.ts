@@ -11,6 +11,7 @@ export interface SessionUser {
   email: string
   firstName: string
   isDemo: boolean
+  isAdmin: boolean
 }
 
 /**
@@ -57,6 +58,7 @@ export async function getSessionUser(
       email: users.email,
       firstName: users.firstName,
       isDemo: users.isDemo,
+      isAdmin: users.isAdmin,
     })
     .from(users)
     .where(eq(users.id, session.userId))

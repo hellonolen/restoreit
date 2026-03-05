@@ -27,9 +27,9 @@ function formatAmount(cents: number): string {
 }
 
 function tierLabel(tier: string): string {
-    if (tier === 'pro') return 'RestoreIt Pro — Restoration';
-    if (tier === 'standard') return 'RestoreIt — Restoration';
-    return `RestoreIt — ${tier}`;
+    if (tier === 'pro') return 'restoreit Pro — Restoration';
+    if (tier === 'standard') return 'restoreit — Restoration';
+    return `restoreit — ${tier}`;
 }
 
 export default function BillingPage() {
@@ -119,7 +119,7 @@ export default function BillingPage() {
                 {!hasProtection ? (
                     <div className="space-y-4">
                         <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
-                            Continuous disk health monitoring, early warning alerts, extended RestoreIt Cloud retention, and priority restore queue.
+                            Continuous disk health monitoring, early warning alerts, extended restoreit Cloud retention, and priority restore queue.
                         </p>
                         <ul className="grid grid-cols-2 gap-2 text-xs text-[var(--color-text-tertiary)]">
                             {['24/7 disk health monitoring', 'Corruption detection alerts', 'Priority restore queue', 'Extended 30-day cloud retention', 'Full restore history archive', 'Cancel anytime'].map(f => (
@@ -157,7 +157,7 @@ export default function BillingPage() {
                             <div className="p-4 rounded-xl border border-red-500/30 bg-red-500/5 space-y-3">
                                 <div className="flex items-start gap-3">
                                     <AlertCircle size={16} className="text-red-400 shrink-0 mt-0.5" />
-                                    <p className="text-sm text-[var(--color-text-secondary)]">Cancelling will stop disk monitoring and reduce RestoreIt Cloud retention to 7 days starting your next billing cycle.</p>
+                                    <p className="text-sm text-[var(--color-text-secondary)]">Cancelling will stop disk monitoring and reduce restoreit Cloud retention to 7 days starting your next billing cycle.</p>
                                 </div>
                                 <div className="flex gap-3">
                                     <button onClick={() => setShowCancelConfirm(false)} className="flex-1 py-2 rounded-xl border border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-foreground)] text-sm transition-all">Keep Plan</button>
