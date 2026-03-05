@@ -14,7 +14,7 @@ export default function RaasDocsPage() {
     { icon: <Zap size={20} />, title: 'Chunked Disk Upload', desc: 'Stream disk images in optimized chunks with automatic reassembly and integrity checks.' },
     { icon: <Code2 size={20} />, title: 'Webhook-Driven Results', desc: 'Receive real-time job completion notifications and file manifests via signed webhooks.' },
     { icon: <Shield size={20} />, title: 'HMAC-SHA256 Security', desc: 'Every webhook payload is cryptographically signed — verify authenticity before processing.' },
-    { icon: <BarChart3 size={20} />, title: 'Usage Tracking', desc: 'Monitor jobs created, data scanned, and files restored across your billing period.' },
+    { icon: <BarChart3 size={20} />, title: 'Webhook Event Logs', desc: 'Every delivery attempt is logged — event, status code, retries, and result visible in your dashboard.' },
     { icon: <Lock size={20} />, title: 'MCP Server', desc: 'Connect AI agents directly to restoreit via Model Context Protocol — no code required.' },
   ]
 

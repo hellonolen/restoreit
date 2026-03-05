@@ -92,11 +92,11 @@ export const PARTNER_FAQS: PartnerFAQ[] = [
   },
   {
     question: 'How long is restored data retained?',
-    answer: 'Restored files are available for 30 days after scan completion. Partners can request extended retention on the Growth and Enterprise tiers.',
+    answer: 'Restored files are available for 30 days after scan completion. Enterprise tier includes extended data retention automatically.',
   },
   {
     question: 'Is restoreit compliant with data protection regulations?',
-    answer: 'We follow SOC 2 Type II practices and are GDPR-compliant. Enterprise partners can request a DPA (Data Processing Agreement) and compliance documentation.',
+    answer: 'We follow SOC 2 Type II practices and are GDPR-compliant. Enterprise tier includes 99.9% uptime guarantee. Compliance documentation is available in your partner dashboard.',
   },
   {
     question: 'What is the typical turnaround time?',

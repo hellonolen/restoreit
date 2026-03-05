@@ -339,6 +339,24 @@ const isValid = verifyWebhook(req.body, sig, ts, WEBHOOK_SECRET);`}</CodeBlock>
   "completed_at": 1709510700000
 }`}</CodeBlock>
                 </div>
+
+                <div className="space-y-4">
+                    <h3 className="text-lg font-bold">Webhook Event Logs</h3>
+                    <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed">
+                        Every webhook delivery attempt is logged and visible in your <strong>Partner Dashboard</strong> under
+                        {' '}<em>Webhook Event Logs</em>. Each log entry includes the event type, HTTP status code, number of
+                        delivery attempts, and whether delivery succeeded. Use this to debug integration issues without guessing.
+                    </p>
+                    <div className="rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] p-5 space-y-2">
+                        <div className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--color-text-dim)]">Logged per delivery</div>
+                        <ul className="text-xs text-[var(--color-text-secondary)] space-y-1 leading-relaxed">
+                            <li>• <strong>Event</strong> — e.g. <code className="text-[var(--color-accent)]" style={{ fontFamily: 'var(--font-mono), monospace' }}>job.completed</code>, <code className="text-[var(--color-accent)]" style={{ fontFamily: 'var(--font-mono), monospace' }}>job.failed</code></li>
+                            <li>• <strong>Status Code</strong> — HTTP response from your callback URL</li>
+                            <li>• <strong>Attempts</strong> — 1–4 (automatic retry with exponential backoff)</li>
+                            <li>• <strong>Result</strong> — Delivered or Failed</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
 
             {/* MCP Server */}
@@ -364,7 +382,7 @@ const isValid = verifyWebhook(req.body, sig, ts, WEBHOOK_SECRET);`}</CodeBlock>
     "restoreit": {
       "url": "https://restoreit.app/api/mcp",
       "headers": {
-        "Authorization": "Bearer rstr_live_your_api_key"
+        "Authorization": "Bearer ri_your_api_key"
       }
     }
   }
