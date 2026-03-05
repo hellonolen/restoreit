@@ -1,12 +1,24 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import { ArrowRight, Link as LinkIcon, Search, Download, Code, Bell, BarChart3, Link2, Gauge, Layers, Check, ChevronRight } from 'lucide-react'
 import SiteHeader from '@/components/SiteHeader'
 import SiteFooter from '@/components/SiteFooter'
 import { PARTNER_TIERS, PARTNER_FAQS } from '@/lib/partner-constants'
 
+const QTY_OPTIONS = [1, 2, 3, 4, 5] as const
+
 export default function PartnersPage() {
+  const [qty, setQty] = useState<Record<string, number>>({
+    starter: 1,
+    growth: 1,
+    enterprise: 1,
+  })
+
+  const updateQty = (slug: string, count: number) => {
+    setQty(prev => ({ ...prev, [slug]: count }))
+  }
 
   return (
     <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-foreground)] font-sans flex flex-col selection:bg-[var(--color-accent)]/30 transition-colors duration-300">
@@ -119,49 +131,74 @@ export default function PartnersPage() {
               </p>
             </div>
             <div className="grid md:grid-cols-3 gap-6">
-              {PARTNER_TIERS.map((tier) => (
-                <div
-                  key={tier.slug}
-                  className={`relative rounded-3xl border p-8 flex flex-col ${tier.recommended
-                    ? 'border-[var(--color-accent)]/40 bg-[var(--color-accent)]/[0.03] ring-1 ring-[var(--color-accent)]/20'
-                    : 'border-[var(--color-border)] bg-[var(--color-card)]'
-                    }`}
-                >
-                  {tier.recommended && (
-                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-[var(--color-accent)] text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-lg shadow-[var(--color-accent)]/30">
-                      Recommended
-                    </div>
-                  )}
-                  <div className="mb-6 space-y-4">
-                    <h3 className="text-2xl font-black">{tier.name}</h3>
-                    <div className="flex items-baseline gap-1">
-                      <span className="text-5xl font-black">${tier.price}</span>
-                      <span className="text-[var(--color-text-tertiary)] text-lg">{tier.period}</span>
-                    </div>
-                    <div className="text-sm text-[var(--color-text-tertiary)] space-y-1">
-                      <div>{tier.scanVolume} scan volume &middot; {tier.jobLimit}</div>
-                      <div>{tier.rateLimit}</div>
-                    </div>
-                  </div>
-                  <ul className="space-y-3 mb-8 flex-1">
-                    {tier.features.map((f) => (
-                      <li key={f} className="flex items-start gap-3 text-sm text-[var(--color-text-secondary)]">
-                        <Check size={16} className="text-[var(--color-accent)] shrink-0 mt-0.5" />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                  <Link
-                    href={`/checkout/partner?tier=${tier.slug}`}
-                    className={`w-full h-14 rounded-2xl text-sm font-black uppercase tracking-[0.15em] transition-all flex items-center justify-center gap-2 active:scale-[0.98] ${tier.recommended
-                      ? 'bg-[var(--color-accent)] hover:opacity-90 text-white shadow-[0_20px_40px_rgba(138,43,226,0.25)]'
-                      : 'border border-[var(--color-border)] hover:bg-[var(--color-card-hover)] text-[var(--color-foreground)]'
+              {PARTNER_TIERS.map((tier) => {
+                const count = qty[tier.slug] ?? 1
+                const total = tier.price * count
+
+                return (
+                  <div
+                    key={tier.slug}
+                    className={`relative rounded-3xl border p-8 flex flex-col ${tier.recommended
+                      ? 'border-[var(--color-accent)]/40 bg-[var(--color-accent)]/[0.03] ring-1 ring-[var(--color-accent)]/20'
+                      : 'border-[var(--color-border)] bg-[var(--color-card)]'
                       }`}
                   >
-                    Get Started <ArrowRight size={16} />
-                  </Link>
-                </div>
-              ))}
+                    {tier.recommended && (
+                      <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-[var(--color-accent)] text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-lg shadow-[var(--color-accent)]/30">
+                        Recommended
+                      </div>
+                    )}
+                    <div className="mb-6 space-y-4">
+                      <h3 className="text-2xl font-black">{tier.name}</h3>
+                      <div className="flex items-baseline gap-1">
+                        <span className="text-5xl font-black">${total}</span>
+                        <span className="text-[var(--color-text-tertiary)] text-lg">{tier.period}</span>
+                      </div>
+                      {count > 1 && (
+                        <div className="text-xs text-[var(--color-text-tertiary)]">
+                          ${tier.price} × {count}
+                        </div>
+                      )}
+                      <div className="text-sm text-[var(--color-text-tertiary)] space-y-1">
+                        <div>{tier.scanVolume} scan volume · {tier.jobLimit}</div>
+                        <div>{tier.rateLimit}</div>
+                      </div>
+                      <div className="mt-2">
+                        <label className="text-[10px] font-bold uppercase tracking-[0.15em] text-[var(--color-text-dim)] block mb-1.5">Quantity</label>
+                        <select
+                          value={count}
+                          onChange={(e) => updateQty(tier.slug, Number(e.target.value))}
+                          className="w-full bg-[var(--color-card-hover)] border border-[var(--color-border)] rounded-xl px-4 py-2.5 text-sm text-[var(--color-foreground)] appearance-none cursor-pointer hover:border-[var(--color-border-focus)] transition-colors focus:outline-none focus:border-[var(--color-accent)]/50"
+                          style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center' }}
+                        >
+                          {QTY_OPTIONS.map(n => (
+                            <option key={n} value={n}>
+                              {n}× — ${tier.price * n}{tier.period}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                    <ul className="space-y-3 mb-8 flex-1">
+                      {tier.features.map((f) => (
+                        <li key={f} className="flex items-start gap-3 text-sm text-[var(--color-text-secondary)]">
+                          <Check size={16} className="text-[var(--color-accent)] shrink-0 mt-0.5" />
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
+                    <Link
+                      href={`/checkout/partner?tier=${tier.slug}&qty=${count}`}
+                      className={`w-full h-14 rounded-2xl text-sm font-black uppercase tracking-[0.15em] transition-all flex items-center justify-center gap-2 active:scale-[0.98] ${tier.recommended
+                        ? 'bg-[var(--color-accent)] hover:opacity-90 text-white shadow-[0_20px_40px_rgba(138,43,226,0.25)]'
+                        : 'border border-[var(--color-border)] hover:bg-[var(--color-card-hover)] text-[var(--color-foreground)]'
+                        }`}
+                    >
+                      Get Started <ArrowRight size={16} />
+                    </Link>
+                  </div>
+                )
+              })}
             </div>
           </div>
         </section>
