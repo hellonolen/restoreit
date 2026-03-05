@@ -73,7 +73,7 @@ export default function FAQPage() {
             <main className="flex-1 pt-28 pb-20">
                 <section className="max-w-3xl mx-auto px-6 md:px-8 space-y-16">
                     <div className="space-y-4">
-                        <h1 className="text-5xl md:text-6xl font-black tracking-tighter">
+                        <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tighter">
                             Frequently Asked Questions
                         </h1>
                         <p className="text-lg text-[var(--color-text-secondary)]">

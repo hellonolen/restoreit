@@ -56,7 +56,7 @@ export default function HowItWorksPage() {
                 <section className="max-w-3xl mx-auto px-6 md:px-8 space-y-20">
                     <div className="space-y-6">
                         <div className="text-[var(--color-accent)] text-[10px] font-black uppercase tracking-[0.3em]">How It Works</div>
-                        <h1 className="text-5xl md:text-6xl font-black tracking-tighter">
+                        <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tighter">
                             Five steps. Zero disk writes.
                         </h1>
                         <p className="text-lg text-[var(--color-text-secondary)] leading-relaxed max-w-2xl">
@@ -94,7 +94,7 @@ export default function HowItWorksPage() {
                             <Terminal size={14} />
                             curl -sL https://restoreit.app/relay | bash
                         </div>
-                        <div className="grid grid-cols-3 gap-3">
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                             {['Zero disk writes', 'Memory-only execution', 'TLS encrypted stream'].map((label) => (
                                 <div key={label} className="flex items-center gap-2 p-3 rounded-xl bg-[var(--color-card)] border border-[var(--color-border-subtle)] text-xs text-[var(--color-accent)]">
                                     <Shield size={14} /><span className="text-[var(--color-text-secondary)]">{label}</span>

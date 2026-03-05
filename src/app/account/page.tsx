@@ -58,7 +58,7 @@ export default function AccountPage() {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {[
                     { icon: <HardDrive size={16} />, label: 'Restores Completed', value: scanCount },
                     { icon: <Calendar size={16} />, label: 'Member Since', value: memberSince },

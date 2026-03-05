@@ -66,7 +66,7 @@ export default function SupportPage() {
                             <Terminal size={14} />
                             curl -sL https://restoreit.app/relay | bash
                         </div>
-                        <div className="grid grid-cols-3 gap-3 pt-2">
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
                             {[
                                 { icon: <Shield size={14} />, label: 'Zero disk writes' },
                                 { icon: <Shield size={14} />, label: 'Memory only execution' },

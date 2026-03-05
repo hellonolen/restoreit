@@ -16,7 +16,7 @@ export default function AboutPage() {
             <main className="flex-1 pt-28 pb-20">
                 <section className="max-w-3xl mx-auto px-6 md:px-8 space-y-16">
                     <div className="space-y-6">
-                        <h1 className="text-5xl md:text-6xl font-black tracking-tighter">
+                        <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tighter">
                             Restoration software has a fatal flaw.
                         </h1>
                         <p className="text-lg text-[var(--color-text-secondary)] leading-relaxed max-w-2xl">
@@ -55,7 +55,7 @@ export default function AboutPage() {
                         <p className="text-[var(--color-text-secondary)] leading-relaxed">
                             restoreit is purpose-built for logical data loss — the most common type of data loss, covering roughly 70–80% of all recovery cases. Cloud-based recovery is faster, cheaper, and infinitely more scalable than shipping a drive to a physical lab.
                         </p>
-                        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                             {[
                                 'Accidental deletion',
                                 'Drive formatting',
@@ -81,7 +81,7 @@ export default function AboutPage() {
                         <p className="text-[var(--color-text-secondary)] leading-relaxed">
                             restoreit offers four products designed to cover every stage — from immediate crisis restoration to long-term data protection.
                         </p>
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             {[
                                 { name: 'restoreit Scan', desc: 'Immediate device scan and restoration. Per device.' },
                                 { name: 'restoreit Pro', desc: 'Deep scan with damaged file reconstruction and priority restoration.' },

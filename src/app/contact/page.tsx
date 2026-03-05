@@ -46,7 +46,7 @@ export default function ContactPage() {
             <main className="flex-1 pt-28 pb-20">
                 <div className="max-w-2xl mx-auto px-6 md:px-8 space-y-12">
                     <div className="space-y-4">
-                        <h1 className="text-5xl md:text-6xl font-black tracking-tighter">Contact Us</h1>
+                        <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tighter">Contact Us</h1>
                         <p className="text-lg text-[var(--color-text-secondary)]">
                             Have a question, need help, or want to reach the team? Fill out the form below.
                         </p>

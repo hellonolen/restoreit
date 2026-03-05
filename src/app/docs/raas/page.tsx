@@ -35,7 +35,7 @@ export default function RaasDocsPage() {
             <div className="text-[var(--color-accent)] text-[10px] font-black uppercase tracking-[0.3em]">
               restoreit-as-a-Service
             </div>
-            <h1 className="text-5xl md:text-6xl font-black tracking-tighter leading-[0.95]">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tighter leading-[0.95]">
               Add restoreit<br />to your product.
             </h1>
             <p className="text-lg text-[var(--color-text-tertiary)] max-w-xl leading-relaxed">

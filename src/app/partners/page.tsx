@@ -31,7 +31,7 @@ export default function PartnersPage() {
             <div className="text-[var(--color-accent)] text-[10px] font-black uppercase tracking-[0.3em]">
               Restore-as-a-Service
             </div>
-            <h1 className="text-5xl md:text-6xl font-black tracking-tighter leading-[0.95]">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tighter leading-[0.95]">
               Turn your repair shop into a restoreit service.
             </h1>
             <p className="text-lg md:text-xl text-[var(--color-text-tertiary)] max-w-xl mx-auto leading-relaxed">

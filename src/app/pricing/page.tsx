@@ -172,9 +172,9 @@ export default function PricingPage() {
 
             <main className="flex-1 pt-28">
                 {/* Hero */}
-                <section className="pt-12 pb-8 px-6 md:px-8 text-center">
+                <section className="pt-8 sm:pt-12 pb-8 px-5 sm:px-6 md:px-8 text-center">
                     <div className="max-w-3xl mx-auto space-y-6">
-                        <h1 className="text-5xl md:text-7xl font-black tracking-tighter leading-[0.95]">
+                        <h1 className="text-3xl sm:text-5xl md:text-7xl font-black tracking-tighter leading-[0.95]">
                             Simple, honest pricing.
                         </h1>
                         <p className="text-lg md:text-xl text-[var(--color-text-tertiary)] max-w-xl mx-auto leading-relaxed">
@@ -190,8 +190,8 @@ export default function PricingPage() {
                             <div
                                 key={plan.id}
                                 className={`relative rounded-3xl border p-8 flex flex-col ${plan.recommended
-                                        ? 'border-[var(--color-accent)]/40 bg-[var(--color-accent)]/[0.03] ring-1 ring-[var(--color-accent)]/20'
-                                        : 'border-[var(--color-border)] bg-[var(--color-card)]'
+                                    ? 'border-[var(--color-accent)]/40 bg-[var(--color-accent)]/[0.03] ring-1 ring-[var(--color-accent)]/20'
+                                    : 'border-[var(--color-border)] bg-[var(--color-card)]'
                                     }`}
                             >
                                 {plan.recommended && (
@@ -202,8 +202,8 @@ export default function PricingPage() {
 
                                 <div className="mb-6 space-y-4">
                                     <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${plan.recommended
-                                            ? 'bg-[var(--color-accent)]/10 border border-[var(--color-accent)]/30 text-[var(--color-accent)]'
-                                            : 'bg-[var(--color-card-hover)] border border-[var(--color-border)] text-[var(--color-text-secondary)]'
+                                        ? 'bg-[var(--color-accent)]/10 border border-[var(--color-accent)]/30 text-[var(--color-accent)]'
+                                        : 'bg-[var(--color-card-hover)] border border-[var(--color-border)] text-[var(--color-text-secondary)]'
                                         }`}>
                                         {plan.icon}
                                     </div>
@@ -249,8 +249,8 @@ export default function PricingPage() {
                                 <ul className="space-y-3 mb-8 flex-1">
                                     {plan.features.map((f) => (
                                         <li key={f.text} className={`flex items-start gap-3 text-sm ${f.included
-                                                ? f.highlight ? 'text-[var(--color-foreground)] font-medium' : 'text-[var(--color-text-secondary)]'
-                                                : 'text-[var(--color-disabled-text)]'
+                                            ? f.highlight ? 'text-[var(--color-foreground)] font-medium' : 'text-[var(--color-text-secondary)]'
+                                            : 'text-[var(--color-disabled-text)]'
                                             }`}>
                                             {f.included ? (
                                                 <Check size={16} className="text-[var(--color-accent)] shrink-0 mt-0.5" />

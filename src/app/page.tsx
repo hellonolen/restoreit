@@ -11,7 +11,7 @@ export default function LandingPage() {
       <SiteHeader />
 
       {/* Hero Section */}
-      <section className="min-h-screen flex flex-col items-center justify-center pt-32 pb-20 px-6 md:px-8 relative overflow-hidden">
+      <section className="min-h-screen flex flex-col items-center justify-center pt-24 sm:pt-32 pb-16 sm:pb-20 px-5 sm:px-6 md:px-8 relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-full max-w-4xl h-96 bg-gradient-to-b from-[var(--color-accent)]/20 to-transparent blur-[120px] opacity-40" />
         </div>
@@ -21,7 +21,7 @@ export default function LandingPage() {
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-[10px] font-bold uppercase tracking-[0.2em]">
               <Shield size={10} strokeWidth={3} /> Stop. Do not write anything to your drive.
             </div>
-            <h1 className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tighter leading-[0.9]">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.9]">
               What most people do <br />
               <span className="text-[var(--color-text-secondary)]">after losing a file makes things worse.</span>
             </h1>
@@ -31,7 +31,7 @@ export default function LandingPage() {
           </div>
 
           <div className="flex items-center justify-center">
-            <Link href="/pricing" className="w-full sm:w-auto h-16 px-10 rounded-2xl bg-[var(--color-accent)] hover:opacity-90 text-white text-sm font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3 shadow-[0_20px_40px_rgba(138,43,226,0.3)] hover:scale-105 active:scale-95">
+            <Link href="/pricing" className="w-full sm:w-auto h-14 sm:h-16 px-8 sm:px-10 rounded-2xl bg-[var(--color-accent)] hover:opacity-90 text-white text-xs sm:text-sm font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3 shadow-[0_20px_40px_rgba(138,43,226,0.3)] hover:scale-105 active:scale-95">
               Get Started <ArrowRight size={18} />
             </Link>
           </div>
@@ -62,7 +62,7 @@ export default function LandingPage() {
             <h2 className="text-4xl md:text-5xl font-black tracking-tighter">Five simple steps.</h2>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4">
             {[
               { step: '01', title: 'Describe', desc: 'Tell us what happened and which drive to scan.' },
               { step: '02', title: 'Select', desc: 'Choose the drive. Run the relay command.' },
@@ -105,7 +105,7 @@ export default function LandingPage() {
             restoreit scans your drive without writing a single byte. See what the scan finds before you pay.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-            <Link href="/pricing" className="w-full sm:w-auto h-16 px-12 rounded-2xl bg-[var(--color-accent)] hover:opacity-90 text-white text-sm font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3 shadow-[0_20px_40px_rgba(138,43,226,0.3)] hover:scale-105 active:scale-95">
+            <Link href="/pricing" className="w-full sm:w-auto h-14 sm:h-16 px-8 sm:px-12 rounded-2xl bg-[var(--color-accent)] hover:opacity-90 text-white text-xs sm:text-sm font-black uppercase tracking-[0.2em] transition-all flex items-center justify-center gap-3 shadow-[0_20px_40px_rgba(138,43,226,0.3)] hover:scale-105 active:scale-95">
               Get Started <ChevronRight size={18} />
             </Link>
           </div>

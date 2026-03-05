@@ -69,7 +69,7 @@ export default function ProtectionPage() {
                 </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="col-span-1 p-6 rounded-2xl border border-[var(--color-accent)]/30 bg-gradient-to-br from-[var(--color-accent)]/10 to-transparent space-y-4">
                     <div className="flex items-center gap-2 text-[var(--color-accent)]">
                         <Brain size={18} />
@@ -84,7 +84,7 @@ export default function ProtectionPage() {
                     </p>
                 </div>
 
-                <div className="col-span-2 grid grid-cols-2 gap-4">
+                <div className="col-span-1 md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="p-5 rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] space-y-4">
                         <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2 text-[var(--color-text-secondary)]">
@@ -109,7 +109,7 @@ export default function ProtectionPage() {
                 </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="space-y-4">
                     <h2 className="text-sm font-bold uppercase tracking-wider">Active Protection</h2>
                     <div className="space-y-2">
