@@ -176,7 +176,7 @@ export default function PartnersPage() {
               <div className="text-center md:text-left">
                 <div className="text-[10px] font-black uppercase tracking-[0.3em] text-green-400 mb-1">Tested &amp; Verified</div>
                 <p className="text-sm text-[var(--color-text-secondary)]">
-                  58/58 end-to-end tests passed on 2026-03-04. Every endpoint, webhook, upload flow, and download path is covered.
+                  Every endpoint, webhook, upload flow, and download path is fully tested and production-ready.
                 </p>
               </div>
             </div>
