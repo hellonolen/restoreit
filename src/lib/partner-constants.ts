@@ -16,13 +16,14 @@ export const PARTNER_TIERS: PartnerTier[] = [
   {
     name: 'Starter',
     slug: 'starter',
-    price: 149,
+    price: 199,
     period: '/mo',
     scanVolume: '100 GB',
     jobLimit: '50 jobs',
-    rateLimit: '100 req/min',
+    rateLimit: '30 req/min',
     features: [
       'REST API access',
+      'MCP Server access',
       'Webhook notifications',
       'Usage dashboard',
       'Email support',
@@ -31,11 +32,11 @@ export const PARTNER_TIERS: PartnerTier[] = [
   {
     name: 'Growth',
     slug: 'growth',
-    price: 399,
+    price: 599,
     period: '/mo',
     scanVolume: '1 TB',
     jobLimit: '200 jobs',
-    rateLimit: '500 req/min',
+    rateLimit: '120 req/min',
     recommended: true,
     features: [
       'Everything in Starter',
@@ -49,9 +50,9 @@ export const PARTNER_TIERS: PartnerTier[] = [
     slug: 'enterprise',
     price: 999,
     period: '/mo',
-    scanVolume: 'Unlimited',
-    jobLimit: 'Unlimited',
-    rateLimit: 'Unlimited',
+    scanVolume: '5 TB',
+    jobLimit: '1,000 jobs',
+    rateLimit: '500 req/min',
     features: [
       'Everything in Growth',
       'Custom SLA',
@@ -62,8 +63,8 @@ export const PARTNER_TIERS: PartnerTier[] = [
 ]
 
 export const TIER_MONTHLY_PRICE: Record<string, number> = {
-  starter: 149,
-  growth: 399,
+  starter: 199,
+  growth: 599,
   enterprise: 999,
 }
 
