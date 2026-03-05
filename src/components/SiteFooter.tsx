@@ -42,7 +42,7 @@ export default function SiteFooter() {
 
             <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 pt-10 border-t border-[var(--color-border-subtle)]">
                 <div className="text-[9px] font-black text-[var(--color-text-dim)] uppercase tracking-[0.2em]">
-                    &copy; 2026 restoreit. All rights reserved.
+                    &copy; {new Date().getFullYear()} restoreit. All rights reserved.
                 </div>
 
                 <div className="flex items-center gap-4">

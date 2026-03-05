@@ -9,7 +9,10 @@ export default function robots(): MetadataRoute.Robots {
                 disallow: [
                     '/api/',
                     '/account/',
-                    '/checkout/success',
+                    '/checkout/',
+                    '/restore',
+                    '/login',
+                    '/signup',
                 ],
             },
         ],

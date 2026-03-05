@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import Link from 'next/link';
-import { ArrowRight, Terminal, Shield, Cloud, Download, Monitor } from 'lucide-react';
+import { ArrowRight, Terminal, Shield, Cloud, Lock, Monitor } from 'lucide-react';
 
 export const metadata: Metadata = {
     title: 'How It Works — restoreit',
@@ -40,10 +40,10 @@ const steps = [
     },
     {
         number: '05',
-        title: 'Download Your Files',
-        desc: 'Choose your plan, complete payment, and download your restored files securely.',
-        icon: <Download size={24} />,
-        detail: 'restoreit Scan delivers immediate downloads. restoreit Pro includes a 7-day download window. Add restoreit Cloud for long-term 500GB encrypted storage.',
+        title: 'Access Your Files',
+        desc: 'Choose your plan, complete payment, and access your restored files securely via restoreit Cloud.',
+        icon: <Lock size={24} />,
+        detail: 'restoreit Scan provides 48-hour cloud access. restoreit Pro includes 7-day cloud retention. Add restoreit Cloud for long-term 500GB encrypted storage.',
     },
 ];
 

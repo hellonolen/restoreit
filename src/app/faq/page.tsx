@@ -32,7 +32,7 @@ const faqCategories = [
         questions: [
             { q: 'What products does restoreit offer?', a: 'Four products: restoreit Scan (one-time per device) for immediate restoration, restoreit Pro (one-time per device) for deep scan and priority restoration, restoreit Cloud (yearly) for 500GB encrypted storage, and restoreit Protection (monthly) for ongoing disk monitoring. See our pricing page for current rates.' },
             { q: 'Are these prices per device?', a: 'Yes. restoreit Scan and restoreit Pro are priced per device. You can add additional devices at any time.' },
-            { q: 'What\'s the difference between Scan and Pro?', a: 'Scan provides a standard restoration scan with immediate download. Pro adds deep sector-level scanning, damaged file reconstruction, priority restore queue, and a 7-day download window.' },
+            { q: 'What\'s the difference between Scan and Pro?', a: 'Scan provides a standard restoration scan with 48-hour cloud access to recovered files. Pro adds deep sector-level scanning, damaged file reconstruction, priority restore queue, and 7-day cloud retention.' },
             { q: 'Who can purchase restoreit Cloud?', a: 'restoreit Cloud is available to restoreit Pro customers. It provides 500GB of encrypted cloud storage for your restored files with long-term access.' },
             { q: 'Can I add products later?', a: 'Yes. You can upgrade or add any product at any time — Scan to Pro, add Cloud storage, or subscribe to Protection after your restoration.' },
             { q: 'Do you offer refunds?', a: 'All completed purchases are final. You review scan results before paying, so you know exactly what you\'re getting.' },
@@ -42,7 +42,7 @@ const faqCategories = [
         category: 'Security & Privacy',
         questions: [
             { q: 'Is my data private?', a: 'All data is encrypted in transit using TLS 1.3 and encrypted at rest using AES-256. restoreit operates on a zero-access principle — our infrastructure processes raw binary streams. We do not index, catalog, or access the content of your files beyond what is necessary for restoration.' },
-            { q: 'How long does my data stay in restoreit Cloud?', a: 'restoreit Scan: download immediately, no persistent storage. restoreit Pro: 7-day download window. restoreit Cloud subscribers: files stored for as long as your subscription is active, up to 500GB.' },
+            { q: 'How long does my data stay in restoreit Cloud?', a: 'restoreit Scan: 48-hour cloud access. restoreit Pro: 7-day cloud retention. restoreit Cloud subscribers: files stored for as long as your subscription is active, up to 500GB.' },
         ],
     },
     {

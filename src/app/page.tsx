@@ -12,7 +12,7 @@ const jsonLd = {
       '@type': 'Organization',
       name: 'restoreit',
       url: 'https://restoreit.app',
-      logo: 'https://restoreit.app/favicon.ico',
+      logo: 'https://restoreit.app/images/og-image.png',
       description: 'Cloud-based forensic file restoration that never writes to your drive.',
       contactPoint: { '@type': 'ContactPoint', email: 'team@restoreit.app', contactType: 'customer support' },
     },
@@ -75,7 +75,7 @@ export default function LandingPage() {
       </section>
 
       {/* Product Screenshots */}
-      <section className="py-16 sm:py-24 md:py-32 px-2 sm:px-6 md:px-8 border-t border-[var(--color-border-subtle)]">
+      <section id="about" className="py-16 sm:py-24 md:py-32 px-2 sm:px-6 md:px-8 border-t border-[var(--color-border-subtle)]">
         <div className="max-w-6xl mx-auto space-y-8 sm:space-y-16">
           <div className="rounded-xl sm:rounded-2xl border border-[var(--color-border)] overflow-hidden">
             <Image src="/images/scan_intake.png" alt="restoreit scan intake" width={2880} height={1800} className="w-full h-auto" />
@@ -87,7 +87,7 @@ export default function LandingPage() {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-24 md:py-32 px-6 md:px-8 bg-[var(--color-background)] relative">
+      <section id="how-it-works" className="py-24 md:py-32 px-6 md:px-8 bg-[var(--color-background)] relative">
         <div className="max-w-6xl mx-auto">
           <div className="mb-20 space-y-4">
             <div className="text-[var(--color-accent)] text-[10px] font-black uppercase tracking-[0.3em]">How It Works</div>
@@ -100,7 +100,7 @@ export default function LandingPage() {
               { step: '02', title: 'Select', desc: 'Choose the drive. Run the relay command.' },
               { step: '03', title: 'Scan', desc: 'The relay streams your drive to our cloud engine.' },
               { step: '04', title: 'Preview', desc: 'See what the scan detected before you pay.' },
-              { step: '05', title: 'Unlock', desc: 'Choose your plan. Download your restored files.' },
+              { step: '05', title: 'Unlock', desc: 'Choose your plan. Access your restored files securely via restoreit Cloud.' },
             ].map((item) => (
               <div key={item.step} className="group p-6 md:p-8 rounded-[24px] md:rounded-[32px] border border-[var(--color-border-subtle)] bg-[var(--color-card)] hover:bg-[var(--color-card-hover)] hover:border-[var(--color-accent)]/30 transition-all">
                 <div className="text-[var(--color-text-dim)] font-black text-3xl md:text-4xl mb-6 group-hover:text-[var(--color-accent)]/40 transition-colors">{item.step}</div>
@@ -113,7 +113,7 @@ export default function LandingPage() {
       </section>
 
       {/* Platform Stats */}
-      <section className="py-24 md:py-32 px-6 md:px-8 border-t border-[var(--color-border-subtle)]">
+      <section id="pricing" className="py-24 md:py-32 px-6 md:px-8 border-t border-[var(--color-border-subtle)]">
         <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
           {PLATFORM_STATS.map(stat => (
             <div key={stat.label} className="space-y-2">

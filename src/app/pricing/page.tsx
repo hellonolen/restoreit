@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Check, X, Shield, HardDrive, Cloud, ArrowRight, Download, Lock, Activity, Monitor } from 'lucide-react';
+import { Check, X, Shield, HardDrive, Cloud, ArrowRight, Lock, Activity, Monitor } from 'lucide-react';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 
@@ -36,7 +36,7 @@ const plans: Plan[] = [
         fullName: 'restoreit Scan',
         price: 89,
         period: 'one-time per device',
-        description: 'Immediate device scan and file detection. Download what the scan finds.',
+        description: 'Immediate device scan and file detection. Access recovered files via restoreit Cloud.',
         icon: <HardDrive size={24} />,
         cta: 'Get Started',
         ctaHref: '/restore',
@@ -59,7 +59,7 @@ const plans: Plan[] = [
         fullName: 'restoreit Pro',
         price: 249,
         period: 'one-time per device',
-        description: 'Deep scan with damaged file reconstruction, priority restoration, and a 7-day download window.',
+        description: 'Deep scan with damaged file reconstruction, priority restoration, and 7-day cloud retention.',
         icon: <Shield size={24} />,
         cta: 'Get Started',
         ctaHref: '/restore',
@@ -72,8 +72,8 @@ const plans: Plan[] = [
             { text: 'Damaged file reconstruction', included: true, highlight: true },
             { text: 'Selective file restoration', included: true },
             { text: 'Priority restore queue', included: true, highlight: true },
-            { text: '7-day download window', included: true, highlight: true },
-            { text: 'Unlimited re-downloads (7 days)', included: true, highlight: true },
+            { text: '7-day cloud retention', included: true, highlight: true },
+            { text: 'Unlimited cloud access (7 days)', included: true, highlight: true },
             { text: 'Eligible for restoreit Cloud', included: true, highlight: true },
         ],
     },
@@ -95,7 +95,7 @@ const plans: Plan[] = [
             { text: 'Long-term file retention', included: true, highlight: true },
             { text: 'Secure access anytime', included: true },
             { text: 'AES-256 encryption at rest', included: true },
-            { text: 'Unlimited re-downloads', included: true },
+            { text: 'Unlimited cloud access', included: true },
             { text: 'Multiple device storage', included: true },
             { text: 'Cancel anytime', included: true },
         ],
@@ -132,7 +132,7 @@ const faqs = [
     },
     {
         q: 'What\'s the difference between Scan and Pro?',
-        a: 'Scan provides a standard cloud restoration scan with immediate download. Pro adds deep sector-level scanning, damaged file reconstruction, a priority restore queue, and a 7-day download window instead of immediate-only.',
+        a: 'Scan provides a standard cloud restoration scan with 48-hour cloud access. Pro adds deep sector-level scanning, damaged file reconstruction, a priority restore queue, and 7-day cloud retention.',
     },
     {
         q: 'Who can purchase restoreit Cloud?',
@@ -308,8 +308,8 @@ export default function PricingPage() {
                                     { feature: 'Deep scan mode', scan: false, pro: true, cloud: '—', protection: '—' },
                                     { feature: 'Damaged file reconstruction', scan: false, pro: true, cloud: '—', protection: '—' },
                                     { feature: 'Priority restore queue', scan: false, pro: true, cloud: '—', protection: true },
-                                    { feature: 'Download window', scan: 'Immediate', pro: '7 days', cloud: '—', protection: '—' },
-                                    { feature: 'Re-downloads', scan: 'Once', pro: 'Unlimited', cloud: 'Unlimited', protection: '—' },
+                                    { feature: 'Cloud retention', scan: '48 hours', pro: '7 days', cloud: 'Unlimited', protection: '—' },
+                                    { feature: 'Cloud access', scan: 'Limited', pro: 'Unlimited', cloud: 'Unlimited', protection: '—' },
                                     { feature: '500GB cloud storage', scan: false, pro: false, cloud: true, protection: false },
                                     { feature: 'Disk health monitoring', scan: false, pro: false, cloud: false, protection: true },
                                     { feature: 'Corruption alerts', scan: false, pro: false, cloud: false, protection: true },
@@ -343,7 +343,7 @@ export default function PricingPage() {
                             {[
                                 { icon: <HardDrive size={20} />, step: '01', title: 'Run the Scan', desc: 'The relay scans your drive safely — nothing installed, nothing overwritten.' },
                                 { icon: <Monitor size={20} />, step: '02', title: 'Review Results', desc: 'See what the scan detected. Check file types, sizes, and integrity.' },
-                                { icon: <Download size={20} />, step: '03', title: 'Choose & Pay', desc: 'Pick your plan — Scan or Pro. Download or store in restoreit Cloud.' },
+                                { icon: <Cloud size={20} />, step: '03', title: 'Choose & Pay', desc: 'Pick your plan — Scan or Pro. Access your files via restoreit Cloud.' },
                                 { icon: <Activity size={20} />, step: '04', title: 'Stay Protected', desc: 'Add Protection for ongoing disk monitoring and corruption alerts.' },
                             ].map((s) => (
                                 <div key={s.step} className="space-y-3">

@@ -3,11 +3,10 @@
 import { Suspense, useState } from 'react';
 import { Shield, ArrowRight, Check, Cloud, HardDrive, Lock } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 
 function CheckoutContent() {
     const [isProcessing, setIsProcessing] = useState(false);
-    const router = useRouter();
     const searchParams = useSearchParams();
     const tierParam = searchParams.get('tier');
     const initialTier = tierParam === 'scan' ? 'scan' : 'pro';
@@ -259,7 +258,7 @@ function CheckoutContent() {
                                     Redirecting...
                                 </>
                             ) : (
-                                <>Pay with Whop <ArrowRight size={16} /></>
+                                <>Complete Purchase <ArrowRight size={16} /></>
                             )}
                         </button>
 

@@ -10,6 +10,7 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
+  themeColor: '#0A0A0F',
 };
 
 export const metadata: Metadata = {
@@ -26,11 +27,13 @@ export const metadata: Metadata = {
     siteName: 'restoreit',
     title: 'restoreit — Cloud File Restoration',
     description: 'Cloud-based file restoration that never writes to your drive. Scan, preview, and restore deleted files.',
+    images: [{ url: '/images/og-image.png', width: 1200, height: 630, alt: 'restoreit — Cloud File Restoration' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'restoreit — Cloud File Restoration',
     description: 'Cloud-based file restoration that never writes to your drive. Scan, preview, and restore deleted files.',
+    images: ['/images/og-image.png'],
   },
   robots: {
     index: true,
