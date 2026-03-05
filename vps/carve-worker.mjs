@@ -10,9 +10,8 @@
 // ═══════════════════════════════════════════════════════════════
 
 import { createHash } from 'node:crypto'
-import { readFile, writeFile, mkdir, rm, readdir, stat } from 'node:fs/promises'
+import { mkdir, rm } from 'node:fs/promises'
 import { join } from 'node:path'
-import { existsSync } from 'node:fs'
 
 // ─── Config ────────────────────────────────────────────────────
 
@@ -227,7 +226,6 @@ async function processJob(job) {
 
         // 4. Download all chunks and concatenate
         log('  Downloading chunks...')
-        const rawPath = join(jobDir, 'raw.img')
         const chunks = []
 
         for (let i = 0; i < manifest.totalChunks; i++) {
@@ -257,7 +255,7 @@ async function processJob(job) {
                 [Date.now(), jobId]
             )
             await d1Query(
-                `UPDATE scans SET status = 'completed' WHERE id = ?`,
+                `UPDATE scans SET status = 'ready' WHERE id = ?`,
                 [scanId]
             )
             log('  No recoverable files found. Job complete.')
@@ -295,7 +293,7 @@ async function processJob(job) {
             [Date.now(), jobId]
         )
         await d1Query(
-            `UPDATE scans SET status = 'completed' WHERE id = ?`,
+            `UPDATE scans SET status = 'ready' WHERE id = ?`,
             [scanId]
         )
 
@@ -382,7 +380,7 @@ async function main() {
 
     log(`\nPolling for jobs every ${POLL_MS / 1000}s...\n`)
 
-    // eslint-disable-next-line no-constant-condition
+
     while (true) {
         const hadWork = await poll()
         if (!hadWork) {
