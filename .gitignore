@@ -43,3 +43,6 @@ next-env.d.ts
 .open-next/
 vps-worker/node_modules/
 vps-worker/dist/
+
+# VPS secrets
+vps/.env

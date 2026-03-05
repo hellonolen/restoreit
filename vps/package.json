@@ -1,0 +1,10 @@
+{
+    "name": "restoreit-carve-worker",
+    "version": "1.0.0",
+    "type": "module",
+    "description": "VPS file carving worker for restoreit",
+    "scripts": {
+        "start": "node carve-worker.mjs",
+        "dry-run": "node carve-worker.mjs --dry-run"
+    }
+}
