@@ -30,46 +30,54 @@ export async function POST(request: Request) {
     return Response.json({ error: 'Invalid request body' }, { status: 400 })
   }
 
-  const db = await getDb()
-  const scanId = crypto.randomUUID()
-  const relayToken = crypto.randomUUID()
+  try {
+    const db = await getDb()
+    const scanId = crypto.randomUUID()
+    const relayToken = crypto.randomUUID()
 
-  // Hash the relay token for storage — never store plaintext
-  const tokenBytes = new TextEncoder().encode(relayToken)
-  const hashBuffer = await crypto.subtle.digest('SHA-256', tokenBytes)
-  const relayTokenHash = Array.from(new Uint8Array(hashBuffer))
-    .map(b => b.toString(16).padStart(2, '0'))
-    .join('')
+    // Hash the relay token for storage — never store plaintext
+    const tokenBytes = new TextEncoder().encode(relayToken)
+    const hashBuffer = await crypto.subtle.digest('SHA-256', tokenBytes)
+    const relayTokenHash = Array.from(new Uint8Array(hashBuffer))
+      .map(b => b.toString(16).padStart(2, '0'))
+      .join('')
 
-  const now = new Date()
+    const now = new Date()
 
-  await db.insert(schema.scans).values({
-    id: scanId,
-    userId: user.id,
-    driveName,
-    mode,
-    status: 'created',
-    filesFound: 0,
-    dataSize: 0,
-    restoreRate: 0,
-    chunkSizeBytes: CHUNK_SIZE_BYTES,
-    totalChunks: null,
-    chunksReceived: 0,
-    bytesReceived: 0,
-    relayTokenHash,
-    startedAt: now,
-  })
+    await db.insert(schema.scans).values({
+      id: scanId,
+      userId: user.id,
+      driveName,
+      mode,
+      status: 'created',
+      filesFound: 0,
+      dataSize: 0,
+      restoreRate: 0,
+      chunkSizeBytes: CHUNK_SIZE_BYTES,
+      totalChunks: null,
+      chunksReceived: 0,
+      bytesReceived: 0,
+      relayTokenHash,
+      startedAt: now,
+    })
 
-  await trackFunnelEvent({
-    userId: user.id,
-    event: 'scan_created',
-    scanId,
-    metadata: { driveName, mode },
-  })
+    await trackFunnelEvent({
+      userId: user.id,
+      event: 'scan_created',
+      scanId,
+      metadata: { driveName, mode },
+    })
 
-  return Response.json({
-    scanId,
-    relayToken,
-    chunkSizeBytes: CHUNK_SIZE_BYTES,
-  })
+    return Response.json({
+      scanId,
+      relayToken,
+      chunkSizeBytes: CHUNK_SIZE_BYTES,
+    })
+  } catch (error) {
+    console.error('Scan create error:', error)
+    return Response.json(
+      { error: 'Scan creation failed', details: error instanceof Error ? error.message : String(error) },
+      { status: 500 }
+    )
+  }
 }
