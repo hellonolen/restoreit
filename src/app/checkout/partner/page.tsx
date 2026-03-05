@@ -59,7 +59,7 @@ function PartnerCheckoutContent() {
           <div className="w-8 h-8 rounded-md bg-[var(--color-accent)] flex items-center justify-center shadow-lg shadow-[var(--color-accent)]/20">
             <div className="w-2.5 h-2.5 bg-white rounded-sm rotate-45" />
           </div>
-          <span className="text-base font-bold tracking-wide">RESTOREIT</span>
+          <span className="text-base font-bold tracking-wide">restoreit</span>
         </Link>
         <div className="flex items-center gap-2 px-3 py-1.5 bg-[var(--color-card-hover)] border border-[var(--color-border)] text-xs tracking-widest text-[var(--color-text-secondary)] font-medium rounded-lg">
           <Lock size={12} /> PARTNER CHECKOUT

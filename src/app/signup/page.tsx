@@ -61,7 +61,7 @@ function SignupContent() {
                         <div className="w-10 h-10 rounded-xl bg-[var(--color-accent)] flex items-center justify-center shadow-[0_0_30px_rgba(138,43,226,0.3)] group-hover:scale-105 transition-transform">
                             <div className="w-2.5 h-2.5 bg-white rounded-sm rotate-45"></div>
                         </div>
-                        <span className="text-xl font-black tracking-[0.3em] text-[var(--color-foreground)]">RESTOREIT</span>
+                        <span className="text-xl font-black tracking-[0.3em] text-[var(--color-foreground)]">restoreit</span>
                     </Link>
 
                     <div className="space-y-8 max-w-lg">

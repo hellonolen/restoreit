@@ -38,7 +38,7 @@ export default function SiteHeader() {
                     <div className="w-9 h-9 rounded-xl bg-[var(--color-accent)] flex items-center justify-center shadow-[0_0_30px_rgba(138,43,226,0.3)] group-hover:scale-110 transition-transform">
                         <div className="w-2.5 h-2.5 bg-white rounded-sm rotate-45" />
                     </div>
-                    <span className="text-lg font-black tracking-[0.3em] text-[var(--color-foreground)]">RESTOREIT</span>
+                    <span className="text-lg font-black tracking-[0.3em] text-[var(--color-foreground)]">restoreit</span>
                 </Link>
 
                 <nav className="hidden lg:flex items-center gap-5 text-[10px] font-black uppercase tracking-[0.2em]">

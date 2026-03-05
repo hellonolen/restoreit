@@ -38,7 +38,7 @@ export default function AccountLayout({ children }: { children: React.ReactNode 
                         <div className="w-7 h-7 rounded-md bg-[var(--color-accent)] flex items-center justify-center shadow-lg shadow-[var(--color-accent)]/20">
                             <div className="w-2 h-2 bg-white rounded-sm rotate-45"></div>
                         </div>
-                        <span className="text-sm font-bold tracking-wide">RESTOREIT</span>
+                        <span className="text-sm font-bold tracking-wide">restoreit</span>
                     </Link>
                     <span className="text-[var(--color-disabled-text)]">/</span>
                     <span className="text-sm text-[var(--color-text-tertiary)]">Account</span>
