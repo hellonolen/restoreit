@@ -602,7 +602,7 @@ restoreit requires a persistent user account to support:
 • Recovery session history
 • Cloud Vault access
 • Credit card management
-• restoreit Pro subscription ($12/month)
+• restoreit Protection subscription ($29/month)
 
 ------------------------------------------------------------
 
@@ -622,17 +622,17 @@ restoreit requires a persistent user account to support:
 
 **Subscription Status**
 • Recovery history log (all past sessions)
-• restoreit Pro subscription ($12/month): active, inactive, or trialing
-• Pro subscription is offered only after a successful paid recovery event
+• restoreit Protection subscription ($29/month): active, inactive, or trialing
+• Protection subscription is offered only after a successful paid recovery event
 • One-click cancel or resume from account dashboard
 
 ------------------------------------------------------------
 
 ### 16.2 Post-Recovery Subscription Conversion Flow
 
-1. User completes a recovery and pays (Standard $89 or Pro $249)
+1. User completes a recovery and pays (Scan $89 or Pro $249)
 2. Recovery completes → Cloud Vault extraction confirmed
-3. System presents restoreit Pro protection upsell ($12/mo)
+3. System presents restoreit Protection upsell ($29/mo)
 4. If accepted, subscription begins immediately — stored card is charged monthly
 5. User dashboard reflects active Pro status and all associated benefits
 6. If declined, the upsell is shown again on next login, once, for 30 days

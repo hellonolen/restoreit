@@ -120,10 +120,10 @@ export default function ProUpsell({ sessionStats, onRestart, onBack, onAccept }:
                         {/* Price */}
                         <div className="flex items-center justify-between p-4 rounded-xl border bg-[var(--color-card-hover)] border-[var(--color-border)]">
                             <div>
-                                <div className="font-semibold text-[var(--color-foreground)]">restoreit Pro Protection</div>
+                                <div className="font-semibold text-[var(--color-foreground)]">restoreit Protection</div>
                                 <div className="text-[11px] font-mono text-[var(--color-text-tertiary)] uppercase tracking-wider mt-0.5">Monthly · Cancel Anytime</div>
                             </div>
-                            <div className="text-sm font-medium text-[var(--color-text-secondary)]">Monthly subscription</div>
+                            <div className="text-xl font-medium text-[var(--color-foreground)]">$29<span className="text-sm text-[var(--color-text-secondary)] tracking-wide"> /mo</span></div>
                         </div>
 
                         <button
@@ -131,7 +131,7 @@ export default function ProUpsell({ sessionStats, onRestart, onBack, onAccept }:
                             className="w-full bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white px-5 py-4 rounded-xl text-sm font-bold tracking-wide transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
                         >
                             <ShieldCheck size={16} />
-                            Enable Pro Protection
+                            Add Protection
                         </button>
 
                         <button onClick={onRestart}
