@@ -1,0 +1,68 @@
+@@ -151,51 +153,25 @@
+     addNotification('success', 'Got it. We\'ll prioritize those file types during the scan.');
+   };
+ 
+-  const startScan = () => {
++  const startScan = async () => {
+     setCurrentStep(3);
+     setScanProgress(0);
+     setScanPaused(false);
+     setScanStats({ ...defaultScanStats, networkStatus: NetworkStatus.CONNECTING });
+     addNotification('info', 'Connected. Cloud scan started.');
+ 
+-    let progress = 0;
+-    let elapsed = 0;
+-    const estimatedDuration = scanMode === 'quick' ? 30 : 90;
+-
+-    const timer = setInterval(() => {
+-      if (scanPaused) return;
+-      progress += scanMode === 'quick' ? Math.random() * 12 : Math.random() * 5;
+-      elapsed += 0.4;
+-
+-      if (progress >= 100) {
+-        clearInterval(timer);
+-        setScanProgress(100);
+-        setScanStats(prev => ({
+-          ...prev, sectorsScanned: prev.totalSectors, networkStatus: NetworkStatus.CONNECTED,
+-          elapsedSeconds: elapsed, estimatedRemainingSeconds: 0,
+-        }));
+-        addNotification('success', 'Scan complete. Restorable files detected.');
+-        setTimeout(() => setCurrentStep(4), 800);
+-      } else {
+-        setScanProgress(progress);
+-        setScanStats(prev => ({
+-          ...prev,
+-          sectorsScanned: Math.floor((progress / 100) * prev.totalSectors),
+-          filesDetected: prev.filesDetected + Math.floor(Math.random() * 20),
+-          dataRestorable: prev.dataRestorable + Math.floor(Math.random() * 5_000_000),
+-          elapsedSeconds: elapsed,
+-          estimatedRemainingSeconds: Math.max(0, estimatedDuration - elapsed),
+-          uploadSpeedBps: 2_000_000 + Math.random() * 8_000_000,
+-          dataTransferred: prev.dataTransferred + Math.floor(Math.random() * 2_000_000),
+-          networkStatus: NetworkStatus.CONNECTED,
+-        }));
+-
+-        // Mock file discovery based on priorities
+-        setFilesFound(prev => ({
+-          ...prev,
+-          media: prev.media + (diagnosticData.priorities.includes('images') ? 2 : 1),
+-          documents: prev.documents + (diagnosticData.priorities.includes('documents') ? 2 : 1),
+-          other: prev.other + 1
+-        }));
+-      }
+-    }, 400);
++    try {
++      const driveName = selectedDrive ? (mockDrives.find(d => d.id === selectedDrive)?.name || 'Unknown Drive') : 'Unknown Drive';
++      const res = await fetch('/api/scan/create', {
++        method: 'POST',
++        headers: { 'Content-Type': 'application/json' },
++        body: JSON.stringify({ mode: scanMode, driveName })
++      });
++      if (res.ok) {
++        const data = await res.json();
++        setScanId(data.scanId);
++        setRelayToken(data.relayToken);
++        addNotification('info', 'Secure relay token generated. Ready to connect.');
++      } else {
++        addNotification('error', 'Failed to initialize cloud scan.');
++      }

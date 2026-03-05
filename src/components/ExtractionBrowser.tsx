@@ -1,7 +1,7 @@
 // ExtractionBrowser: File Filter, Search, Selective Restore, Grid/List/Timeline, Proof of Life
 "use client";
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Lock, CheckCircle2, AlertTriangle, AlertCircle, Grid3X3, List, Clock, Search, Download, RotateCcw, Copy, Shield, FileText, Image as ImageIcon, Film, Archive, Cpu, ChevronRight, X, ArrowLeft, Activity } from 'lucide-react';
 import NextImage from 'next/image';
 import { FileCategory, ViewMode, ScanStats } from '../types';
@@ -72,7 +72,36 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
     const [isReviewing, setIsReviewing] = useState(false);
     const [repairingFileId, setRepairingFileId] = useState<string | null>(null);
 
-    const selectedFiles = useMemo(() => MOCK_FILES.filter(f => selectedIds.has(f.id)), [selectedIds]);
+    const [retrievedFiles, setRetrievedFiles] = useState<FileItem[]>(MOCK_FILES);
+
+    useEffect(() => {
+        const fetchFiles = async () => {
+            try {
+                const res = await fetch('/api/cloud/files');
+                if (res.ok) {
+                    const data = (await res.json()) as { success: boolean; data?: { id: string; fileName: string; sizeBytes: number; fileType: string; createdAt: string }[] };
+                    if (data.success && data.data && data.data.length > 0) {
+                        const formattedFiles = data.data.map(f => ({
+                            id: f.id,
+                            name: f.fileName,
+                            size: f.sizeBytes,
+                            category: (f.fileType?.includes('image') ? 'images' : f.fileType?.includes('video') ? 'videos' : 'documents') as FileCategory,
+                            status: 'intact' as const,
+                            integrity: 100,
+                            modifiedAt: new Date(f.createdAt).getTime(),
+                            path: '/Cloud/' + f.fileName
+                        }));
+                        setRetrievedFiles(formattedFiles);
+                    }
+                }
+            } catch (e) {
+                console.error('Failed to fetch real files:', e);
+            }
+        };
+        fetchFiles();
+    }, []);
+
+    const selectedFiles = useMemo(() => retrievedFiles.filter(f => selectedIds.has(f.id)), [selectedIds, retrievedFiles]);
     const selectedSize = useMemo(() => selectedFiles.reduce((acc, f) => acc + f.size, 0), [selectedFiles]);
 
     const categories: { key: FileCategory; label: string; count: number }[] = [
@@ -84,12 +113,12 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
     ];
 
     const filtered = useMemo(() => {
-        return MOCK_FILES.filter(f => {
+        return retrievedFiles.filter(f => {
             const matchesSearch = search === '' || f.name.toLowerCase().includes(search.toLowerCase()) || f.path.toLowerCase().includes(search.toLowerCase());
             const matchesCategory = categoryFilter === 'all' || f.category === categoryFilter;
             return matchesSearch && matchesCategory;
         });
-    }, [search, categoryFilter]);
+    }, [search, categoryFilter, retrievedFiles]);
 
     const toggleSelect = (id: string) => {
         setSelectedIds(prev => {
@@ -105,7 +134,7 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
         setSelectAll(prev => !prev);
     };
 
-    const restoreRate = Math.round((MOCK_FILES.filter(f => f.status === 'intact').length / MOCK_FILES.length) * 100);
+    const restoreRate = retrievedFiles.length > 0 ? Math.round((retrievedFiles.filter(f => f.status === 'intact').length / retrievedFiles.length) * 100) : 100;
 
     if (isReviewing) {
         return (
@@ -179,7 +208,7 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
                         <div className="p-8 border-b flex items-center justify-between border-[var(--color-border-subtle)]">
                             <div>
                                 <div className="text-[10px] font-bold text-[var(--color-accent)] uppercase tracking-widest mb-1">File Repair</div>
-                                <h3 className="text-2xl font-semibold text-[var(--color-foreground)]">Restoring: <span className="font-mono text-[var(--color-accent)]">{MOCK_FILES.find(f => f.id === repairingFileId)?.name}</span></h3>
+                                <h3 className="text-2xl font-semibold text-[var(--color-foreground)]">Restoring: <span className="font-mono text-[var(--color-accent)]">{retrievedFiles.find(f => f.id === repairingFileId)?.name}</span></h3>
                             </div>
                             <button onClick={() => setRepairingFileId(null)} className="p-3 hover:bg-[var(--color-accent)]/10 rounded-full transition-all text-[var(--color-text-tertiary)] hover:text-[var(--color-accent)]"><X size={24} /></button>
                         </div>
@@ -288,7 +317,7 @@ export default function ExtractionBrowser({ totalFiles, files, stats, onRestart,
                         <div className="px-6 py-4 border-b border-[var(--color-accent)]/20 bg-[var(--color-accent)]/5 flex items-center justify-between"><span className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--color-accent)]">Proof of Life</span><div className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-green-500" /><span className="text-[9px] font-bold text-green-500 uppercase tracking-widest">Active</span></div></div>
                         <div className="p-5">
                             <div className="grid grid-cols-2 gap-3 mb-5">
-                                {['/images/scan_intake.png','/images/scan_intake.png','/images/scan_intake.png','/images/scan_intake.png'].map((src, i) => (<div key={i} className="aspect-square relative rounded-2xl overflow-hidden group/thumb"><NextImage src={src} width={200} height={200} alt="Restored thumbnail" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" /><div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] flex items-center justify-center transition-all group-hover:opacity-0"><Lock size={20} className="text-white/20" /></div></div>))}
+                                {['/images/scan_intake.png', '/images/scan_intake.png', '/images/scan_intake.png', '/images/scan_intake.png'].map((src, i) => (<div key={i} className="aspect-square relative rounded-2xl overflow-hidden group/thumb"><NextImage src={src} width={200} height={200} alt="Restored thumbnail" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" /><div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] flex items-center justify-center transition-all group-hover:opacity-0"><Lock size={20} className="text-white/20" /></div></div>))}
                             </div>
                             <p className="text-center"><span className="text-[11px] font-black uppercase tracking-widest text-[var(--color-text-dim)]">+ {(totalFiles - 4).toLocaleString()} files encrypted</span></p>
                         </div>

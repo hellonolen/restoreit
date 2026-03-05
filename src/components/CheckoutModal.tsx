@@ -7,7 +7,6 @@ import { useClickOutside } from '../hooks/useClickOutside';
 
 interface CheckoutModalProps {
     onClose: () => void;
-    onSuccess: () => void;
     totalFiles: number;
     dataSize: number;
     devices?: number;
@@ -20,7 +19,7 @@ function formatBytes(b: number): string {
     return `${(b / Math.pow(k, i)).toFixed(1)} ${s[i]}`;
 }
 
-export default function CheckoutModal({ onClose, onSuccess, totalFiles, dataSize, devices = 1 }: CheckoutModalProps) {
+export default function CheckoutModal({ onClose, totalFiles, dataSize, devices = 1 }: CheckoutModalProps) {
     const deviceCount = Math.max(1, Math.min(5, Math.floor(devices) || 1));
     const [selectedTier, setSelectedTier] = useState<'standard' | 'pro'>('standard');
     const modalRef = useRef<HTMLDivElement>(null);
@@ -72,16 +71,18 @@ export default function CheckoutModal({ onClose, onSuccess, totalFiles, dataSize
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ tier: selectedTier, devices: deviceCount }),
             });
-            const data = (await res.json()) as { url?: string };
+            const data = (await res.json()) as { url?: string, error?: string };
             if (data.url) {
                 window.location.href = data.url;
             } else {
-                onSuccess();
+                console.error('Checkout failed:', data.error || 'Unknown error');
+                setIsRedirecting(false);
+                alert('Checkout failed to initialize. Please try again or contact support.');
             }
-        } catch {
-            onSuccess();
-        } finally {
+        } catch (err) {
+            console.error('Network error during checkout:', err);
             setIsRedirecting(false);
+            alert('A network error occurred connecting to the checkout provider.');
         }
     };
 
@@ -120,7 +121,7 @@ export default function CheckoutModal({ onClose, onSuccess, totalFiles, dataSize
                                         <div>
                                             <div className="font-semibold text-sm">{tier.name}</div>
                                             <div className="text-2xl font-light mt-1">{tier.price * deviceCount}<span className="text-[var(--color-text-tertiary)] text-sm">.00</span></div>
-                                        {deviceCount > 1 && <div className="text-[10px] text-[var(--color-text-tertiary)]">${tier.price} x {deviceCount} devices</div>}
+                                            {deviceCount > 1 && <div className="text-[10px] text-[var(--color-text-tertiary)]">${tier.price} x {deviceCount} devices</div>}
                                         </div>
                                         {tier.id === 'pro' && <Star size={14} className="text-[var(--color-accent)] fill-[var(--color-accent)]" />}
                                         {selectedTier === tier.id && <div className="w-4 h-4 rounded-full bg-[var(--color-accent)] flex items-center justify-center"><div className="w-2 h-2 rounded-full bg-white"></div></div>}

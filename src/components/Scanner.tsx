@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Wifi, WifiOff, Pause, Play, X, Activity, HardDrive, FileText, Clock, Upload } from 'lucide-react';
+import { Wifi, WifiOff, Pause, Play, X, Activity, HardDrive, FileText, Clock, Upload, Terminal } from 'lucide-react';
 import { ScanStats, NetworkStatus } from '../types';
 
 interface ScannerProps {
     progress: number;
     files: { documents: number; media: number; archives: number; other: number; images: number; video: number; system: number; archive: number; };
     stats: ScanStats;
+    scanId?: string | null;
+    relayToken?: string | null;
     paused: boolean;
     onPause: () => void;
     onCancel: () => void;
@@ -43,7 +45,7 @@ function formatTime(seconds: number): string {
     return `${Math.floor(m / 60)}h ${m % 60}m`;
 }
 
-export default function Scanner({ progress, files, stats, paused, onPause, onCancel, onBack }: ScannerProps) {
+export default function Scanner({ scanId, relayToken, progress, files, stats, paused, onPause, onCancel, onBack }: ScannerProps) {
     const totalFiles = files.documents + files.media + files.archives + files.other;
     const pct = Math.min(100, Math.round(progress));
     const radius = 70;
@@ -116,7 +118,29 @@ export default function Scanner({ progress, files, stats, paused, onPause, onCan
 
             <div className="flex gap-10 items-start flex-wrap lg:flex-nowrap">
                 {/* Progress Ring */}
-                <div className="flex flex-col items-center gap-6 shrink-0">
+                <div className="flex flex-col items-center gap-6 shrink-0 w-full lg:w-auto">
+                    {scanId && stats.networkStatus === NetworkStatus.CONNECTING && (
+                        <div className="w-full bg-[var(--color-card)] border-[var(--color-accent)]/30 border p-5 rounded-xl space-y-4 mb-4">
+                            <div className="flex items-center gap-3">
+                                <Terminal size={14} className="text-[var(--color-accent)] shrink-0" />
+                                <span className="font-medium text-sm text-[var(--color-foreground)]">Run relay to start</span>
+                            </div>
+                            <p className="text-xs leading-relaxed text-[var(--color-text-secondary)]">
+                                Open Terminal and run this precise command to pipe your disk straight to the forensic cloud. Replace <code>/dev/diskN</code> with your target drive block.
+                            </p>
+                            <div className="bg-[var(--color-background)] border-[var(--color-border)] border rounded-xl p-3 flex items-center justify-between gap-4">
+                                <code className="text-[var(--color-accent)] font-mono text-[10px] tracking-wide break-all selection:bg-[var(--color-accent)]/30">
+                                    RESTOREIT_TOKEN={relayToken} bash &lt;(curl -sL &quot;https://restoreit.app/api/relay?scan={scanId}&quot;) /dev/diskN
+                                </code>
+                                <button
+                                    onClick={() => navigator.clipboard?.writeText(`RESTOREIT_TOKEN=${relayToken} bash <(curl -sL "https://restoreit.app/api/relay?scan=${scanId}") /dev/diskN`)}
+                                    className="bg-[var(--color-card-hover)] hover:bg-[var(--color-border)] border border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-foreground)] px-3 py-1.5 rounded-lg text-xs font-medium transition-all shrink-0"
+                                >
+                                    Copy
+                                </button>
+                            </div>
+                        </div>
+                    )}
                     <div className="relative">
                         <svg width="180" height="180" className="-rotate-90" role="progressbar" aria-valuenow={pct} aria-valuemin={0} aria-valuemax={100}>
                             <circle cx="90" cy="90" r={radius} stroke="var(--color-border)" strokeWidth="10" fill="none" />
