@@ -67,8 +67,8 @@ export const PARTNER_TIERS: PartnerTier[] = [
     rateLimitNum: 500,
     features: [
       'Everything in Growth',
-      'Custom SLA',
-      'Custom scan profiles',
+      '99.9% uptime SLA',
+      'Deep scan priority',
       'Extended data retention',
     ],
   },
