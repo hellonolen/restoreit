@@ -4,8 +4,8 @@ import SiteHeader from '@/components/SiteHeader'
 import SiteFooter from '@/components/SiteFooter'
 
 export const metadata = {
-  title: 'Restore-as-a-Service API — restoreit',
-  description: 'Add forensic-grade data recovery to your product. REST API for IT service providers, MSPs, and repair shops.',
+  title: 'restoreit-as-a-Service API — restoreit',
+  description: 'Add restoreit to your product. REST API for IT service providers and repair shops.',
 }
 
 export default function RaasDocsPage() {
@@ -33,13 +33,13 @@ export default function RaasDocsPage() {
         <section className="py-24 md:py-32 px-6 md:px-8">
           <div className="max-w-4xl mx-auto space-y-8">
             <div className="text-[var(--color-accent)] text-[10px] font-black uppercase tracking-[0.3em]">
-              Restore-as-a-Service
+              restoreit-as-a-Service
             </div>
             <h1 className="text-5xl md:text-6xl font-black tracking-tighter leading-[0.95]">
-              Add forensic data recovery<br />to your product.
+              Add restoreit<br />to your product.
             </h1>
             <p className="text-lg text-[var(--color-text-tertiary)] max-w-xl leading-relaxed">
-              A REST API that lets IT service providers, MSPs, and repair shops offer professional-grade
+              A REST API that lets IT service providers and repair shops offer professional-grade
               file recovery without building recovery infrastructure.
             </p>
 
