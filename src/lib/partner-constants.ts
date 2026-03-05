@@ -92,6 +92,6 @@ export const PARTNER_FAQS: PartnerFAQ[] = [
   },
   {
     question: 'How does billing work?',
-    answer: 'Flat monthly subscription. Pick your tier, pay one price, use your included volume. No per-GB metering, no surprise charges. Usage is tracked in real time on your dashboard.',
+    answer: 'Flat monthly subscription based on scan volume. Pick your tier, pay one price, use your included volume. No per-GB metering, no surprise charges. Need more? Upgrade to the next tier anytime. Usage is tracked in real time on your dashboard.',
   },
 ]
