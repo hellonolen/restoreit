@@ -29,8 +29,8 @@ const jsonLd = {
       url: 'https://restoreit.app',
       description: 'Cloud-based file restoration. Scan your drive without writing a single byte. See what the scan finds before you pay.',
       offers: [
-        { '@type': 'Offer', name: 'Scan', price: '89', priceCurrency: 'USD', description: 'Cloud restoration scan with immediate download' },
-        { '@type': 'Offer', name: 'Pro', price: '249', priceCurrency: 'USD', description: 'Deep scan, damaged file reconstruction, 7-day download window' },
+        { '@type': 'Offer', name: 'Scan', price: '89', priceCurrency: 'USD', description: 'Cloud restoration scan with secure cloud delivery' },
+        { '@type': 'Offer', name: 'Pro', price: '249', priceCurrency: 'USD', description: 'Deep scan, damaged file reconstruction, restoreit Cloud storage' },
       ],
     },
   ],

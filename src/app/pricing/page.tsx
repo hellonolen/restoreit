@@ -46,7 +46,7 @@ const plans: Plan[] = [
             { text: 'Cloud restoration scan', included: true },
             { text: 'Quick scan mode', included: true },
             { text: 'Selective file restoration', included: true },
-            { text: 'Immediate download', included: true },
+            { text: 'Secure cloud delivery', included: true },
             { text: '7-day support window', included: true },
             { text: 'Deep scan & file reconstruction', included: false },
             { text: 'Priority restore queue', included: false },
