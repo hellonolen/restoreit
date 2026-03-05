@@ -32,7 +32,7 @@ export const PARTNER_TIERS: PartnerTier[] = [
       'MCP Server access',
       'Webhook notifications',
       'Usage dashboard',
-      'Email support',
+      'AI support agent',
     ],
   },
   {
@@ -51,7 +51,7 @@ export const PARTNER_TIERS: PartnerTier[] = [
       'Everything in Starter',
       'Priority scanning queue',
       'Bulk upload support',
-      'Priority support',
+      'Advanced analytics dashboard',
     ],
   },
   {
@@ -68,8 +68,8 @@ export const PARTNER_TIERS: PartnerTier[] = [
     features: [
       'Everything in Growth',
       'Custom SLA',
-      'On-prem deployment option',
-      'Dedicated account manager',
+      'White-label restore portal',
+      'Multi-user team access',
     ],
   },
 ]
