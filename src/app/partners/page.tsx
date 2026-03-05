@@ -134,6 +134,10 @@ export default function PartnersPage() {
               {PARTNER_TIERS.map((tier) => {
                 const count = qty[tier.slug] ?? 1
                 const total = tier.price * count
+                const totalGB = tier.scanVolumeGB * count
+                const totalJobs = tier.jobLimitNum * count
+                const totalRate = tier.rateLimitNum * count
+                const volLabel = totalGB >= 1024 ? `${(totalGB / 1024).toFixed(totalGB % 1024 === 0 ? 0 : 1)} TB` : `${totalGB} GB`
 
                 return (
                   <div
@@ -160,8 +164,8 @@ export default function PartnersPage() {
                         </div>
                       )}
                       <div className="text-sm text-[var(--color-text-tertiary)] space-y-1">
-                        <div>{tier.scanVolume} scan volume · {tier.jobLimit}</div>
-                        <div>{tier.rateLimit}</div>
+                        <div>{volLabel} scan volume · {totalJobs.toLocaleString()} jobs</div>
+                        <div>{totalRate.toLocaleString()} req/min</div>
                       </div>
                       <div className="mt-2">
                         <label className="text-[10px] font-bold uppercase tracking-[0.15em] text-[var(--color-text-dim)] block mb-1.5">Quantity</label>

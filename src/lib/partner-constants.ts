@@ -6,8 +6,11 @@ export interface PartnerTier {
   price: number
   period: string
   scanVolume: string
+  scanVolumeGB: number
   jobLimit: string
+  jobLimitNum: number
   rateLimit: string
+  rateLimitNum: number
   features: string[]
   recommended?: boolean
 }
@@ -19,8 +22,11 @@ export const PARTNER_TIERS: PartnerTier[] = [
     price: 199,
     period: '/mo',
     scanVolume: '100 GB',
+    scanVolumeGB: 100,
     jobLimit: '50 jobs',
+    jobLimitNum: 50,
     rateLimit: '30 req/min',
+    rateLimitNum: 30,
     features: [
       'REST API access',
       'MCP Server access',
@@ -35,8 +41,11 @@ export const PARTNER_TIERS: PartnerTier[] = [
     price: 599,
     period: '/mo',
     scanVolume: '1 TB',
+    scanVolumeGB: 1024,
     jobLimit: '200 jobs',
+    jobLimitNum: 200,
     rateLimit: '120 req/min',
+    rateLimitNum: 120,
     recommended: true,
     features: [
       'Everything in Starter',
@@ -51,8 +60,11 @@ export const PARTNER_TIERS: PartnerTier[] = [
     price: 999,
     period: '/mo',
     scanVolume: '5 TB',
+    scanVolumeGB: 5120,
     jobLimit: '1,000 jobs',
+    jobLimitNum: 1000,
     rateLimit: '500 req/min',
+    rateLimitNum: 500,
     features: [
       'Everything in Growth',
       'Custom SLA',
