@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { ArrowRight, Upload, Search, Download, Code, Bell, BarChart3, Link2, Gauge, Layers, Check, ChevronRight } from 'lucide-react'
+import { ArrowRight, Link as LinkIcon, Search, Download, Code, Bell, BarChart3, Link2, Gauge, Layers, Check, ChevronRight } from 'lucide-react'
 import SiteHeader from '@/components/SiteHeader'
 import SiteFooter from '@/components/SiteFooter'
 import { PARTNER_TIERS, PARTNER_FAQS } from '@/lib/partner-constants'
@@ -55,9 +55,9 @@ export default function PartnersPage() {
             </div>
             <div className="grid md:grid-cols-3 gap-8">
               {[
-                { icon: <Upload size={24} />, step: '01', title: 'Upload', desc: 'POST a disk image via presigned upload. We accept raw, E01, and dd formats up to 2TB.' },
-                { icon: <Search size={24} />, step: '02', title: 'Scan', desc: 'Our engine carves file signatures, reconstructs fragments, and scores integrity automatically.' },
-                { icon: <Download size={24} />, step: '03', title: 'Restore', desc: 'List recovered files, preview metadata, and download via presigned URLs. Deliver to your customer.' },
+                { icon: <LinkIcon size={24} />, step: '01', title: 'Connect', desc: 'Authenticate with your API key and connect via REST API or MCP Server. No installs, no SDKs.' },
+                { icon: <Search size={24} />, step: '02', title: 'Scan', desc: 'Upload a disk image and our engine carves file signatures, reconstructs fragments, and scores integrity.' },
+                { icon: <Download size={24} />, step: '03', title: 'Restoreit', desc: 'List recovered files, preview metadata, and download via presigned URLs. Deliver to your customer.' },
               ].map((s) => (
                 <div key={s.step} className="p-6 md:p-8 rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] space-y-4">
                   <div className="w-12 h-12 rounded-2xl bg-[var(--color-accent)]/10 border border-[var(--color-accent)]/30 flex items-center justify-center text-[var(--color-accent)] mx-auto">
@@ -89,7 +89,7 @@ export default function PartnersPage() {
                 { icon: <Bell size={20} />, title: 'Webhooks', desc: 'Real-time HMAC-signed notifications when scans complete, fail, or need attention.' },
                 { icon: <BarChart3 size={20} />, title: 'Usage Dashboard', desc: 'Track jobs, GB scanned, files restored, and estimated revenue in real time.' },
                 { icon: <Link2 size={20} />, title: 'Presigned Downloads', desc: 'Stream restored files directly to your customer. No intermediate storage needed.' },
-                { icon: <Gauge size={20} />, title: 'Rate Limiting', desc: 'Tier-based rate limits with clear headers. Scale from 100 to unlimited req/min.' },
+                { icon: <Gauge size={20} />, title: 'Rate Limiting', desc: 'Tier-based rate limits with clear headers. Scale from 30 to 500 req/min.' },
                 { icon: <Layers size={20} />, title: 'Scan Modes', desc: 'Quick scan for speed, deep scan for maximum recovery. Choose per job.' },
               ].map((f) => (
                 <div key={f.title} className="p-6 md:p-8 rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] space-y-3">
@@ -166,22 +166,6 @@ export default function PartnersPage() {
           </div>
         </section>
 
-        {/* Tested & Verified */}
-        <section className="py-16 px-6 md:px-8 border-t border-[var(--color-border-subtle)]">
-          <div className="max-w-3xl mx-auto">
-            <div className="rounded-2xl border border-green-500/20 bg-green-500/5 p-6 md:p-8 flex flex-col md:flex-row items-center gap-4 md:gap-6">
-              <div className="w-12 h-12 rounded-2xl bg-green-500/10 border border-green-500/30 flex items-center justify-center shrink-0">
-                <Check size={24} className="text-green-400" />
-              </div>
-              <div className="text-center md:text-left">
-                <div className="text-[10px] font-black uppercase tracking-[0.3em] text-green-400 mb-1">Tested &amp; Verified</div>
-                <p className="text-sm text-[var(--color-text-secondary)]">
-                  Every endpoint, webhook, upload flow, and download path is fully tested and production-ready.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* FAQ */}
         <section className="py-24 md:py-32 px-6 md:px-8 border-t border-[var(--color-border-subtle)]">
