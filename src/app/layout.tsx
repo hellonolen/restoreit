@@ -13,8 +13,29 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'restoreit — Cloud File Restoration',
-  description: 'Cloud-based file restoration. See what the scan finds before you pay.',
+  metadataBase: new URL('https://restoreit.app'),
+  title: {
+    default: 'restoreit — Cloud File Restoration',
+    template: '%s — restoreit',
+  },
+  description: 'Cloud-based file restoration that never writes to your drive. Scan, preview, and restore deleted files.',
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://restoreit.app',
+    siteName: 'restoreit',
+    title: 'restoreit — Cloud File Restoration',
+    description: 'Cloud-based file restoration that never writes to your drive. Scan, preview, and restore deleted files.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'restoreit — Cloud File Restoration',
+    description: 'Cloud-based file restoration that never writes to your drive. Scan, preview, and restore deleted files.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
