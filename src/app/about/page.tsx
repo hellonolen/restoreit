@@ -51,6 +51,32 @@ export default function AboutPage() {
                     </div>
 
                     <div className="space-y-6">
+                        <h2 className="text-2xl font-black tracking-tight">What we recover</h2>
+                        <p className="text-[var(--color-text-secondary)] leading-relaxed">
+                            restoreit is purpose-built for logical data loss — the most common type of data loss, covering roughly 70–80% of all recovery cases. Cloud-based recovery is faster, cheaper, and infinitely more scalable than shipping a drive to a physical lab.
+                        </p>
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                            {[
+                                'Accidental deletion',
+                                'Drive formatting',
+                                'File system corruption',
+                                'Ransomware encryption',
+                                'Partition loss',
+                                'OS crash / failed update',
+                            ].map((item) => (
+                                <div key={item} className="px-4 py-3 rounded-xl border border-[var(--color-accent)]/20 bg-[var(--color-accent)]/5 text-sm font-medium text-[var(--color-accent)]">
+                                    {item}
+                                </div>
+                            ))}
+                        </div>
+                        <div className="rounded-xl border border-[var(--color-border-subtle)] bg-[var(--color-card)] p-5">
+                            <p className="text-sm text-[var(--color-text-tertiary)] leading-relaxed">
+                                <strong className="text-[var(--color-text-secondary)]">Not designed for:</strong> Physical hardware failure (seized motors, crashed heads, fire/water damage). These cases require a physical cleanroom lab. restoreit works at the sector level — the drive must be readable for our cloud engine to process it.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="space-y-6">
                         <h2 className="text-2xl font-black tracking-tight">Our products</h2>
                         <p className="text-[var(--color-text-secondary)] leading-relaxed">
                             restoreit offers four products designed to cover every stage — from immediate crisis restoration to long-term data protection.

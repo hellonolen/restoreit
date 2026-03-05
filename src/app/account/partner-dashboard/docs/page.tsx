@@ -467,9 +467,9 @@ const isValid = verifyWebhook(req.body, sig, ts, WEBHOOK_SECRET);`}</CodeBlock>
                             <div className="p-4 text-[10px] font-black uppercase tracking-[0.2em] text-[var(--color-text-dim)]">Monthly Quota</div>
                         </div>
                         {[
-                            { tier: 'Starter', rate: '100 req/min', quota: '100 GB' },
-                            { tier: 'Growth', rate: '500 req/min', quota: '1 TB' },
-                            { tier: 'Enterprise', rate: 'Unlimited', quota: 'Unlimited' },
+                            { tier: 'Starter', rate: '30 req/min', quota: '100 GB' },
+                            { tier: 'Growth', rate: '120 req/min', quota: '1 TB' },
+                            { tier: 'Enterprise', rate: 'Custom', quota: 'Custom' },
                         ].map((row, i) => (
                             <div key={row.tier} className={`grid grid-cols-3 ${i > 0 ? 'border-t border-[var(--color-border-subtle)]' : ''}`}>
                                 <div className="p-4 text-sm font-bold">{row.tier}</div>

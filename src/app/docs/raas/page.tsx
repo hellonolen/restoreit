@@ -19,9 +19,9 @@ export default function RaasDocsPage() {
   ]
 
   const tiers = [
-    { name: 'Starter', price: '$299', period: '/mo', rate: '100 req/min', quota: '100 GB', highlight: false },
-    { name: 'Growth', price: '$799', period: '/mo', rate: '500 req/min', quota: '1 TB', highlight: true },
-    { name: 'Enterprise', price: 'Custom', period: '', rate: 'Unlimited', quota: 'Unlimited', highlight: false },
+    { name: 'Starter', price: '$199', period: '/mo', rate: '30 req/min', quota: '100 GB', highlight: false },
+    { name: 'Growth', price: '$599', period: '/mo', rate: '120 req/min', quota: '1 TB', highlight: true },
+    { name: 'Enterprise', price: 'Custom', period: '', rate: 'Custom', quota: 'Custom', highlight: false },
   ]
 
   return (

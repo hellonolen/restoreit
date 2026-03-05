@@ -54,6 +54,15 @@ const faqCategories = [
             { q: 'Scan disconnected mid-way', a: 'Re-run the same curl command. Scan state is checkpointed. The relay will resume from the last confirmed sector.' },
         ],
     },
+    {
+        category: 'What restoreit Is Ideal For',
+        questions: [
+            { q: 'What types of data loss does restoreit handle?', a: 'restoreit is built for logical data loss — accidental deletion, drive formatting, file system corruption, ransomware encryption, and partition loss. These are the most common causes of data loss, accounting for roughly 70-80% of all recovery cases.' },
+            { q: 'Why is cloud-based recovery better for these cases?', a: 'Traditional recovery requires shipping your drive to a lab and waiting days. restoreit streams your drive data to our cloud engine in minutes — no shipping, no physical lab, no specialized equipment. Cloud-based recovery is faster, cheaper, and infinitely more scalable than physical lab recovery for logical failures.' },
+            { q: 'What about physical drive damage?', a: 'If your drive has physical hardware failure — seized motor, crashed read/write heads, or fire/water damage — the drive cannot be read at the sector level. These cases require a physical cleanroom lab. restoreit is not designed for hardware-level recovery.' },
+            { q: 'Can restoreit recover files from a ransomware attack?', a: "Yes. Ransomware typically encrypts files in place, but the original unencrypted data often remains on disk until overwritten. restoreit's deep scan reads raw sectors beneath the encrypted layer to locate and reconstruct the original files." },
+        ],
+    },
 ];
 
 export default function FAQPage() {
