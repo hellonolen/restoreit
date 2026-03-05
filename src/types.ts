@@ -80,7 +80,7 @@ export interface ScanSession {
 }
 
 export interface CheckoutTier {
-    id: 'standard' | 'pro';
+    id: 'scan' | 'pro';
     name: string;
     price: number;
     cloudStorage: string;

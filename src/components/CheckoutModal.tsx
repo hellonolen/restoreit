@@ -21,14 +21,14 @@ function formatBytes(b: number): string {
 
 export default function CheckoutModal({ onClose, totalFiles, dataSize, devices = 1 }: CheckoutModalProps) {
     const deviceCount = Math.max(1, Math.min(5, Math.floor(devices) || 1));
-    const [selectedTier, setSelectedTier] = useState<'standard' | 'pro'>('standard');
+    const [selectedTier, setSelectedTier] = useState<'scan' | 'pro'>('scan');
     const modalRef = useRef<HTMLDivElement>(null);
     useClickOutside(modalRef, onClose);
     const [isRedirecting, setIsRedirecting] = useState(false);
 
     const tiers = [
         {
-            id: 'standard' as const,
+            id: 'scan' as const,
             name: 'restoreit Scan',
             price: 89,
             scanLimit: 'Immediate download',

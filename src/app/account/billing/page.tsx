@@ -28,7 +28,7 @@ function formatAmount(cents: number): string {
 
 function tierLabel(tier: string): string {
     if (tier === 'pro') return 'restoreit Pro — Restoration';
-    if (tier === 'standard') return 'restoreit — Restoration';
+    if (tier === 'scan') return 'restoreit — Restoration';
     return `restoreit — ${tier}`;
 }
 
@@ -46,7 +46,7 @@ export default function BillingPage() {
                 if (data.payments) setPayments(data.payments);
                 if (data.subscription) setSubscription(data.subscription);
             })
-            .catch(() => {})
+            .catch(() => { })
             .finally(() => setLoading(false));
     }, []);
 
@@ -186,13 +186,12 @@ export default function BillingPage() {
                                 </div>
                                 <div className="flex items-center gap-3">
                                     <span className="font-mono text-sm">{formatAmount(p.amount)}</span>
-                                    <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase border ${
-                                        p.status === 'completed'
+                                    <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase border ${p.status === 'completed'
                                             ? 'bg-green-500/10 border-green-500/20 text-green-400'
                                             : p.status === 'failed'
-                                            ? 'bg-red-500/10 border-red-500/20 text-red-400'
-                                            : 'bg-yellow-500/10 border-yellow-500/20 text-yellow-400'
-                                    }`}>{p.status}</span>
+                                                ? 'bg-red-500/10 border-red-500/20 text-red-400'
+                                                : 'bg-yellow-500/10 border-yellow-500/20 text-yellow-400'
+                                        }`}>{p.status}</span>
                                 </div>
                             </div>
                         ))}

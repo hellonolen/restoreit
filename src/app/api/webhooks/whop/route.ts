@@ -65,7 +65,7 @@ async function handlePaymentSucceeded(
 
   const metadata = data.metadata as Record<string, string> | undefined
   const userId = metadata?.user_id
-  const tier = (metadata?.tier ?? 'standard') as 'standard' | 'pro' | 'cloud' | 'protection' | 'starter' | 'growth' | 'enterprise'
+  const tier = (metadata?.tier ?? 'scan') as 'scan' | 'pro' | 'cloud' | 'protection' | 'starter' | 'growth' | 'enterprise'
   const checkoutType = metadata?.checkout_type ?? 'consumer'
   const scanId = metadata?.scan_id ?? null
   const whopPaymentId = data.id as string | undefined

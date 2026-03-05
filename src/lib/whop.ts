@@ -14,7 +14,7 @@ function getHeaders() {
 interface CreateCheckoutParams {
   planId: string
   userId: string
-  tier: 'standard' | 'pro' | 'cloud' | 'protection' | 'starter' | 'growth' | 'enterprise'
+  tier: 'scan' | 'pro' | 'cloud' | 'protection' | 'starter' | 'growth' | 'enterprise'
   quantity?: number
   redirectUrl: string
   checkoutType?: 'consumer' | 'partner'
@@ -87,7 +87,7 @@ export async function verifyWebhookSignature(
 // Whop plan IDs — set these in environment variables
 export const WHOP_PLANS: Record<string, string> = {
   // Consumer tiers
-  standard: process.env.WHOP_PLAN_STANDARD ?? '',
+  scan: process.env.WHOP_PLAN_SCAN ?? '',
   pro: process.env.WHOP_PLAN_PRO ?? '',
   cloud: process.env.WHOP_PLAN_CLOUD ?? '',
   protection: process.env.WHOP_PLAN_PROTECTION ?? '',
@@ -98,4 +98,4 @@ export const WHOP_PLANS: Record<string, string> = {
 }
 
 export const PARTNER_TIERS = ['starter', 'growth', 'enterprise'] as const
-export const CONSUMER_TIERS = ['standard', 'pro', 'cloud', 'protection'] as const
+export const CONSUMER_TIERS = ['scan', 'pro', 'cloud', 'protection'] as const

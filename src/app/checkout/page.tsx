@@ -10,8 +10,8 @@ function CheckoutContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const tierParam = searchParams.get('tier');
-    const initialTier = tierParam === 'standard' ? 'standard' : 'pro';
-    const [selectedPlan, setSelectedPlan] = useState<'standard' | 'pro'>(initialTier);
+    const initialTier = tierParam === 'scan' ? 'scan' : 'pro';
+    const [selectedPlan, setSelectedPlan] = useState<'scan' | 'pro'>(initialTier);
     const [error, setError] = useState('');
     const rawDevices = Number(searchParams.get('devices') ?? '1');
     const devices = Math.max(1, Math.min(5, Math.floor(rawDevices) || 1));
@@ -49,7 +49,7 @@ function CheckoutContent() {
 
     const plans = [
         {
-            id: 'standard' as const,
+            id: 'scan' as const,
             name: 'restoreit',
             price: 89,
             features: [
@@ -107,22 +107,20 @@ function CheckoutContent() {
                                 key={plan.id}
                                 type="button"
                                 onClick={() => setSelectedPlan(plan.id)}
-                                className={`p-6 rounded-2xl border text-left transition-all relative overflow-hidden ${
-                                    selectedPlan === plan.id
+                                className={`p-6 rounded-2xl border text-left transition-all relative overflow-hidden ${selectedPlan === plan.id
                                         ? 'bg-[var(--color-accent)]/5 border-[var(--color-accent)] ring-1 ring-[var(--color-accent)]'
                                         : 'bg-[var(--color-card)] border-[var(--color-border)] hover:border-[var(--color-border-focus)]'
-                                }`}
+                                    }`}
                             >
                                 {plan.recommended && (
                                     <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[var(--color-accent)] to-purple-800" />
                                 )}
                                 <div className="flex justify-between items-start mb-4">
                                     <div className="flex items-center gap-3">
-                                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center border ${
-                                            selectedPlan === plan.id
+                                        <div className={`w-10 h-10 rounded-xl flex items-center justify-center border ${selectedPlan === plan.id
                                                 ? 'bg-[var(--color-accent)]/10 border-[var(--color-accent)]/30 text-[var(--color-accent)]'
                                                 : 'bg-[var(--color-card-hover)] border-[var(--color-border)] text-[var(--color-text-tertiary)]'
-                                        }`}>
+                                            }`}>
                                             {plan.icon}
                                         </div>
                                         <div>
@@ -206,11 +204,10 @@ function CheckoutContent() {
                             type="button"
                             onClick={handleCheckout}
                             disabled={isProcessing}
-                            className={`w-full h-14 rounded-2xl text-sm font-black uppercase tracking-[0.15em] transition-all flex items-center justify-center gap-3 active:scale-[0.98] ${
-                                isProcessing
+                            className={`w-full h-14 rounded-2xl text-sm font-black uppercase tracking-[0.15em] transition-all flex items-center justify-center gap-3 active:scale-[0.98] ${isProcessing
                                     ? 'bg-[var(--color-disabled-bg)] text-[var(--color-disabled-text)] cursor-not-allowed border border-[var(--color-border-subtle)]'
                                     : 'bg-[var(--color-accent)] hover:opacity-90 text-white shadow-[0_20px_40px_rgba(138,43,226,0.25)]'
-                            }`}
+                                }`}
                         >
                             {isProcessing ? (
                                 <>
