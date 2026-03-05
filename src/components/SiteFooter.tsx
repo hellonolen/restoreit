@@ -25,6 +25,7 @@ export default function SiteFooter() {
                         <Link href="/support" className="hover:text-[var(--color-foreground)] transition-colors">Support</Link>
                         <Link href="/partners" className="hover:text-[var(--color-foreground)] transition-colors">Partners</Link>
                         <Link href="/docs/raas" className="hover:text-[var(--color-foreground)] transition-colors">API Docs</Link>
+                        <Link href="/blog" className="hover:text-[var(--color-foreground)] transition-colors">Blog</Link>
                     </nav>
                 </div>
 

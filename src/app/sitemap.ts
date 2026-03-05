@@ -15,6 +15,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
         '/contact',
         '/partners',
         '/docs/raas',
+        '/blog',
+        '/blog/recover-deleted-files-without-installing-software',
+        '/blog/cloud-vs-traditional-data-recovery',
+        '/blog/accidentally-formatted-drive',
         '/login',
         '/signup',
         '/restore',
@@ -27,7 +31,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     return routes.map((route) => ({
         url: `${base}${route}`,
         lastModified: now,
-        changeFrequency: route === '' ? 'weekly' : 'monthly',
-        priority: route === '' ? 1.0 : route === '/pricing' || route === '/partners' ? 0.9 : 0.7,
+        changeFrequency: route === '' || route === '/blog' ? 'weekly' as const : route.startsWith('/blog/') ? 'monthly' as const : 'monthly' as const,
+        priority: route === '' ? 1.0 : route === '/pricing' || route === '/partners' ? 0.9 : route === '/blog' ? 0.8 : route.startsWith('/blog/') ? 0.7 : 0.7,
     }))
 }
