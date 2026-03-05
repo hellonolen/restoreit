@@ -3,7 +3,7 @@
 import { cookies } from 'next/headers'
 import { getSessionUser } from '@/lib/auth'
 import { getDb } from '@/db'
-import { partners, apiJobs, apiUsage } from '@/db/schema'
+import { partners, apiJobs, apiUsage, webhookLogs } from '@/db/schema'
 import { eq, and, sql, desc, gte } from 'drizzle-orm'
 import { TIER_MONTHLY_PRICE } from '@/lib/partner-constants'
 
@@ -99,6 +99,23 @@ export async function GET() {
     .orderBy(desc(apiJobs.createdAt))
     .limit(10)
 
+  // Recent webhook deliveries (10 most recent)
+  const recentWebhooks = await db
+    .select({
+      id: webhookLogs.id,
+      event: webhookLogs.event,
+      callbackUrl: webhookLogs.callbackUrl,
+      statusCode: webhookLogs.statusCode,
+      success: webhookLogs.success,
+      attempts: webhookLogs.attempts,
+      errorMessage: webhookLogs.errorMessage,
+      deliveredAt: webhookLogs.deliveredAt,
+    })
+    .from(webhookLogs)
+    .where(eq(webhookLogs.partnerId, partner.id))
+    .orderBy(desc(webhookLogs.deliveredAt))
+    .limit(10)
+
   return json({
     registered: true,
     partner: {
@@ -120,6 +137,10 @@ export async function GET() {
       ...j,
       createdAt: j.createdAt instanceof Date ? j.createdAt.getTime() : j.createdAt,
       completedAt: j.completedAt instanceof Date ? j.completedAt.getTime() : j.completedAt,
+    })),
+    recentWebhooks: recentWebhooks.map(w => ({
+      ...w,
+      deliveredAt: w.deliveredAt instanceof Date ? w.deliveredAt.getTime() : w.deliveredAt,
     })),
   })
 }

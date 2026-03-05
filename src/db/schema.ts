@@ -138,6 +138,19 @@ export const apiUsage = sqliteTable('api_usage', {
   recordedAt: integer('recorded_at', { mode: 'timestamp' }).notNull(),
 })
 
+export const webhookLogs = sqliteTable('webhook_logs', {
+  id: text('id').primaryKey(),
+  partnerId: text('partner_id').notNull().references(() => partners.id),
+  apiJobId: text('api_job_id').references(() => apiJobs.id),
+  event: text('event').notNull(), // e.g. 'job.completed', 'job.failed'
+  callbackUrl: text('callback_url').notNull(),
+  statusCode: integer('status_code'), // HTTP response code, null if network error
+  success: integer('success', { mode: 'boolean' }).notNull(),
+  attempts: integer('attempts').notNull().default(1),
+  errorMessage: text('error_message'),
+  deliveredAt: integer('delivered_at', { mode: 'timestamp' }).notNull(),
+})
+
 // Conversion funnel tracking
 
 export const funnelEvents = sqliteTable('funnel_events', {

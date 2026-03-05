@@ -32,6 +32,18 @@ interface DashboardData {
   partner?: { name: string; tier: string; apiKeyHint: string }
   kpis?: KPIs
   recentJobs?: RecentJob[]
+  recentWebhooks?: WebhookLog[]
+}
+
+interface WebhookLog {
+  id: string
+  event: string
+  callbackUrl: string
+  statusCode: number | null
+  success: boolean
+  attempts: number
+  errorMessage: string | null
+  deliveredAt: number
 }
 
 interface RegisterResponse {
@@ -282,7 +294,7 @@ export default function PartnerDashboardPage() {
   }
 
   // State 3: Dashboard
-  const { partner, kpis, recentJobs } = data
+  const { partner, kpis, recentJobs, recentWebhooks } = data
 
   return (
     <div className="space-y-8">
@@ -323,7 +335,7 @@ export default function PartnerDashboardPage() {
             <p className="text-sm text-[var(--color-text-secondary)]">
               {partner.tier === 'starter'
                 ? 'Unlock priority scanning, bulk uploads, and 1 TB scan volume with Growth.'
-                : 'Get unlimited volume, custom SLA, and a dedicated account manager with Enterprise.'}
+                : 'Get 5 TB volume, deep scan priority, and 99.9% uptime guarantee with Enterprise.'}
             </p>
           </div>
           <Link
@@ -385,6 +397,52 @@ export default function PartnerDashboardPage() {
                       <td className="p-4 text-right text-[var(--color-text-secondary)]">{formatBytes(job.dataRecovered)}</td>
                       <td className="p-4 text-right text-[var(--color-text-secondary)]">
                         {new Date(job.createdAt).toLocaleDateString()}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Webhook Event Logs */}
+      {recentWebhooks && recentWebhooks.length > 0 && (
+        <div className="space-y-4">
+          <h2 className="text-lg font-bold">Webhook Event Logs</h2>
+          <div className="rounded-2xl border border-[var(--color-border)] overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-[var(--color-border)] bg-[var(--color-card)]">
+                    <th className="text-left p-4 text-[10px] font-black uppercase tracking-[0.2em] text-[var(--color-text-dim)]">Event</th>
+                    <th className="text-left p-4 text-[10px] font-black uppercase tracking-[0.2em] text-[var(--color-text-dim)]">Status</th>
+                    <th className="text-right p-4 text-[10px] font-black uppercase tracking-[0.2em] text-[var(--color-text-dim)]">Code</th>
+                    <th className="text-right p-4 text-[10px] font-black uppercase tracking-[0.2em] text-[var(--color-text-dim)]">Attempts</th>
+                    <th className="text-right p-4 text-[10px] font-black uppercase tracking-[0.2em] text-[var(--color-text-dim)]">Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {recentWebhooks.map((wh) => (
+                    <tr key={wh.id} className="border-t border-[var(--color-border-subtle)]">
+                      <td className="p-4">
+                        <code className="text-xs text-[var(--color-accent)]" style={{ fontFamily: 'var(--font-mono), monospace' }}>
+                          {wh.event}
+                        </code>
+                      </td>
+                      <td className="p-4">
+                        <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider border ${wh.success
+                          ? 'bg-green-500/10 text-green-400 border-green-500/20'
+                          : 'bg-red-500/10 text-red-400 border-red-500/20'
+                          }`}>
+                          {wh.success ? 'Delivered' : 'Failed'}
+                        </span>
+                      </td>
+                      <td className="p-4 text-right text-[var(--color-text-secondary)]">{wh.statusCode ?? '--'}</td>
+                      <td className="p-4 text-right text-[var(--color-text-secondary)]">{wh.attempts}</td>
+                      <td className="p-4 text-right text-[var(--color-text-secondary)]">
+                        {new Date(wh.deliveredAt).toLocaleDateString()}
                       </td>
                     </tr>
                   ))}
