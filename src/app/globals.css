@@ -47,6 +47,12 @@ html.light-mode {
   --color-placeholder: #9CA3AF;
 }
 
+/* Theme-aware image swapping */
+.light-only { display: none; }
+.dark-only { display: block; }
+html.light-mode .light-only { display: block; }
+html.light-mode .dark-only { display: none; }
+
 @layer base {
   body {
     background-color: var(--color-background);

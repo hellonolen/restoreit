@@ -78,10 +78,12 @@ export default function LandingPage() {
       <section id="about" className="py-16 sm:py-24 md:py-32 px-2 sm:px-6 md:px-8 border-t border-[var(--color-border-subtle)]">
         <div className="max-w-6xl mx-auto space-y-8 sm:space-y-16">
           <div className="rounded-xl sm:rounded-2xl border border-[var(--color-border)] overflow-hidden">
-            <Image src="/images/scan_intake.png" alt="restoreit scan intake" width={2880} height={1800} className="w-full h-auto" />
+            <Image src="/images/scan_intake.png" alt="restoreit scan intake" width={2880} height={1800} className="w-full h-auto dark-only" />
+            <Image src="/images/scan_intake_light.png" alt="restoreit scan intake" width={2880} height={1800} className="w-full h-auto light-only" />
           </div>
           <div className="rounded-xl sm:rounded-2xl border border-[var(--color-border)] overflow-hidden">
-            <Image src="/images/cloud_vault.png" alt="restoreit Cloud file storage" width={2880} height={1800} className="w-full h-auto" />
+            <Image src="/images/cloud_vault.png" alt="restoreit Cloud file storage" width={2880} height={1800} className="w-full h-auto dark-only" />
+            <Image src="/images/cloud_vault_light.png" alt="restoreit Cloud file storage" width={2880} height={1800} className="w-full h-auto light-only" />
           </div>
         </div>
       </section>
