@@ -12,9 +12,14 @@ function CheckoutContent() {
     const tierParam = searchParams.get('tier');
     const initialTier = tierParam === 'scan' ? 'scan' : 'pro';
     const [selectedPlan, setSelectedPlan] = useState<'scan' | 'pro'>(initialTier);
+    const [cloudStorage, setCloudStorage] = useState(false);
     const [error, setError] = useState('');
     const rawDevices = Number(searchParams.get('devices') ?? '1');
     const devices = Math.max(1, Math.min(5, Math.floor(rawDevices) || 1));
+
+    const planPrice = selectedPlan === 'pro' ? 249 : 89;
+    const storagePrice = cloudStorage ? 79 : 0;
+    const totalPrice = (planPrice + storagePrice) * devices;
 
     const handleCheckout = async () => {
         setIsProcessing(true);
@@ -24,7 +29,11 @@ function CheckoutContent() {
             const res = await fetch('/api/checkout', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ tier: selectedPlan, devices }),
+                body: JSON.stringify({
+                    tier: selectedPlan,
+                    devices,
+                    addons: cloudStorage ? ['cloud_storage'] : [],
+                }),
             });
 
             if (!res.ok) {
@@ -55,8 +64,8 @@ function CheckoutContent() {
             features: [
                 { text: 'Deep drive scanner', included: true },
                 { text: 'Reconstructs damaged files', included: true },
-                { text: 'Download to your own drive', included: true },
-                { text: 'restoreit Cloud storage', included: false },
+                { text: 'Restored files via secure link', included: true },
+                { text: 'Extended Cloud retention', included: false },
             ],
             icon: <HardDrive size={20} />,
         },
@@ -108,8 +117,8 @@ function CheckoutContent() {
                                 type="button"
                                 onClick={() => setSelectedPlan(plan.id)}
                                 className={`p-6 rounded-2xl border text-left transition-all relative overflow-hidden ${selectedPlan === plan.id
-                                        ? 'bg-[var(--color-accent)]/5 border-[var(--color-accent)] ring-1 ring-[var(--color-accent)]'
-                                        : 'bg-[var(--color-card)] border-[var(--color-border)] hover:border-[var(--color-border-focus)]'
+                                    ? 'bg-[var(--color-accent)]/5 border-[var(--color-accent)] ring-1 ring-[var(--color-accent)]'
+                                    : 'bg-[var(--color-card)] border-[var(--color-border)] hover:border-[var(--color-border-focus)]'
                                     }`}
                             >
                                 {plan.recommended && (
@@ -118,8 +127,8 @@ function CheckoutContent() {
                                 <div className="flex justify-between items-start mb-4">
                                     <div className="flex items-center gap-3">
                                         <div className={`w-10 h-10 rounded-xl flex items-center justify-center border ${selectedPlan === plan.id
-                                                ? 'bg-[var(--color-accent)]/10 border-[var(--color-accent)]/30 text-[var(--color-accent)]'
-                                                : 'bg-[var(--color-card-hover)] border-[var(--color-border)] text-[var(--color-text-tertiary)]'
+                                            ? 'bg-[var(--color-accent)]/10 border-[var(--color-accent)]/30 text-[var(--color-accent)]'
+                                            : 'bg-[var(--color-card-hover)] border-[var(--color-border)] text-[var(--color-text-tertiary)]'
                                             }`}>
                                             {plan.icon}
                                         </div>
@@ -156,12 +165,41 @@ function CheckoutContent() {
                         ))}
                     </div>
 
+                    {/* Cloud Storage Add-on */}
+                    <button
+                        type="button"
+                        onClick={() => setCloudStorage(!cloudStorage)}
+                        className={`w-full p-5 rounded-2xl border text-left transition-all flex items-center gap-4 ${cloudStorage
+                            ? 'bg-[var(--color-accent)]/5 border-[var(--color-accent)] ring-1 ring-[var(--color-accent)]'
+                            : 'bg-[var(--color-card)] border-[var(--color-border)] hover:border-[var(--color-border-focus)]'
+                            }`}
+                    >
+                        <div className={`w-5 h-5 rounded-md border-2 flex items-center justify-center shrink-0 transition-colors ${cloudStorage
+                            ? 'bg-[var(--color-accent)] border-[var(--color-accent)]'
+                            : 'border-[var(--color-border-focus)]'
+                            }`}>
+                            {cloudStorage && <Check size={12} className="text-white" />}
+                        </div>
+                        <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-0.5">
+                                <Cloud size={16} className={cloudStorage ? 'text-[var(--color-accent)]' : 'text-[var(--color-text-tertiary)]'} />
+                                <span className="text-sm font-bold">Add restoreit Cloud Storage</span>
+                            </div>
+                            <p className="text-xs text-[var(--color-text-tertiary)] leading-relaxed">
+                                Keep your recovered files safe in the cloud. Access them anytime, from any device.
+                            </p>
+                        </div>
+                        <div className="text-lg font-bold shrink-0">
+                            +$79<span className="text-[var(--color-text-dim)] text-xs font-normal">.00</span>
+                        </div>
+                    </button>
+
                     <div className="bg-[var(--color-accent)]/5 border border-[var(--color-accent)]/20 p-5 rounded-xl flex gap-4">
                         <Shield size={20} className="text-[var(--color-accent)] shrink-0 mt-0.5" />
                         <div>
                             <h4 className="text-sm font-bold mb-1">Safe Restoration Guarantee</h4>
                             <p className="text-xs text-[var(--color-text-secondary)] leading-relaxed">
-                                restoreit scans your drive without writing to disk. Pro tier stores files in restoreit Cloud. Standard tier downloads to your own drive.
+                                restoreit scans your drive without writing to disk. Your recovered files are stored securely in restoreit Cloud.
                             </p>
                         </div>
                     </div>
@@ -173,24 +211,30 @@ function CheckoutContent() {
                         <div className="flex items-end justify-between">
                             <h2 className="text-xl font-bold">Order Summary</h2>
                             <div className="text-3xl font-bold tracking-tight">
-                                ${(selectedPlan === 'pro' ? 249 : 89) * devices}<span className="text-[var(--color-text-tertiary)] text-base">.00</span>
+                                ${totalPrice}<span className="text-[var(--color-text-tertiary)] text-base">.00</span>
                             </div>
                         </div>
 
                         <div className="space-y-3 text-sm">
                             <div className="flex justify-between text-[var(--color-text-secondary)]">
                                 <span>{selectedPlan === 'pro' ? 'restoreit Pro' : 'restoreit'}{devices > 1 ? ` x ${devices} devices` : ''}</span>
-                                <span className="text-[var(--color-foreground)]">${(selectedPlan === 'pro' ? 249 : 89) * devices}.00</span>
+                                <span className="text-[var(--color-foreground)]">${planPrice * devices}.00</span>
                             </div>
+                            {cloudStorage && (
+                                <div className="flex justify-between text-[var(--color-text-secondary)]">
+                                    <span>Cloud Storage{devices > 1 ? ` x ${devices}` : ''}</span>
+                                    <span className="text-[var(--color-foreground)]">${storagePrice * devices}.00</span>
+                                </div>
+                            )}
                             {devices > 1 && (
                                 <div className="flex justify-between text-[var(--color-text-dim)] text-xs">
-                                    <span>${selectedPlan === 'pro' ? 249 : 89} per device</span>
+                                    <span>${planPrice + storagePrice} per device</span>
                                     <span>{devices} devices</span>
                                 </div>
                             )}
                             <div className="border-t border-[var(--color-border-subtle)] pt-3 flex justify-between font-bold">
                                 <span>Total</span>
-                                <span>${(selectedPlan === 'pro' ? 249 : 89) * devices}.00</span>
+                                <span>${totalPrice}.00</span>
                             </div>
                         </div>
 
@@ -205,8 +249,8 @@ function CheckoutContent() {
                             onClick={handleCheckout}
                             disabled={isProcessing}
                             className={`w-full h-14 rounded-2xl text-sm font-black uppercase tracking-[0.15em] transition-all flex items-center justify-center gap-3 active:scale-[0.98] ${isProcessing
-                                    ? 'bg-[var(--color-disabled-bg)] text-[var(--color-disabled-text)] cursor-not-allowed border border-[var(--color-border-subtle)]'
-                                    : 'bg-[var(--color-accent)] hover:opacity-90 text-white shadow-[0_20px_40px_rgba(138,43,226,0.25)]'
+                                ? 'bg-[var(--color-disabled-bg)] text-[var(--color-disabled-text)] cursor-not-allowed border border-[var(--color-border-subtle)]'
+                                : 'bg-[var(--color-accent)] hover:opacity-90 text-white shadow-[0_20px_40px_rgba(138,43,226,0.25)]'
                                 }`}
                         >
                             {isProcessing ? (
