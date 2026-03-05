@@ -4,7 +4,7 @@ import { getDb, schema } from '@/db'
 import { eq, and } from 'drizzle-orm'
 import { trackFunnelEvent } from '@/lib/funnel'
 
-export const runtime = 'edge'
+
 
 async function hashToken(token: string): Promise<string> {
   const bytes = new TextEncoder().encode(token)

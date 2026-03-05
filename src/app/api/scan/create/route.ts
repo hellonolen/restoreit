@@ -5,7 +5,7 @@ import { getSessionUser } from '@/lib/auth'
 import { getDb, schema } from '@/db'
 import { trackFunnelEvent } from '@/lib/funnel'
 
-export const runtime = 'edge'
+
 
 const CHUNK_SIZE_BYTES = 16 * 1024 * 1024 // 16MB
 
