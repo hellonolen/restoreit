@@ -68,7 +68,7 @@ export const PARTNER_TIERS: PartnerTier[] = [
     features: [
       'Everything in Growth',
       'Custom SLA',
-      'White-label restore portal',
+      'Custom scan profiles',
       'Multi-user team access',
     ],
   },
