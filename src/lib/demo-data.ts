@@ -1,10 +1,10 @@
 import type { DriveInfo, ScanSession, ScanStats, NetworkStatus } from '@/types'
 
 // ============================================================
-// Demo data shown to users before their first purchase.
-// Once a user completes a payment, is_demo flips to false
+// Demo data shown to users before their first scan/purchase.
+// Once a user initiates a real scan, is_demo flips to false
 // and all demo data is replaced with real data from D1.
-// Landing page stats are ALWAYS shown (marketing).
+// Landing page stats are ALWAYS shown (marketing/capability).
 // ============================================================
 
 export const DEMO_USER = {
@@ -102,12 +102,12 @@ export const DEMO_INVOICES = [
   { id: 'INV-002', date: 'Feb 3, 2026', description: 'restoreit — Restoration', amount: '$89.00', status: 'paid' },
 ]
 
-// Landing page stats — always shown, not per-user
+// Landing page stats — platform capabilities, always shown
 export const PLATFORM_STATS = [
   { label: 'Uptime', value: '99.99%', sub: 'SLA Guaranteed' },
-  { label: 'Restoration Speed', value: '18GB/s', sub: 'Peak Throughput' },
+  { label: 'Scan Speed', value: '2GB/min', sub: 'Avg. Throughput' },
   { label: 'Encryption', value: 'AES-256', sub: 'End-to-End' },
-  { label: 'Files Restored', value: '1.2B+', sub: 'Last 24 Hours' },
+  { label: 'Zero Writes', value: '0 bytes', sub: 'Written to Disk' },
 ]
 
 export const DEMO_PROTECTION_STATS = {
