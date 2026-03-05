@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
 import Link from 'next/link';
-import { ArrowRight, Terminal, Shield, Cloud, Lock, Monitor } from 'lucide-react';
+import { ArrowRight, Terminal, Shield, Cloud, Lock, Monitor, ShieldCheck } from 'lucide-react';
 
 export const metadata: Metadata = {
     title: 'How It Works — restoreit',
@@ -12,38 +12,38 @@ export const metadata: Metadata = {
 const steps = [
     {
         number: '01',
-        title: 'Tell Us What Happened',
-        desc: 'Describe your situation — accidental deletion, formatted drive, corrupted files. Select the drive you want to scan.',
+        title: 'Connect',
+        desc: 'Describe your situation — accidental deletion, formatted drive, corrupted files. Select the drive and run a single relay command in your terminal.',
         icon: <Terminal size={24} />,
-        detail: 'Our intake form helps us understand the scenario so we can configure the right scan parameters for your drive and file system.',
+        detail: 'The relay is a lightweight script that launches entirely in your computer\'s RAM — nothing is installed to disk. It reads raw sectors from your drive and never writes a single byte.',
     },
     {
         number: '02',
-        title: 'Run the Relay Command',
-        desc: 'Copy and paste a single command into your terminal. The relay launches in your computer\'s RAM — nothing is installed to disk.',
-        icon: <Shield size={24} />,
-        detail: 'The relay is a lightweight script that reads raw sectors from your drive. It never writes a single byte. This is what makes restoreit fundamentally different from traditional restoration tools.',
-    },
-    {
-        number: '03',
-        title: 'We Scan Your Drive',
+        title: 'Scan',
         desc: 'The relay streams your drive\'s sectors to our cloud engine over an encrypted connection. Our algorithms analyze the raw data for restorable files.',
         icon: <Cloud size={24} />,
         detail: 'restoreit Scan uses quick pattern matching. restoreit Pro uses deep sector-level reconstruction that can piece together damaged and fragmented files.',
     },
     {
-        number: '04',
-        title: 'Review the Results',
+        number: '03',
+        title: 'Preview',
         desc: 'See exactly what was detected — file names, types, sizes, and integrity scores. You decide whether to proceed.',
         icon: <Monitor size={24} />,
-        detail: 'Browse results by file type, search for specific files, and check integrity scores that indicate how complete each file is. You are in control.',
+        detail: 'Browse results by file type, search for specific files, and check integrity scores that indicate how complete each file is. You are in full control before committing.',
     },
     {
-        number: '05',
-        title: 'Access Your Files',
+        number: '04',
+        title: 'restoreit',
         desc: 'Choose your plan, complete payment, and access your restored files securely via restoreit Cloud.',
         icon: <Lock size={24} />,
         detail: 'restoreit Scan provides 48-hour cloud access. restoreit Pro includes 7-day cloud retention. Add restoreit Cloud for long-term 500GB encrypted storage.',
+    },
+    {
+        number: '05',
+        title: 'Protect',
+        desc: 'Add restoreit Protection to continuously monitor your drives and prevent future data loss.',
+        icon: <ShieldCheck size={24} />,
+        detail: 'The $29/mo Protection plan watches your drives for early warning signs — bad sectors, filesystem anomalies, and degradation patterns — so you never lose data again.',
     },
 ];
 

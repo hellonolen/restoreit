@@ -12,30 +12,25 @@ export default function SiteFooter() {
                         <span className="text-base font-black tracking-[0.3em] text-[var(--color-foreground)]">restoreit</span>
                     </Link>
                     <p className="text-[var(--color-text-dim)] max-w-sm text-sm leading-relaxed font-medium">
-                        Cloud-based file restoration that never writes to your drive. Scan, restore, and protect your data.
+                        Cloud-based file restoration that never writes to your drive. Connect, scan, preview, restore, and protect your data.
                     </p>
                 </div>
 
                 <div className="space-y-6">
-                    <div className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--color-text-secondary)]">Product</div>
+                    <div className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--color-text-secondary)]">Company</div>
                     <nav className="flex flex-col gap-4 text-xs font-bold text-[var(--color-text-dim)]">
-                        <Link href="/pricing" className="hover:text-[var(--color-foreground)] transition-colors">Pricing</Link>
-                        <Link href="/how-it-works" className="hover:text-[var(--color-foreground)] transition-colors">How It Works</Link>
-                        <Link href="/faq" className="hover:text-[var(--color-foreground)] transition-colors">FAQ</Link>
-                        <Link href="/support" className="hover:text-[var(--color-foreground)] transition-colors">Support</Link>
+                        <Link href="/about" className="hover:text-[var(--color-foreground)] transition-colors">About</Link>
                         <Link href="/partners" className="hover:text-[var(--color-foreground)] transition-colors">Partners</Link>
-                        <Link href="/docs/raas" className="hover:text-[var(--color-foreground)] transition-colors">API Docs</Link>
-                        <Link href="/blog" className="hover:text-[var(--color-foreground)] transition-colors">Blog</Link>
+                        <Link href="/support" className="hover:text-[var(--color-foreground)] transition-colors">Support</Link>
                     </nav>
                 </div>
 
                 <div className="space-y-6">
-                    <div className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--color-text-secondary)]">Legal</div>
+                    <div className="text-[10px] font-black uppercase tracking-[0.3em] text-[var(--color-text-secondary)]">Resources</div>
                     <nav className="flex flex-col gap-4 text-xs font-bold text-[var(--color-text-dim)]">
-                        <Link href="/privacy" className="hover:text-[var(--color-foreground)] transition-colors">Privacy Policy</Link>
-                        <Link href="/terms" className="hover:text-[var(--color-foreground)] transition-colors">Terms of Service</Link>
-                        <Link href="/disclaimers" className="hover:text-[var(--color-foreground)] transition-colors">Disclaimers</Link>
-                        <Link href="/contact" className="hover:text-[var(--color-foreground)] transition-colors">Contact</Link>
+                        <Link href="/blog" className="hover:text-[var(--color-foreground)] transition-colors">Blog</Link>
+                        <Link href="/docs/raas" className="hover:text-[var(--color-foreground)] transition-colors">API Docs</Link>
+                        <Link href="/faq" className="hover:text-[var(--color-foreground)] transition-colors">FAQ</Link>
                     </nav>
                 </div>
             </div>

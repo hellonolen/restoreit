@@ -98,11 +98,11 @@ export default function LandingPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4">
             {[
-              { step: '01', title: 'Describe', desc: 'Tell us what happened and which drive to scan.' },
-              { step: '02', title: 'Select', desc: 'Choose the drive. Run the relay command.' },
-              { step: '03', title: 'Scan', desc: 'The relay streams your drive to our cloud engine.' },
-              { step: '04', title: 'Preview', desc: 'See what the scan detected before you pay.' },
-              { step: '05', title: 'Unlock', desc: 'Choose your plan. Access your restored files securely via restoreit Cloud.' },
+              { step: '01', title: 'Connect', desc: 'Run a single relay command. Nothing is installed — it executes entirely in your computer\'s RAM.' },
+              { step: '02', title: 'Scan', desc: 'The relay streams your drive\'s raw sectors to our cloud engine over an encrypted connection.' },
+              { step: '03', title: 'Preview', desc: 'See what was found — file names, types, sizes, and integrity scores. You decide whether to proceed.' },
+              { step: '04', title: 'restoreit', desc: 'Choose your plan and access your restored files securely via restoreit Cloud.' },
+              { step: '05', title: 'Protect', desc: 'Add restoreit Protection to continuously monitor your drives and prevent future data loss.' },
             ].map((item) => (
               <div key={item.step} className="group p-6 md:p-8 rounded-[24px] md:rounded-[32px] border border-[var(--color-border-subtle)] bg-[var(--color-card)] hover:bg-[var(--color-card-hover)] hover:border-[var(--color-accent)]/30 transition-all">
                 <div className="text-[var(--color-text-dim)] font-black text-3xl md:text-4xl mb-6 group-hover:text-[var(--color-accent)]/40 transition-colors">{item.step}</div>

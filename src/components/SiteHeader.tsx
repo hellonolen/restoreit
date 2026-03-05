@@ -11,8 +11,6 @@ const NAV_LINKS = [
     { href: '/how-it-works', label: 'How It Works' },
     { href: '/faq', label: 'FAQ' },
     { href: '/pricing', label: 'Pricing' },
-    { href: '/support', label: 'Support' },
-    { href: '/blog', label: 'Blog' },
     { href: '/login', label: 'Login' },
 ];
 
@@ -52,6 +50,12 @@ export default function SiteHeader() {
                             {label}
                         </Link>
                     ))}
+                    <Link
+                        href="/restore"
+                        className="px-6 py-2.5 rounded-xl bg-[var(--color-accent)] text-white hover:opacity-90 transition-all shadow-lg shadow-[var(--color-accent)]/20"
+                    >
+                        Get Started
+                    </Link>
                     <button
                         onClick={() => setDarkMode(prev => !prev)}
                         className="p-2.5 rounded-lg border border-[var(--color-border)] text-[var(--color-text-secondary)] hover:text-[var(--color-foreground)] transition-all"
@@ -59,12 +63,6 @@ export default function SiteHeader() {
                     >
                         {darkMode ? <Sun size={16} /> : <Moon size={16} />}
                     </button>
-                    <Link
-                        href="/restore"
-                        className="px-6 py-2.5 rounded-xl bg-[var(--color-accent)] text-white hover:opacity-90 transition-all shadow-lg shadow-[var(--color-accent)]/20"
-                    >
-                        Get Started
-                    </Link>
                 </nav>
 
                 <button
