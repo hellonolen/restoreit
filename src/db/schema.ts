@@ -43,7 +43,7 @@ export const payments = sqliteTable('payments', {
   id: text('id').primaryKey(),
   userId: text('user_id').notNull().references(() => users.id),
   whopPaymentId: text('whop_payment_id'),
-  tier: text('tier', { enum: ['standard', 'pro', 'protection', 'starter', 'growth', 'enterprise'] }).notNull(),
+  tier: text('tier', { enum: ['standard', 'pro', 'cloud', 'protection', 'starter', 'growth', 'enterprise'] }).notNull(),
   scanId: text('scan_id').references(() => scans.id),
   amount: integer('amount').notNull(),
   status: text('status', { enum: ['pending', 'completed', 'failed', 'refunded'] }).notNull(),

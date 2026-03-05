@@ -14,7 +14,7 @@ function getHeaders() {
 interface CreateCheckoutParams {
   planId: string
   userId: string
-  tier: 'standard' | 'pro' | 'protection' | 'starter' | 'growth' | 'enterprise'
+  tier: 'standard' | 'pro' | 'cloud' | 'protection' | 'starter' | 'growth' | 'enterprise'
   quantity?: number
   redirectUrl: string
   checkoutType?: 'consumer' | 'partner'
@@ -89,6 +89,7 @@ export const WHOP_PLANS: Record<string, string> = {
   // Consumer tiers
   standard: process.env.WHOP_PLAN_STANDARD ?? '',
   pro: process.env.WHOP_PLAN_PRO ?? '',
+  cloud: process.env.WHOP_PLAN_CLOUD ?? '',
   protection: process.env.WHOP_PLAN_PROTECTION ?? '',
   // Partner tiers
   starter: process.env.WHOP_PLAN_PARTNER_STARTER ?? '',
@@ -97,4 +98,4 @@ export const WHOP_PLANS: Record<string, string> = {
 }
 
 export const PARTNER_TIERS = ['starter', 'growth', 'enterprise'] as const
-export const CONSUMER_TIERS = ['standard', 'pro', 'protection'] as const
+export const CONSUMER_TIERS = ['standard', 'pro', 'cloud', 'protection'] as const

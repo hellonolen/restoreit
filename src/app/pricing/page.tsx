@@ -35,7 +35,7 @@ const plans: Plan[] = [
         name: 'Scan',
         fullName: 'restoreit Scan',
         price: 89,
-        period: 'per device',
+        period: 'one-time per device',
         description: 'Immediate device scan and file detection. Download what the scan finds.',
         icon: <HardDrive size={24} />,
         cta: 'Get Started',
@@ -58,7 +58,7 @@ const plans: Plan[] = [
         name: 'Pro',
         fullName: 'restoreit Pro',
         price: 249,
-        period: 'per device',
+        period: 'one-time per device',
         description: 'Deep scan with damaged file reconstruction, priority restoration, and a 7-day download window.',
         icon: <Shield size={24} />,
         cta: 'Get Started',
@@ -189,11 +189,10 @@ export default function PricingPage() {
                         {plans.map((plan) => (
                             <div
                                 key={plan.id}
-                                className={`relative rounded-3xl border p-8 flex flex-col ${
-                                    plan.recommended
+                                className={`relative rounded-3xl border p-8 flex flex-col ${plan.recommended
                                         ? 'border-[var(--color-accent)]/40 bg-[var(--color-accent)]/[0.03] ring-1 ring-[var(--color-accent)]/20'
                                         : 'border-[var(--color-border)] bg-[var(--color-card)]'
-                                }`}
+                                    }`}
                             >
                                 {plan.recommended && (
                                     <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-[var(--color-accent)] text-[10px] font-black uppercase tracking-[0.2em] text-white shadow-lg shadow-[var(--color-accent)]/30">
@@ -202,11 +201,10 @@ export default function PricingPage() {
                                 )}
 
                                 <div className="mb-6 space-y-4">
-                                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${
-                                        plan.recommended
+                                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${plan.recommended
                                             ? 'bg-[var(--color-accent)]/10 border border-[var(--color-accent)]/30 text-[var(--color-accent)]'
                                             : 'bg-[var(--color-card-hover)] border border-[var(--color-border)] text-[var(--color-text-secondary)]'
-                                    }`}>
+                                        }`}>
                                         {plan.icon}
                                     </div>
                                     <div>
@@ -250,11 +248,10 @@ export default function PricingPage() {
 
                                 <ul className="space-y-3 mb-8 flex-1">
                                     {plan.features.map((f) => (
-                                        <li key={f.text} className={`flex items-start gap-3 text-sm ${
-                                            f.included
+                                        <li key={f.text} className={`flex items-start gap-3 text-sm ${f.included
                                                 ? f.highlight ? 'text-[var(--color-foreground)] font-medium' : 'text-[var(--color-text-secondary)]'
                                                 : 'text-[var(--color-disabled-text)]'
-                                        }`}>
+                                            }`}>
                                             {f.included ? (
                                                 <Check size={16} className="text-[var(--color-accent)] shrink-0 mt-0.5" />
                                             ) : (
